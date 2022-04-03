@@ -1,0 +1,12 @@
+vich_uploader:
+    db_driver: orm
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    mappings:
+        questions:
+            uri_prefix:         '%app.path.questions%'
+            upload_destination: '%kernel.project_dir%/public%app.path.questions%'
+            namer: vich_uploader.namer_origname

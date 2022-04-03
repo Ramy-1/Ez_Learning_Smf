@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block title %}New Test{% endblock %}
+
+{% block body %}
+{{parent()}}
+    <h1>Create new Test</h1>
+
+    {{ include('test/_form.html.twig') }}
+
+    <a href="{{ path('app_test_index') }}">back to list</a>
+{% endblock %}

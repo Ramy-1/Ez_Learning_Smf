@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block title %}New Questions{% endblock %}
+
+{% block body %}
+{{parent()}}
+    <h1>Create new Questions</h1>
+
+    {{ include('questions/_form.html.twig') }}
+
+    <a href="{{ path('app_questions_index') }}">back to list</a>
+{% endblock %}

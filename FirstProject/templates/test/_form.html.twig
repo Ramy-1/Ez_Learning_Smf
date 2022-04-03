@@ -1,0 +1,31 @@
+
+{{ form_start(form) }}
+    <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    {% for input in form %}
+                    <div class="form-group row">
+                        
+                        <label class="text-bluee">{{form_label(input)}}</label>
+                        <div class="col-sm-12">
+                        {{form_widget(input)}}
+                        <div class="invalid-feedback">{{form_errors(input)}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                        </div>
+                    </div>
+                  </div>
+             </div>
+            </div>
+         </div>
+{{ form_end(form) }}
