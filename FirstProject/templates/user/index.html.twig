@@ -15,8 +15,7 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
+		<h1>Hello ✅</h1>
 
 		This friendly message is coming from:
 		<ul>
@@ -52,7 +51,7 @@
 				</tr>
 			</thead>
 			<tbody class="customtable">
-				{# {% for u in tab %}
+				{% for u in tab %}
 					<tr>
 						<th>
 							<label class="customcheckbox">
@@ -62,9 +61,15 @@
 						</th>
 
 
-                        <td>u.nom</td>
+                        <td>{{u.nom}}</td>
+                        <td>{{u.prenom}}</td>
+                        <td>{{u.tel}}</td>
+                        <td>{{u.email}}</td>
+                        <td>{{u.pwd}}</td>
+                        <td>{{u.carteBanq}}</td>
+                        <td>{{u.role}}</td>
 					</tr>
-				{% endfor %} #}
+				{% endfor %}
 			</tbody>
 		</tr>
 	</tbody>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 class UserController extends AbstractController
 {
@@ -17,18 +18,18 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
+    // @IsGranted("ROLE_ADMIN")
     /**
-     * @IsGranted("ROLE_ADMIN")
      * @param UserRepository $repository
      * @return Response
      * @Route ({"/","/afficheuser"},name="afficheuser")
      */
-    // public function afficheuser(UserRepository $repository)
-    // {
-    //     //$repository=$this->getDoctrine()->getRepository(Classroom::class);
-    //     $tabuser=$repository->findAll();
-    //     return $this->render('user/afficheuser.html.twig',[
-    //         'tab'=>$tabuser
-    //     ]);
-    // }
+    public function afficheuser(UserRepository $repository)
+    {
+        //$repository=$this->getDoctrine()->getRepository(Classroom::class);
+        $tabuser=$repository->findAll();
+        return $this->render('user/index.html.twig',[
+            'tab'=>$tabuser
+        ]); 
+    }
 }

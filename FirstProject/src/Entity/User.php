@@ -128,7 +128,7 @@ class User
         return $this->pwd;
     }
 
-    public function setPwd(string $pwd): self
+    public function setPassword(string $pwd): self
     {
         $this->pwd = $pwd;
 
