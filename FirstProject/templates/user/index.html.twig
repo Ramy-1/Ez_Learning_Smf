@@ -1,18 +1,71 @@
 {% extends 'backbase.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<div class="example-wrapper">
+		<h1>Hello
+			{{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/mrram/Desktop/Ez_Learning_Smf/FirstProject/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/mrram/Desktop/Ez_Learning_Smf/FirstProject/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+		This friendly message is coming from:
+		<ul>
+			<li>Your controller at
+				<code>
+					<a href="{{ 'C:/Users/mrram/Desktop/Ez_Learning_Smf/FirstProject/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a>
+				</code>
+			</li>
+			<li>Your template at
+				<code>
+					<a href="{{ 'C:/Users/mrram/Desktop/Ez_Learning_Smf/FirstProject/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a>
+				</code>
+			</li>
+		</ul>
+	</div>
+	<div class="table-responsive">
+		<table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th>
+						<label class="customcheckbox mb-3">
+							<input type="checkbox" id="mainCheckbox"/>
+							<span class="checkmark"></span>
+						</label>
+					</th>
+					<th scope="col">nom</th>
+					<th scope="col">prenom</th>
+					<th scope="col">tel</th>
+					<th scope="col">email</th>
+					<th scope="col">pwd</th>
+					<th scope="col">carteBanq</th>
+					<th scope="col">role</th>
+				</tr>
+			</thead>
+			<tbody class="customtable">
+				{# {% for u in tab %}
+					<tr>
+						<th>
+							<label class="customcheckbox">
+								<input type="checkbox" class="listCheckbox"/>
+								<span class="checkmark"></span>
+							</label>
+						</th>
+
+
+                        <td>u.nom</td>
+					</tr>
+				{% endfor %} #}
+			</tbody>
+		</tr>
+	</tbody>
+</table></div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>{% endblock %}
