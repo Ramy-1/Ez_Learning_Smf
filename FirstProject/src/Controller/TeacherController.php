@@ -13,7 +13,9 @@ class TeacherController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('teacher/index.html.twig', [
+//        return $this->render('teacher/index.html.twig', [
+
+        return $this->render('backbase.html.twig', [
             'controller_name' => 'TeacherController',
         ]);
     }
