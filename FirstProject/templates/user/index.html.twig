@@ -30,7 +30,7 @@
 								<i class="mdi mdi-view-dashboard"></i>
 							</h1>
 							{# <a href="{{path('app_home')}}"> #}
-                            {# <a href="{{ path('updateuser',{'id':c.id}) }}"> #}
+                             <a href="{{ path('app_register') }}"> 
 								<h6 class="text-white">Add</h6>
 							</div>
 						</div>
@@ -83,7 +83,7 @@
 							<td>{{u.pwd}}</td>
 							<td>{{u.carteBanq}}</td>
 							<td>{{u.role}}</td>
-                            <td><a href="{{ path('updateuser',{'id':u.id}) }}">Update</a></td>
+                            {# <td><a href="{{ path('updateuser',{'id':u.id}) }}">Update</a></td> #}
 
 						</tr>
 					{% endfor %}
