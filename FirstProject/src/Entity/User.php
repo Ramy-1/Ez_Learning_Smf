@@ -134,6 +134,12 @@ class User
 
         return $this;
     }
+    public function setPassword(string $pwd): self
+    {
+        $this->pwd = $pwd;
+
+        return $this;
+    }
 
     public function getCarteBanq(): ?string
     {
