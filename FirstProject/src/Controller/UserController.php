@@ -140,7 +140,7 @@ class UserController extends AbstractController
     public function update($id,UserRepository $repository ,Request $request)
     {
         $user=$repository->find($id);
-        $form=$this->createForm(RegistrationFormType::class, $user);
+        $form=$this->createForm(UserType::class, $user);
         $form->add('update',SubmitType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
@@ -149,6 +149,6 @@ class UserController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('afficheuser');
         }
-        return $this->render('user/update.html.twig',['form'=>$form->createView()]);
+        return $this->render('user/newUser.html.twig',['UserForm'=>$form->createView()]);
     }
 }
