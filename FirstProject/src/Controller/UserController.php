@@ -94,7 +94,7 @@ class UserController extends AbstractController
             // );
             // generer un activation token
             // $user->setActivationToken(md5(uniqid()));
-            
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -116,5 +116,38 @@ class UserController extends AbstractController
         return $this->render('user/newUser.html.twig', [
             'UserForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{idUser}", name="UserDelete", methods={"POST"})
+     */
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('afficheuser', [], Response::HTTP_SEE_OTHER);
+
+    }
+
+    // @IsGranted("ROLE_ADMIN")
+    /**
+     * @Route ("/delete/{id}",name="UserDeletee")
+     */
+    public function deletee($id)
+    {
+        $repository=$this->getDoctrine()->getRepository(User::class);
+        // $rep=$this->getDoctrine()->getRepository(Panier::class);
+
+        $user=$repository->find($id);
+        // $panier=$rep->findOneBy(['user'=>$user]);
+        $em=$this->getDoctrine()->getManager();
+        // $em->remove($panier);
+        // $em->flush();
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('afficheuser');
     }
 }
