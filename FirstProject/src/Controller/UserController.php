@@ -48,23 +48,6 @@ class UserController extends AbstractController
             'tab' => $tabuser
         ]);
     }
-
-    /**
-     * @Route ("/updateuser/{id}" , name="updateuser")
-     */
-    public function update($id, UserRepository $repository, Request $request)
-    {
-        $user = $repository->find($id);
-        $form = $this->createForm(UserType::class, $user);
-        $form->add('update', SubmitType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-            return $this->redirectToRoute('afficheuser');
-        }
-        return $this->render('user/newUser.html.twig', ['form' => $form->createView()]);
-    }
     // public function signup($id,UserRepository $repository ,Request $request)
     // {
     /**
@@ -149,5 +132,23 @@ class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('afficheuser');
+    }
+
+    /**
+     * @Route ("/updateuser/{id}" , name="UserUpdate")
+     */
+    public function update($id,UserRepository $repository ,Request $request)
+    {
+        $user=$repository->find($id);
+        $form=$this->createForm(RegistrationFormType::class, $user);
+        $form->add('update',SubmitType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em=$this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('afficheuser');
+        }
+        return $this->render('user/update.html.twig',['form'=>$form->createView()]);
     }
 }
