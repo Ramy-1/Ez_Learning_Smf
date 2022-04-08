@@ -48,8 +48,6 @@ class UserController extends AbstractController
             'tab' => $tabuser
         ]);
     }
-    // public function signup($id,UserRepository $repository ,Request $request)
-    // {
     /**
      * @Route("/register", name="app_register")
      */
@@ -151,4 +149,14 @@ class UserController extends AbstractController
         }
         return $this->render('user/newUser.html.twig',['UserForm'=>$form->createView()]);
     }
+    // public function hash(String string) {
+    //     const utf8 = new TextEncoder().encode(string);
+    //     return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
+    //       const hashArray = Array.from(new Uint8Array(hashBuffer));
+    //       const hashHex = hashArray
+    //         .map((bytes) => bytes.toString(16).padStart(2, '0'))
+    //         .join('');
+    //       return hashHex;
+    //     });
+    //   }
 }
