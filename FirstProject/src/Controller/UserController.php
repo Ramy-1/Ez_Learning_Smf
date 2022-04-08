@@ -48,8 +48,6 @@ class UserController extends AbstractController
             'tab' => $tabuser
         ]);
     }
-    // public function signup($id,UserRepository $repository ,Request $request)
-    // {
     /**
      * @Route("/register", name="app_register")
      */
