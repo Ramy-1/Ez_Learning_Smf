@@ -26,6 +26,10 @@ security:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
 
+            # login_throttling:
+            #     max_attempts: 3
+            #     interval: '15 minutes'
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

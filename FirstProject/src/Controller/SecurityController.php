@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+// include 'ChromePhp.php';
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,13 +10,27 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends AbstractController
 {
+    public function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
     /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_home');
+        if ($user = $this->getUser()) {
+            if($user->isVerified()){
+                return $this->redirectToRoute('app_home');
+            }
+            // else {
+            //     // debug_to_console($user);
+            //     echo "NOPE";
+            //     return $this->redirectToRoute('app_login');
+            // }
         }
 
         // get the login error if there is one
@@ -26,34 +40,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
-    /**
-     * @Route("/SignUp", name="app_signup")
-     */
-    // public function SignUp(Request $request): Response
-    // {
-
-    //     $user = new User();
-
-    //     $form = $this->createForm(TaskType::class, $user);
-
-    //     $form->handleRequest($request);
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         // $form->getData() holds the submitted values
-    //         // but, the original `$task` variable has also been updated
-    //         $user = $form->getData();
-
-    //         // ... perform some action, such as saving the task to the database
-    //         $user->setPassword(
-    //             $userPasswordEncoder->encodePassword(
-    //                     $user,
-    //                     $form->get('plainPassword')->getData()
-    //                 )
-    //             );
-
-    //         return $this->redirectToRoute('task_success');
-    //     }
-
-    // }
+    
 
     /**
      * @Route("/logout", name="app_logout")
