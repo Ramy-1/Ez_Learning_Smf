@@ -39,16 +39,18 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     # access_control:
-    #     - { path: ^/, roles: ROLE_ETUDIANT }
+        # - { path: ^/, roles: ROLE_ETUDIANT }
     #     - { path: ^/admin, roles: ROLE_ADMIN }
-    #     - { path: ^/enseignant, roles: ROLE_ADMIN }
-    #     - { path: ^/recruteur, roles: ROLE_ADMIN }
-    #     - { path: ^/universite, roles: ROLE_ADMIN }
-    #     - { path: ^/societe, roles: ROLE_ADMIN }
+    #     - { path: ^/etudiant, roles: ROLE_ETUDIANT }
+    #     - { path: ^/recruteur, roles: ROLE_RECRUTEUR }
+    #     - { path: ^/enseignant, roles: ROLE_ENSIEGNANT }
+    #     - { path: ^/universite, roles: ROLE_UNIVERSITE }
+    #     - { path: ^/societe, roles: ROLE_SOCIETE }
+    
     #     # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:
-       ROLE_ADMIN:       ROLE_USER
+       ROLE_ADMIN: [ROLE_USER,ROLE_ETUDIANT,ROLE_RECRUTEUR,ROLE_ENSIEGNANT,ROLE_UNIVERSITE,ROLE_SOCIETE]     
        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ETUDIANT]
     
 
