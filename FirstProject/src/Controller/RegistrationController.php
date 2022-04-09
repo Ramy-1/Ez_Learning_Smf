@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,8 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-
+use SymfonyCasts\verifyUserEmail\src\Exception\VerifyEmailExceptionInterface;
+// \symfonycasts\VerifyEmailExceptionInterface.php
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -81,8 +82,8 @@ class RegistrationController extends AbstractController
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+        } catch (Exception $exception) {
+            // $this->addFlash('verify_email_error', 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('app_register');
         }
