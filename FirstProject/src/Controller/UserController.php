@@ -10,12 +10,12 @@ use App\Repository\UserRepository;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="app_user")
+     *  @Route("/admin/user", name="app_user")
      */
     public function index(UserRepository $repository): Response
     {
@@ -29,7 +29,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/delete/{id}",name="UserDelete")
+     * @Route ("/admin/user/delete/{id}",name="UserDelete")
      */
     public function userDelete($id)
     {
@@ -44,7 +44,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/updateuser/{id}" , name="UserUpdate")
+     * @Route ("/admin/user/updateuser/{id}" , name="UserUpdate")
      */
     public function update($id, UserRepository $repository, Request $request)
     {
@@ -61,7 +61,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/newuser", name="app_newUser")
+     *  @Route("/admin/user/newuser", name="app_newUser")
      */
     public function newUser(Request $request): Response {
         $user = new User();

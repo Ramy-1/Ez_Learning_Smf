@@ -18,12 +18,30 @@ class SecurityController extends AbstractController
         echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/","/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($user = $this->getUser()) {
             if($user->isVerified()){
+                if(in_array('ROLE_RECRUTEUR',$user->getRoles())){
+                    return $this->redirectToRoute('recruteur_home');
+                }
+                if(in_array('ROLE_ETUDIANT',$user->getRoles())){
+                    return $this->redirectToRoute('etudiant_home');
+                }
+                if(in_array('ROLE_RECRUTEUR',$user->getRoles())){
+                    return $this->redirectToRoute('recruteur_home');
+                }
+                if(in_array('ROLE_ENSIEGNANT',$user->getRoles())){
+                    return $this->redirectToRoute('ensiegnant_home');
+                }
+                if(in_array('ROLE_UNIVERSITE',$user->getRoles())){
+                    return $this->redirectToRoute('universite_home');
+                }
+                if(in_array('ROLE_SOCIETE',$user->getRoles())){
+                    return $this->redirectToRoute('societe_home');
+                }
                 return $this->redirectToRoute('app_home');
             }
             // else {
