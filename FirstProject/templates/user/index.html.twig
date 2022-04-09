@@ -90,12 +90,13 @@
 								</label>
 							</th>
 							<th scope="col">email</th>
-							<th scope="col">password</th>
+							{# <th scope="col">password</th> #}
 							<th scope="col">nom</th>
 							<th scope="col">prenom</th>
 							{# <th scope="col">tel</th> #}
 							{# <th scope="col">carteBanq</th> #}
 							<th scope="col">role</th>
+							<th scope="col">isVerified</th>
 						</tr>
 					</thead>
 					<tbody class="customtable">
@@ -111,9 +112,11 @@
 
 								{# <td>{{u.te}}</td> #}
 								<td>{{u.email}}</td>
-								<td>{{u.password}}</td>
+								{# <td>{{u.password}}</td> #}
 								<td>{{u.name}}</td>
 								<td>{{u.lastName}}</td>
+								{# <td>{{u.getRoles}}</td> #}
+								<td>{{u.isVerified}}</td>
 								{# <td>{{u.carteBanq}}</td> #}
 							{# <td>{{u.role}}</td> #}
 								{# <td><a href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a></td>

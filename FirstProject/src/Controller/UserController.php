@@ -22,4 +22,19 @@ class UserController extends AbstractController
             'tab' => $tabuser
         ]);
     }
+
+    /**
+     * @Route ("/delete/{id}",name="UserDelete")
+     */
+    public function userDelete($id)
+    {
+        $repository=$this->getDoctrine()->getRepository(User::class);
+
+        $user=$repository->find($id);
+        $em=$this->getDoctrine()->getManager();
+    
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('app_user');
+    }
 }
