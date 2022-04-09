@@ -1,0 +1,129 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+	<div
+		class="card">
+		{# <div class="card-body">
+							<h5 class="card-title">Actions</h5>
+							<div
+								class="row">
+								<!-- Column -->
+								<div class="col-md-6 col-lg-2 col-xlg-3">
+									<div class="card card-hover">
+										<div class="box bg-cyan text-center">
+											<h1 class="font-light text-white">
+												<i class="mdi mdi-view-dashboard"></i>
+											</h1>
+										
+				                             <a href="{{ path('app_register') }}"> 
+												<h6 class="text-white">Add</h6>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						 #}
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Actions</h5>
+						<div
+							class="row">
+							<!-- Column -->
+							{# <div class="col-md-6 col-lg-2 col-xlg-3">
+								<div class="card card-hover">
+									<div class="box bg-cyan text-center">
+										<h1 class="font-light text-white">
+											<i class="mdi mdi-pencil"></i>
+										</h1>
+										<h6 class="text-white">Add</h6>
+										<a href="{{ path('app_register') }}"></div>
+									</div>
+								</div> #}
+								{# <!-- Column -->
+																                    <div class="col-md-6 col-lg-2 col-xlg-3">
+																                      <div class="card card-hover">
+																                        <div class="box bg-success text-center">
+																                          <h1 class="font-light text-white">
+																                            <i class="mdi mdi-chart-areaspline"></i>
+																                          </h1>
+																                          <h6 class="text-white">Charts</h6>
+																                        </div>
+																                      </div>
+																                    </div>
+																                   
+																                    <!-- Column -->
+																                    <div class="col-md-6 col-lg-2 col-xlg-3">
+																                      <div class="card card-hover">
+																                        <div class="box bg-danger text-center">
+																                          <h1 class="font-light text-white">
+																                            <i class="mdi mdi-receipt"></i>
+																                          </h1>
+																                          <h6 class="text-white">Email</h6>
+																                        </div>
+																                      </div>
+																                    </div> #}
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{# <div class="row"> #}
+			{# <div class="col-md-3 col-sm-12 d-grid">
+													<button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
+														Success
+													</button>
+												</div> #}
+
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-light">
+						<tr>
+							<th>
+								<label class="customcheckbox mb-3">
+									<input type="checkbox" id="mainCheckbox"/>
+									<span class="checkmark"></span>
+								</label>
+							</th>
+							<th scope="col">email</th>
+							<th scope="col">password</th>
+							<th scope="col">nom</th>
+							<th scope="col">prenom</th>
+							{# <th scope="col">tel</th> #}
+							{# <th scope="col">carteBanq</th> #}
+							<th scope="col">role</th>
+						</tr>
+					</thead>
+					<tbody class="customtable">
+						{% for u in tab %}
+							<tr>
+								<th>
+									<label class="customcheckbox">
+										<input type="checkbox" class="listCheckbox"/>
+										<span class="checkmark"></span>
+									</label>
+								</th>
+
+
+								{# <td>{{u.te}}</td> #}
+								<td>{{u.email}}</td>
+								<td>{{u.password}}</td>
+								<td>{{u.name}}</td>
+								<td>{{u.lastName}}</td>
+								{# <td>{{u.carteBanq}}</td> #}
+							{# <td>{{u.role}}</td> #}
+								{# <td><a href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a></td>
+																                            <td><a href="{{ path('UserDeletee',{'id':u.id}) }}">Delete</a></td> #}
+
+							</tr>
+						{% endfor %}
+					</tbody>
+				</tr>
+			</tbody>
+		</table>
+	</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+{% endblock %}
