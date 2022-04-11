@@ -19,6 +19,8 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\verifyUserEmail\src\Exception\VerifyEmailExceptionInterface;
 // \symfonycasts\VerifyEmailExceptionInterface.php
+use App\Form\UserType;
+
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -34,7 +36,12 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
+        // $user->setPassword("");
+
+        // $form = $this->createForm(Type::class, $user);
+        // $form = $this->createForm(UserType::class, $user);
         $form = $this->createForm(RegistrationFormType::class, $user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -46,6 +53,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setRoles(array("ROLE_ETUDIANT"));
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -71,6 +79,59 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/signup", name="app_signup")
+     */
+    public function signIn(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $user = new User();
+        $user->setPassword("");
+
+        // $form = $this->createForm(Type::class, $user);
+        $form = $this->createForm(UserType::class, $user);
+        // $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+            $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            // $user->setRoles(array("ROLE_ETUDIANT"));
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
+        }
+
+        return $this->render('security/signup.html.twig', [
+            'SignUpForm' => $form->createView(),
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/verify/email", name="app_verify_email")

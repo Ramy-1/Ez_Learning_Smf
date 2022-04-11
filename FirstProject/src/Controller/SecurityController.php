@@ -23,10 +23,8 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($user = $this->getUser()) {
+            
             if($user->isVerified()){
-                if(in_array('ROLE_RECRUTEUR',$user->getRoles())){
-                    return $this->redirectToRoute('recruteur_home');
-                }
                 if(in_array('ROLE_ETUDIANT',$user->getRoles())){
                     return $this->redirectToRoute('etudiant_home');
                 }
@@ -42,13 +40,17 @@ class SecurityController extends AbstractController
                 if(in_array('ROLE_SOCIETE',$user->getRoles())){
                     return $this->redirectToRoute('societe_home');
                 }
-                return $this->redirectToRoute('app_home');
+                if(in_array('ROLE_ADMIN',$user->getRoles())){
+                    return $this->redirectToRoute('admin_home');
+                }
+                return $this->redirectToRoute('etudiant_home');
             }
-            // else {
-            //     // debug_to_console($user);
-            //     echo "NOPE";
-            //     return $this->redirectToRoute('app_login');
-            // }
+            else {
+                // debug_to_console($user);
+                echo 'NOPE';
+                // echo '<script type="text/javascript">toastr.success("Have Fun")</script>';
+                // return $this->redirectToRoute('app_login');
+            }
         }
 
         // get the login error if there is one

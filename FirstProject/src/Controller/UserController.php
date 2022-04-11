@@ -61,11 +61,11 @@ class UserController extends AbstractController
     }
 
     /**
-     *  @Route("/admin/user/newuser", name="app_newUser")
+     *  @Route("/admin/user/newuser", name="newuser")
      */
     public function newUser(Request $request): Response {
         $user = new User();
-        $user->setPassword("0000");
+        $user->setPassword("");
 
         $form = $this->createForm(UserType::class, $user);
 
