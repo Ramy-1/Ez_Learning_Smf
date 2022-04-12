@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Evenement
  *
@@ -23,121 +25,222 @@ class Evenement
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="idOrg", type="string", length=30, nullable=false)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 7,
+     *      minMessage = "doit etre >=2 ",
+     *      maxMessage = "doit etre <=7" )
+     *   )
      */
     private $idorg;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=false)
+     * @Assert\NotBlank(message="description  doit etre non vide")
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 100,
+     *      minMessage = "doit etre >=7 ",
+     *      maxMessage = "doit etre <=100" )
+     * @ORM\Column(type="string", length=1000)
      */
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="date", type="string", length=100, nullable=false)
+     * @var \DateTime
+     * @ORM\Column(name="date", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @var string A "Y-m-d" formatted value
+     * @Assert\GreaterThan("today", message="La date de l'évènement doit être ultérieur à la date d'aujourd'hui")
+     *@Assert\NotBlank
      */
     private $date;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="heure", type="string", length=100, nullable=false)
+     *@Assert\Length(min=1,max=2)
      */
     private $heure;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="lien", type="string", length=200, nullable=false)
+      * @Assert\NotBlank
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url."
+     * )
      */
     private $lien;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="imgEv", type="string", length=200, nullable=false)
+     * @Assert\NotBlank
+     *@Assert\Length(min=4,max=32)
      */
     private $imgev;
 
-    public function getIdevent(): ?int
-    {
-        return $this->idevent;
-    }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbrParticipant", type="integer", nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Positive
+     *
+     */
+    private $nbrparticipant;
 
-    public function getIdorg(): ?string
-    {
-        return $this->idorg;
-    }
+    /**
+     * @var int|null
+     * @Assert\NotBlank
+     * @ORM\Column(name="idUni", type="integer", nullable=true)
+     */
+    private $iduni;
 
-    public function setIdorg(string $idorg): self
-    {
-        $this->idorg = $idorg;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
+    /**
+     * @return string
+     */
     public function getHeure(): ?string
     {
         return $this->heure;
     }
 
-    public function setHeure(string $heure): self
+    /**
+     * @param string $heure
+     */
+    public function setHeure(string $heure): void
     {
         $this->heure = $heure;
-
-        return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getIdevent(): int
+    {
+        return $this->idevent;
+    }
+
+    /**
+     * @param int $idevent
+     */
+    public function setIdevent(int $idevent): void
+    {
+        $this->idevent = $idevent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdorg(): ?string
+    {
+        return $this->idorg;
+    }
+
+    /**
+     * @param string $idorg
+     */
+    public function setIdorg(string $idorg): void
+    {
+        $this->idorg = $idorg;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
     public function getLien(): ?string
     {
         return $this->lien;
     }
 
-    public function setLien(string $lien): self
+    /**
+     * @param string $lien
+     */
+    public function setLien(string $lien): void
     {
         $this->lien = $lien;
-
-        return $this;
     }
 
-    public function getImgev(): ?string
+    /**
+     * @return string
+     */
+    public function getImgev()
     {
         return $this->imgev;
     }
 
-    public function setImgev(string $imgev): self
+    /**
+     * @param string $imgev
+     */
+    public function setImgev(string $imgev): void
     {
         $this->imgev = $imgev;
+    }
 
-        return $this;
+    /**
+     * @return int
+     */
+    public function getNbrparticipant(): ?int
+    {
+        return $this->nbrparticipant;
+    }
+
+    /**
+     * @param int $nbrparticipant
+     */
+    public function setNbrparticipant(int $nbrparticipant): void
+    {
+        $this->nbrparticipant = $nbrparticipant;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getIduni(): ?int
+    {
+        return $this->iduni;
+    }
+
+    /**
+     * @param int|null $iduni
+     */
+    public function setIduni(?int $iduni): void
+    {
+        $this->iduni = $iduni;
     }
 
 

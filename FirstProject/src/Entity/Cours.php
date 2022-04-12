@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Cours
  *
@@ -25,6 +26,10 @@ class Cours
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=100, nullable=false)
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i",
+     *     htmlPattern = "[a-zA-Z]+"
+     * )
      */
     private $titre;
 
@@ -39,13 +44,14 @@ class Cours
      * @var string
      *
      * @ORM\Column(name="duree", type="string", length=200, nullable=false)
+     * @Assert\Positive
      */
     private $duree;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="datecreate", type="string", length=200, nullable=false)
+     * @ORM\Column(name="datecreate", type="date", nullable=true)
      */
     private $datecreate;
 
@@ -59,85 +65,143 @@ class Cours
     /**
      * @var int
      *
+     * @ORM\Column(name="etat", type="integer", nullable=false)
+     */
+    private $etat;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="idcat", type="integer", nullable=false)
      */
     private $idcat;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    /**
+     * @param string $titre
+     */
+    public function setTitre(string $titre): void
     {
         $this->titre = $titre;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDuree(): ?string
     {
         return $this->duree;
     }
 
-    public function setDuree(string $duree): self
+    /**
+     * @param string $duree
+     */
+    public function setDuree(string $duree): void
     {
         $this->duree = $duree;
-
-        return $this;
     }
 
-    public function getDatecreate(): ?string
+    /**
+     * @return string
+     */
+    public function getDatecreate(): ?\DateTimeInterface
     {
         return $this->datecreate;
     }
 
-    public function setDatecreate(string $datecreate): self
+    /**
+     * @param string $datecreate
+     */
+    public function setDatecreate(\DateTimeInterface $datecreate): void
     {
         $this->datecreate = $datecreate;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getSupport(): ?string
     {
         return $this->support;
     }
 
-    public function setSupport(string $support): self
+    /**
+     * @param string $support
+     */
+    public function setSupport(string $support): void
     {
         $this->support = $support;
-
-        return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getEtat(): ?int
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param int $etat
+     */
+    public function setEtat(int $etat): void
+    {
+        $this->etat = $etat;
+    }
+
+    /**
+     * @return int
+     */
     public function getIdcat(): ?int
     {
         return $this->idcat;
     }
 
-    public function setIdcat(int $idcat): self
+    /**
+     * @param int $idcat
+     */
+    public function setIdcat(int $idcat): void
     {
         $this->idcat = $idcat;
-
-        return $this;
     }
 
 

@@ -1,0 +1,38 @@
+
+
+{% block title %}LikeCours index{% endblock %}
+
+{% block body %}
+    <h1>LikeCours index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idlike</th>
+                <th>Iduser</th>
+                <th>LikeEtat</th>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for like_cour in like_cours %}
+            <tr>
+                <td>{{ like_cour.idlike }}</td>
+                <td>{{ like_cour.iduser }}</td>
+                <td>{{ like_cour.likeEtat }}</td>
+                <td>{{ like_cour.id }}</td>
+                <td>
+                    <a href="{{ path('app_like_cours_show', {'idlike': like_cour.idlike}) }}">show</a>
+                    <a href="{{ path('app_like_cours_edit', {'idlike': like_cour.idlike}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

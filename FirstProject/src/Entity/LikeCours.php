@@ -42,45 +42,68 @@ class LikeCours
      */
     private $id;
 
-    public function getIdlike(): ?int
+    /**
+     * @return int
+     */
+    public function getIdlike(): int
     {
         return $this->idlike;
     }
 
-    public function getIduser(): ?int
+    /**
+     * @param int $idlike
+     */
+    public function setIdlike(int $idlike): void
+    {
+        $this->idlike = $idlike;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIduser(): int
     {
         return $this->iduser;
     }
 
-    public function setIduser(int $iduser): self
+    /**
+     * @param int $iduser
+     */
+    public function setIduser(int $iduser): void
     {
         $this->iduser = $iduser;
-
-        return $this;
     }
 
-    public function getLikeEtat(): ?int
+    /**
+     * @return int
+     */
+    public function getLikeEtat(): int
     {
         return $this->likeEtat;
     }
 
-    public function setLikeEtat(int $likeEtat): self
+    /**
+     * @param int $likeEtat
+     */
+    public function setLikeEtat(int $likeEtat): void
     {
         $this->likeEtat = $likeEtat;
-
-        return $this;
     }
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id): self
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
 
