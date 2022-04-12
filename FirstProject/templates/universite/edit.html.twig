@@ -1,0 +1,13 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Edit Universite{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Edit Universite</h1>
+
+    {{ include('universite/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_universite_index') }}" class="btn-success">back to list</a>
+
+    {{ include('universite/_delete_form.html.twig') }}
+{% endblock %}

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Categorie
  *
@@ -25,6 +27,10 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="domaine", type="string", length=50, nullable=false)
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i",
+     *     htmlPattern = "[a-zA-Z]+"
+     * )
      */
     private $domaine;
 
@@ -32,36 +38,59 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="nomcat", type="string", length=50, nullable=false)
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i",
+     *     htmlPattern = "[a-zA-Z]+"
+     * )
      */
     private $nomcat;
 
-    public function getIdcat(): ?int
+    /**
+     * @return int
+     */
+    public function getIdcat(): int
     {
         return $this->idcat;
     }
 
+    /**
+     * @param int $idcat
+     */
+    public function setIdcat(int $idcat): void
+    {
+        $this->idcat = $idcat;
+    }
+
+    /**
+     * @return string
+     */
     public function getDomaine(): ?string
     {
         return $this->domaine;
     }
 
-    public function setDomaine(string $domaine): self
+    /**
+     * @param string $domaine
+     */
+    public function setDomaine(string $domaine): void
     {
         $this->domaine = $domaine;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getNomcat(): ?string
     {
         return $this->nomcat;
     }
 
-    public function setNomcat(string $nomcat): self
+    /**
+     * @param string $nomcat
+     */
+    public function setNomcat(string $nomcat): void
     {
         $this->nomcat = $nomcat;
-
-        return $this;
     }
 
 

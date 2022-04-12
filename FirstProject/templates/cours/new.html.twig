@@ -1,0 +1,11 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}New Cours{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Create new Cours</h1>
+
+    {{ include('cours/_form.html.twig') }}
+
+    <a href="{{ path('app_cours_index') }}" class="btn-success">back to list</a>
+{% endblock %}
