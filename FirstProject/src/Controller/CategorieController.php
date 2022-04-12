@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/categorie")
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends AbstractController
 {
     /**
+     *  @IsGranted("ROLE_ADMIN","ROLE_ENSIEGNANT","ROLE_UNIVERSITE")
      * @Route("/", name="app_categorie_index", methods={"GET"})
      */
     public function index(EntityManagerInterface $entityManager): Response
