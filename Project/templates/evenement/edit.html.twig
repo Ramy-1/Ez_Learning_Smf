@@ -1,0 +1,13 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Edit Evenement{% endblock %}
+
+{% block body %}
+    <h1 style="font-style:inherit;" class="btn-secondary" >Edit Evenement</h1>
+
+    {{ include('evenement/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_evenement_index') }}" class="btn-secondary" style="font-style:italic">back to list</a>
+
+    {{ include('evenement/_delete_form.html.twig') }}
+{% endblock %}
