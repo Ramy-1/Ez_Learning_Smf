@@ -10,7 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 /**
+ * 
+ *  @IsGranted("ROLE_ADMIN","ROLE_UNIVERSITE")
  * @Route("/universite")
  */
 class UniversiteController extends AbstractController
@@ -100,7 +104,7 @@ class UniversiteController extends AbstractController
      */
     public function delete(Request $request, Universite $universite, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$universite->getIduni(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $universite->getIduni(), $request->request->get('_token'))) {
             $entityManager->remove($universite);
             $entityManager->flush();
         }

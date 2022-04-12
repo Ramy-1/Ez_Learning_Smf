@@ -12,12 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 /**
+ * @IsGranted("ROLE_ADMIN","ROLE_RECRUTEUR","ROLE_UNIVERSITE")
  * @Route("/evenement")
  */
+// $this->denyAccessUnlessGranted('ROLE_ADMIN');
 class EvenementController extends AbstractController
 {
-    /**
+    /** 
+     *
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
     public function index(EntityManagerInterface $entityManager): Response
@@ -101,7 +106,7 @@ class EvenementController extends AbstractController
      */
     public function delete(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getIdevent(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getIdevent(), $request->request->get('_token'))) {
             $entityManager->remove($evenement);
             $entityManager->flush();
         }
