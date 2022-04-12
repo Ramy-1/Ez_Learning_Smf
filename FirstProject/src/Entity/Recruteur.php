@@ -77,6 +77,12 @@ class Recruteur
      */
     private $societe;
 
+    /**
+     * @ORM\OneToOne(targetEntity=user::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +180,18 @@ class Recruteur
     public function setSociete(string $societe): self
     {
         $this->societe = $societe;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(user $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

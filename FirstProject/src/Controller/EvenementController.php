@@ -55,6 +55,7 @@ class EvenementController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $evenement = new Evenement();
+        $evenement->setIdorg($this->getUser()->getId());
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
 

@@ -23,7 +23,7 @@ class ProfileController extends AbstractController
         ]);
     }
     /**
-     * @Route("/profile/settings", name="app_profiles")
+     * @Route("/profile/settings", name="app_profileSetting")
      */
     public function settings(Request $request): Response
     {

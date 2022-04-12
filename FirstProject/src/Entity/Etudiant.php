@@ -91,6 +91,12 @@ class Etudiant
      */
     private $score;
 
+    /**
+     * @ORM\OneToOne(targetEntity=user::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getIdEtudiant(): ?int
     {
         return $this->idEtudiant;
@@ -212,6 +218,18 @@ class Etudiant
     public function setScore(int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(user $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

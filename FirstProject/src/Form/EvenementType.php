@@ -16,7 +16,7 @@ class EvenementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idorg')
+            // ->add('idorg')
             ->add('description')
             ->add('date', DateType::class, [
                 'placeholder' => [
@@ -31,7 +31,8 @@ class EvenementType extends AbstractType
             ->add('lien')
             // ->add('imgev',FileType::class, array('data_class' => null))
             ->add('nbrparticipant')
-            ->add('iduni');
+            // ->add('iduni');
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
