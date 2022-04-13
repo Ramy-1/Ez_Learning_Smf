@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Evenement index</h1>
+    <div class="container my-2">
+        <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
+    </div>
+    <table class="table" id="mytable">
+        <thead>
+        <tr>
+            <th style="font-style: oblique" class="btn-danger">idorg</th>
+            <th class="btn-danger">description</th>
+            <th class="btn-danger">date</th>
+            <th class="btn-danger">photo</th>
+            <th class="btn-danger">lien</th>
+            <th class="btn-danger">heure</th>
+            <th class="btn-danger">nb participants</th>
+
+            <th class="btn-danger">actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements |reverse %}
+            <tr>
+                <td>{{ evenement.idorg }}</td>
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : ''}}</td>
+                <td><img class="w-100" src="{{ asset('images/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
+                </td>
+                <td>{{ evenement.lien }}</td>
+                <td>{{ evenement.heure }}</td>
+                <td>{{ evenement.nbrparticipant }}</td>
+                <td>
+                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="btn-secondary">show</a>
+                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn-secondary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_evenement_new') }}" class="btn-secondary">Create new</a>
+    <script>
+
+
+        id="mytable"
+        function myFunction1() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+
+{% endblock %}

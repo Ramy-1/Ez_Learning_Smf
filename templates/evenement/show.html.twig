@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Evenement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idevent</th>
+                <td>{{ evenement.idevent }}</td>
+            </tr>
+            <tr>
+                <th>Idorg</th>
+                <td>{{ evenement.idorg }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.description }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure</th>
+                <td>{{ evenement.heure }}</td>
+            </tr>
+            <tr>
+                <th>Lien</th>
+                <td>{{ evenement.lien }}</td>
+            </tr>
+            <tr>
+                <th>Imgev</th>
+                <td>{{ evenement.imgev }}</td>
+            </tr>
+            <tr>
+                <th>Nbrparticipant</th>
+                <td>{{ evenement.nbrparticipant }}</td>
+            </tr>
+            <tr>
+                <th>Iduni</th>
+                <td>{{ evenement.iduni }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evenement_index') }}" class="btn btn-success"> <i class="bi bi-cart-plus"></i> back to list</a>
+
+    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn btn-dark"><i class="bi bi-cart-plus"></i> edit</a>
+
+    {{ include('evenement/_delete_form.html.twig') }}
+{% endblock %}

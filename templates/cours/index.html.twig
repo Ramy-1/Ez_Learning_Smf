@@ -1,0 +1,82 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours index{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Cours index</h1>
+
+    <section class="product bg-white">
+        {% for cour in cours |reverse %}
+            <div class=container>
+                <div class=row>
+                    <h2>{{ cour.titre }}</h2>
+                    <p2>{{ cour.description }}</p2>
+                    <h2>{{ cour.support }}</h2>
+
+                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}" >show</a>
+                    <hr>
+
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    <a href="{{ path('app_cours_new') }}" class="btn-secondary">Create new</a>
+    <script>
+
+
+        id="mytable"
+        function myFunction1() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+    <script>
+
+
+        id="mytable"
+        function myFunction1() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+
+{% endblock %}
