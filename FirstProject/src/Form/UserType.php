@@ -25,7 +25,6 @@ class UserType extends AbstractType
             // ->add('roles')
             ->add('roles', ChoiceType::class, [
                 'required' => true,
-                'multiple' => false,
                 'expanded' => false,
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
@@ -53,36 +52,34 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('name'
-            // , null, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new NotBlank([
-            //             'message' => 'Please enter a Name',
-            //         ]),
-            //         new Length([
-            //             'min' => 4,
-            //             'minMessage' => 'Your Name should be at least {{ limit }} characters',
-            //             'max' => 69,
-            //         ]),
-            //     ],
-            // ]
+            , null, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a Name',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Your Name should be at least {{ limit }} characters',
+                        'max' => 69,
+                    ]),
+                ],
+            ]
             )
             ->add('lastName'
-            // , null, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new NotBlank([
-            //             'message' => 'Please enter a LastName',
-            //         ]),
-            //         new Length([
-            //             'min' => 4,
-            //             'minMessage' => 'Your LastName should be at least {{ limit }} characters',
-            //             'max' => 69,
-            //         ]),
-            //     ],
-            // ]
+            , null, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a LastName',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Your LastName should be at least {{ limit }} characters',
+                        'max' => 69,
+                    ]),
+                ],
+            ]
             )
-            ->add('faceID')
+            // ->add('faceID')
             // ->add('isVerified')
             ;
 

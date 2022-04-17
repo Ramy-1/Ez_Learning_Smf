@@ -130,6 +130,13 @@
       <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/debug" />
       <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/debug-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/google-mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfony/password-hasher" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfonycasts/verify-email-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/FirstProject/vendor/symfonycasts/reset-password-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
