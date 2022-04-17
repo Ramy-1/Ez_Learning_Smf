@@ -72,6 +72,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
+        if ($user->isBlocked()) {
+            throw new UsernameNotFoundException('User is Blocked');
+        }
+        if (!$user->isVerified()) {
+            throw new UsernameNotFoundException('User not validated');
+        }
 
         return $user;
     }

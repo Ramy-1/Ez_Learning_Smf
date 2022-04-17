@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
 
         $errormsg = 0;
         if ($user = $this->getUser()) {
-            if ($user->IsBlocked()) {
+            if ($user->isBlocked()) {
                 $errormsg = 'User blocker par Admin';
             } else if (!$user->IsVerified()) {
                 $errormsg = 'Mail pas encour verifier';

@@ -196,7 +196,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function IsBlocked(): bool
+    public function isBlocked(): bool
     {
         return $this->isBlocked;
     }
