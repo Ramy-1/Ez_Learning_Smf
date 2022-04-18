@@ -1,0 +1,41 @@
+
+
+{% block title %}Evenement index{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Evenement index</h1>
+
+    <table class="table" id="mytable">
+        <thead>
+        <tr>
+            <th style="font-style: oblique" class="btn-danger">idorg</th>
+            <th class="btn-danger">description</th>
+            <th class="btn-danger">date</th>
+            <th class="btn-danger">photo</th>
+            <th class="btn-danger">lien</th>
+            <th class="btn-danger">heure</th>
+            <th class="btn-danger">nb participants</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements |reverse %}
+            <tr>
+                <td>{{ evenement.idorg }}</td>
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : ''}}</td>
+                <td><img class="w-100" src="{{ asset('images/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
+                </td>
+                <td>{{ evenement.lien }}</td>
+                <td>{{ evenement.heure }}</td>
+                <td>{{ evenement.nbrparticipant }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

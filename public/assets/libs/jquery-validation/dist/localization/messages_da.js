@@ -16,7 +16,7 @@
     maxlength: $.validator.format("Indtast højst {0} tegn."),
     minlength: $.validator.format("Indtast mindst {0} tegn."),
     rangelength: $.validator.format("Indtast mindst {0} og højst {1} tegn."),
-    email: "Indtast en gyldig email-adresse.",
+    email: "Indtast en gyldig emails-adresse.",
     url: "Indtast en gyldig URL.",
     date: "Indtast en gyldig dato.",
     number: "Indtast et tal.",

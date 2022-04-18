@@ -22,6 +22,8 @@
         </tr>
         </thead>
         <tbody>
+
+        <a href="{{ path('app_evenement_new') }}" class="btn-secondary">Create new</a>
         {% for evenement in evenements |reverse %}
             <tr>
                 <td>{{ evenement.idorg }}</td>
@@ -29,6 +31,7 @@
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : ''}}</td>
                 <td><img class="w-100" src="{{ asset('images/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
                 </td>
+
                 <td>{{ evenement.lien }}</td>
                 <td>{{ evenement.heure }}</td>
                 <td>{{ evenement.nbrparticipant }}</td>
@@ -44,7 +47,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('app_evenement_new') }}" class="btn-secondary">Create new</a>
+
     <script>
 
 

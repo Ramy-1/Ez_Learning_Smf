@@ -21,6 +21,8 @@
             </tr>
         </thead>
         <tbody>
+
+        <a href="{{ path('app_universite_new') }}" class="btn-secondary">Create new</a>
         {% for universite in universites |reverse %}
             <tr>
                 <td>{{ universite.iduni }}</td>
@@ -45,7 +47,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_universite_new') }}" class="btn-secondary">Create new</a>
     <script>
 
 

@@ -46,7 +46,7 @@ class CoursController extends AbstractController
     /**
      * @Route("/new", name="app_cours_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer): Response
     {
         $cour = new Cours();
         $form = $this->createForm(CoursType::class, $cour);
@@ -55,6 +55,19 @@ class CoursController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($cour);
             $entityManager->flush();
+            $contact = $form->getData();
+            /* mail*/
+            $message= (new \Swift_Message('EasyLearning'))
+                ->setTo('asmazr586@gmail.com')
+                ->setFrom('asmazr586@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        'emails/contact.html.twig',compact('contact')
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($message);
 
             return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }

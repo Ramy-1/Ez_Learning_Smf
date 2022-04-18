@@ -51,6 +51,7 @@
         </div>
     </div>
     <section class="product bg-white">
+        <button type="submit"><a href="top2events">top 2 events</a></button>
         {% for evenement in evenements %}
             <div class="container">
                 <div class="row mt-3 mb-4">
@@ -67,7 +68,9 @@
                     </br>
                         <b>Heure: </b>{{ evenement.heure}}
                         <br>
-                        <b>Lien: </b>{{ evenement.lien }}
+
+
+                        <b>Lien: </b><a href="{{ evenement.lien }}">{{ evenement.lien }}</a>
                     </br>
                     </div>
                 </div>
@@ -75,4 +78,5 @@
 
         {% endfor %}
     </section>
+    <a href="/evenement/listp" class="btn btn-success "> <i class="fas fa-check"> pdf</i> </a>
 {% endblock %}

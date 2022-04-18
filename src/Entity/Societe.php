@@ -31,7 +31,7 @@ class Societe
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=200, nullable=false)
+     * @ORM\Column(name="emails", type="string", length=200, nullable=false)
      */
     private $email;
 

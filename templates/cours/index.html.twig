@@ -7,6 +7,8 @@
     <h1 class="btn-secondary">Cours index</h1>
 
     <section class="product bg-white">
+
+        <a href="{{ path('app_cours_new') }}" class="btn-secondary">Create new</a>
         {% for cour in cours |reverse %}
             <div class=container>
                 <div class=row>
@@ -14,14 +16,14 @@
                     <p2>{{ cour.description }}</p2>
                     <h2>{{ cour.support }}</h2>
 
-                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}" >show</a>
+                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}" class="btn-secondary">show</a>
+                    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn-secondary">edit</a>
                     <hr>
 
                 </div>
             </div>
         {% endfor %}
     </section>
-    <a href="{{ path('app_cours_new') }}" class="btn-secondary">Create new</a>
     <script>
 
 

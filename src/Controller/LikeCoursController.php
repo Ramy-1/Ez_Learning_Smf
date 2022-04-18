@@ -73,7 +73,7 @@ class LikeCoursController extends AbstractController
             return $this->redirectToRoute('app_like_cours_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('cours/new.html.twig', [
+        return $this->render('like_cours/new.html.twig', [
             'like_cour' => $likeCour,
             'form' => $form->createView(),
         ]);

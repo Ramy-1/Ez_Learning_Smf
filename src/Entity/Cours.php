@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Cours
  *
  * @ORM\Table(name="cours")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CoursRepository")
  */
 class Cours
 {
@@ -59,6 +59,9 @@ class Cours
      * @var string
      *
      * @ORM\Column(name="support", type="string", length=200, nullable=false)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url."
+     * )
      */
     private $support;
 

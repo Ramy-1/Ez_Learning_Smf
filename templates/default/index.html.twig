@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<title>Form</title>
+<body>
+<form action="{{ path('sms_route') }}" method="post">
+    Name:<input class="input" type="text" placeholder="name" name="message"  required><br><br>
+
+    Phone:<input class="input" type="text" placeholder="phone" name="mobile" required><br><br>
+    <button  type="submit" name="btn-save">Submit</button>
+</form>
+</body>
+</html> 

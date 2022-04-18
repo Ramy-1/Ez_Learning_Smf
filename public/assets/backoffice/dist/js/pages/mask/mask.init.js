@@ -14,7 +14,7 @@ $(function (e) {
       alias: "decimal",
       radixPoint: ".",
     }),
-    $(".email-inputmask").inputmask({
+    $(".emails-inputmask").inputmask({
       mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[*{2,6}][*{1,2}].*{1,}[.*{2,6}][.*{1,2}]",
       greedy: !1,
       onBeforePaste: function (n, a) {
