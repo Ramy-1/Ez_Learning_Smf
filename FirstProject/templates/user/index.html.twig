@@ -2,83 +2,69 @@
 
 {% block body %}
 
-	{# <button href="{{ path('newuser') }}" type="button" class="btn btn-success text-white">
-		Add
-	</button> #}
+
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Basic Datatable</h5>
+			<div class="table-responsive">
+				<table id="zero_config" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>email</th>
+							<th>nom</th>
+							<th>prenom</th>
+							<th>role</th>
+							<th>isVerified</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for u in tab %}
+							<tr>
+								<td>{{u.email}}</td>
+								{# <td>{{u.password}}</td> #}
+								<td>{{u.name}}</td>
+								<td>{{u.lastName}}</td>
+								<td>
+									{% for arole in u.roles %}
+										<li>{{arole}}</li>
+									{% endfor %}
+								</td>
+								<td>{{u.isVerified}}</td>
+								<td>
+									<a href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a>
+								</td>
+								<td>
+									<a href="{{ path('UserDelete',{'id':u.id}) }}">Delete</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
+
+	<script>
+		/****************************************
+		 *       Basic Table                   *
+		 ****************************************/
+$("#zero_config").DataTable();
+	</script>
+
 	<div class="col-md-3 col-sm-12 d-grid">
 		<button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
 			Success
 		</button>
 	</div>
+	{# //cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js #}
 
-	{# <div class="col-md-6 col-lg-2 col-xlg-3">
-		<div href="{{ path('newuser') }}" class="card card-hover">
-			<div class="box bg-danger text-center">
-				<h1 class="font-light text-white">
-					<i class="mdi mdi-receipt"></i>
-				</h1>
-				<h6 class="text-white">Add</h6>
-			</div>
-		</div>
-	</div> #}
-
-	<div class="card">
-		<div class="table-responsive">
-			<table class="table">
-				<thead class="thead-light">
-					<tr>
-						<th>
-							<label class="customcheckbox mb-3">
-								<input type="checkbox" id="mainCheckbox"/>
-								<span class="checkmark"></span>
-							</label>
-						</th>
-						<th scope="col">email</th>
-						{# <th scope="col">password</th> #}
-						<th scope="col">nom</th>
-						<th scope="col">prenom</th>
-						{# <th scope="col">tel</th> #}
-						{# <th scope="col">carteBanq</th> #}
-						<th scope="col">role</th>
-						<th scope="col">isVerified</th>
-					</tr>
-				</thead>
-				<tbody class="customtable">
-					{% for u in tab %}
-						<tr>
-							<th>
-								<label class="customcheckbox">
-									<input type="checkbox" class="listCheckbox"/>
-									<span class="checkmark"></span>
-								</label>
-							</th>
-
-
-							{# <td>{{u.te}}</td> #}
-							<td>{{u.email}}</td>
-							{# <td>{{u.password}}</td> #}
-							<td>{{u.name}}</td>
-							<td>{{u.lastName}}</td>
-							<td>
-								{% for arole in u.roles %}
-									<li>{{arole}}</li>
-								{% endfor %}
-							</td>
-							{# <td>{{u.roles}}</td> #}
-							<td>{{u.isVerified}}</td>
-							{# <td>{{u.carteBanq}}</td> #}
-							{# <td>{{u.role}}</td> #}
-							<td>
-								<a href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a>
-							</td>
-							<td>
-								<a href="{{ path('UserDelete',{'id':u.id}) }}">Delete</a>
-							</td>
-
-						</tr>
-					{% endfor %}
-				</tbody>
-			</tr>
-		</tbody>
-	</table>
-</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>{% endblock %}
+	<link href="../assets/jquery.dataTables.min.css" rel="stylesheet"/>
+	<script src="../assets/jquery.dataTables.min.js" rel="stylesheet"/>
+	<link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/>
+	<script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+	<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+{% endblock %}
