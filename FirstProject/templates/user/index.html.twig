@@ -32,39 +32,77 @@
 								</td>
 								<td>{{u.isVerified}}</td>
 								<td>
-									<a href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a>
+									<a id="updated" href="{{ path('UserUpdate',{'id':u.id}) }}">Update</a>
+									<i class="mdi mdi-account-convert"></td>
 								</td>
 								<td>
 									<a href="{{ path('UserDelete',{'id':u.id}) }}">Delete</a>
+									<i class="mdi mdi-account-multiple-minus"></td>
+								</td>
+								<td>
+									<a href="{{ path('UserBlock',{'id':u.id}) }}">
+										{% if u.isBlocked() %}
+											Un
+										{% endif %}
+										Block
+									</a>
+									<i class="mdi mdi-account-alert"></td>
 								</td>
 							</tr>
-						{% endfor %}
-					</tbody>
-
-				</table>
-			</div>
+						</tr>
+					{% endfor %}
+				</tbody>
+				
+			</table>
 		</div>
 	</div>
-	<script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
+</div>
+<script>
 
-	<script>
-		/****************************************
+	toastr.success("HAJA!", "Miracle Max Says");
+</script>
+<script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
+
+<script>
+	/****************************************
 		 *       Basic Table                   *
 		 ****************************************/
 $("#zero_config").DataTable();
-	</script>
+</script>
 
-	<div class="col-md-3 col-sm-12 d-grid">
-		<button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
-			Success
-		</button>
-	</div>
-	{# //cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js #}
+<div class="col-md-3 col-sm-12 d-grid">
+	<button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
+		Success66
+	</button>
+</div>
+{# //cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js #}
 
-	<link href="../assets/jquery.dataTables.min.css" rel="stylesheet"/>
-	<script src="../assets/jquery.dataTables.min.js" rel="stylesheet"/>
-	<link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"/>
-	<link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/>
-	<script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-	<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-{% endblock %}
+<link href="../assets/jquery.dataTables.min.css" rel="stylesheet"/>
+<script src="../assets/jquery.dataTables.min.js" rel="stylesheet"/>
+<link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/>
+<script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+<script src="../assets/libs/jquery/dist/jquery.min.js"></script>{% endblock %}{% block toaster %}
+
+<script>
+	$(function () { // Success Type
+$("#ts-success").on("click", function () {
+toastr.success("Have fun fucking the castle!", "Miracle Max Says");
+});
+
+// Success Type
+$("#ts-info").on("click", function () {
+toastr.info("We do have the Kapua suite available.", "Turtle Bay Resort");
+});
+
+// Success Type
+$("#ts-warning").on("click", function () {
+toastr.warning("My name is Inigo Montoya. You killed my father, prepare to die!");
+});
+
+// Success Type
+$("#ts-error").on("click", function () {
+toastr.error("I do not think that word means what you think it means.", "Inconceivable!");
+});
+});
+</script></body>{% endblock %}

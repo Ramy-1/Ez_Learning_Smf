@@ -12,10 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+
+/**
+ */
 class UserController extends AbstractController
 {
     /**
-     *  @Route("/admin/user", name="app_user")
+     *  @Route("/user", name="app_user")
      */
     public function index(UserRepository $repository): Response
     {
@@ -29,7 +32,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/admin/user/delete/{id}",name="UserDelete")
+     * @Route ("/delete/{id}",name="UserDelete")
      */
     public function userDelete($id)
     {
@@ -44,7 +47,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/admin/user/updateuser/{id}" , name="UserUpdate")
+     * @Route ("/updateuser/{id}" , name="UserUpdate")
      */
     public function update($id, UserRepository $repository, Request $request)
     {
@@ -61,9 +64,10 @@ class UserController extends AbstractController
     }
 
     /**
-     *  @Route("/admin/user/newuser", name="newuser")
+     *  @Route("/newuser", name="newuser")
      */
-    public function newUser(Request $request): Response {
+    public function newUser(Request $request): Response
+    {
         $user = new User();
         $user->setPassword("");
 
@@ -83,5 +87,21 @@ class UserController extends AbstractController
         return $this->render('user/newUser.html.twig', [
             'UserForm' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route ("/block/{id}" , name="UserBlock")
+     */
+    public function block($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->find($id);
+        $em = $this->getDoctrine()->getManager();
+
+        $user->setIsBlocked(!$user->IsBlocked());
+
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('app_user');
     }
 }

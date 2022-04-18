@@ -36,8 +36,7 @@ class FrontController extends AbstractController
 
         $tab = [];
         foreach ($K as $o) {
-
-            $tab += $o->getCour();
+            array_push($tab , $o->getCour());
         };
         $tabc = $this->getDoctrine()
             ->getRepository(Cours::class)
