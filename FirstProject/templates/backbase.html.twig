@@ -501,96 +501,42 @@
 <!-- ============================================================== -->
 <!-- ============================================================== -->
 <!-- All Jquery -->
-<!-- ============================================================== --><script src="{{asset('/assets/libs/jquery/dist/jquery.min.js')}}"> </script>
+<!-- ============================================================== --><script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"> </script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="{{asset('/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
-<script src="{{asset('/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
-<script src="{{asset('/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+<script src="{{asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+<script src="{{asset('assets/extra-libs/sparkline/sparkline.js')}}"></script>
 <!--Wave Effects -->
-<script src="{{asset('/dist/js/waves.js')}}"></script>
+<script src="{{asset('dist/js/waves.js')}}"></script>
 <!--Menu sidebar -->
-<script src="{{asset('/dist/js/sidebarmenu.js')}}"></script>
+<script src="{{asset('dist/js/sidebarmenu.js')}}"></script>
 <!--Custom JavaScript -->
-<script src="{{asset('/dist/js/custom.min.js')}}"></script>
+<script src="{{asset('dist/js/custom.min.js')}}"></script>
 <!-- this page js -->
 
-<script src="{{asset('/assets/libs/flot/excanvas.js')}}"></script>
-<script src="{{asset('/assets/libs/flot/jquery.flot.js')}}"></script>
-<script src="{{asset('/assets/libs/flot/jquery.flot.pie.js')}}"></script>
-<script src="{{asset('/assets/libs/flot/jquery.flot.time.js')}}"></script>
-<script src="{{asset('/assets/libs/flot/jquery.flot.stack.js')}}"></script>
-<script src="{{asset('/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
-<script src="{{asset('/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
-<script src="{{asset('/dist/js/pages/chart/chart-page-init.js')}}"></script>
+<script src="{{asset('assets/libs/flot/excanvas.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.pie.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.time.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.stack.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
+<script src="{{asset('assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
+<script src="{{asset('dist/js/pages/chart/chart-page-init.js')}}"></script>
 
 
-<link rel="stylesheet" href="{{asset('assets/dataTable/css/dataTables.min.css')}}"/>
-<script src="{{asset('assets/dataTable/js/dataTables.min.js')}}"></script>
+{# <link rel="stylesheet" href="{{asset('assets/dataTable/css/dataTables.min.css')}}"/> #}
+<script src="{{asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
 <link href="{{asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet"/>
-
+<script>
+	$("#zero_config").DataTable();
+</script>
 
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{app.request.locale}}" async defer></script>
 
-<script type="text/javascript">
-	/**
-         * The callback function executed
-         * once all the Google dependencies have loaded
-         */
-function onGoogleReCaptchaApiLoad() {
-var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
-for (var i = 0; i < widgets.length; i++) {
-renderReCaptcha(widgets[i]);
-}
-}
 
 
-function renderReCaptcha(widget) {
-var form = widget.closest('form');
-var widgetType = widget.getAttribute('data-type');
-var widgetParameters = {
-'sitekey': '{{ gg_recaptcha_site_key }}'
-};
-
-if (widgetType == 'invisible') {
-widgetParameters['callback'] = function () {
-form.submit()
-};
-widgetParameters['size'] = "invisible";
-}
-
-var widgetId = grecaptcha.render(widget, widgetParameters);
-
-if (widgetType == 'invisible') {
-bindChallengeToSubmitButtons(form, widgetId);
-}
-}
-
-function bindChallengeToSubmitButtons(form, reCaptchaId) {
-getSubmitButtons(form).forEach(function (button) {
-button.addEventListener('click', function (e) {
-e.preventDefault();
-grecaptcha.execute(reCaptchaId);
-});
-});
-}
-function getSubmitButtons(form) {
-var buttons = form.querySelectorAll('button, input');
-var submitButtons = [];
-
-for (var i = 0; i < buttons.length; i++) {
-var button = buttons[i];
-if (button.getAttribute('type') == 'submit') {
-submitButtons.push(button);
-}
-}
-
-return submitButtons;
-}
-</script>
-
-
-<script src="{{asset('/assets/libs/toastr/build/toastr.min.js')}}"></script>{% endblock %}{% block toaster %}
+<script src="{{asset('assets/libs/toastr/build/toastr.min.js')}}"></script>{% endblock %}{% block toaster %}
 {# for the toaster #}
 {# hony badel il msg d'error #}
 	<script>
