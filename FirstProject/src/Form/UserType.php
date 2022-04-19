@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\FormView;
 
 class UserType extends AbstractType
 {
@@ -51,39 +52,44 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('name'
-            , null, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a Name',
-                    ]),
-                    new Length([
-                        'min' => 4,
-                        'minMessage' => 'Your Name should be at least {{ limit }} characters',
-                        'max' => 69,
-                    ]),
-                ],
-            ]
+            ->add(
+                'name',
+                null,
+                [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter a Name',
+                        ]),
+                        new Length([
+                            'min' => 4,
+                            'minMessage' => 'Your Name should be at least {{ limit }} characters',
+                            'max' => 69,
+                        ]),
+                    ],
+                ]
             )
-            ->add('lastName'
-            , null, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a LastName',
-                    ]),
-                    new Length([
-                        'min' => 4,
-                        'minMessage' => 'Your LastName should be at least {{ limit }} characters',
-                        'max' => 69,
-                    ]),
-                ],
-            ]
+            ->add(
+                'lastName',
+                null,
+                [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter a LastName',
+                        ]),
+                        new Length([
+                            'min' => 4,
+                            'minMessage' => 'Your LastName should be at least {{ limit }} characters',
+                            'max' => 69,
+                        ]),
+                    ],
+                ]
             )
             // ->add('faceID')
             // ->add('isVerified')
-            ;
-
-
+            ->add('captcha', ReCaptchaType::class, [
+                'type' => 'invisible' // (invisible, checkbox)
+            ]);;
+        ;
         // Data transformer
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(
@@ -102,6 +108,8 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            // 'type', 'invisible'
         ]);
+        // ->setAllowedValues('type', ['checkbox', 'invisible']);
     }
 }

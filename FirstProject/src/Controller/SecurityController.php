@@ -33,6 +33,9 @@ class SecurityController extends AbstractController
                 $errormsg = 'Mail pas encour verifier';
             } else {
                 // if ($user->isVerified()) {
+                if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                    return $this->redirectToRoute('admin_home');
+                }
                 if (in_array('ROLE_ETUDIANT', $user->getRoles())) {
                     return $this->redirectToRoute('etudiant_home');
                 }
@@ -48,9 +51,7 @@ class SecurityController extends AbstractController
                 if (in_array('ROLE_SOCIETE', $user->getRoles())) {
                     return $this->redirectToRoute('societe_home');
                 }
-                if (in_array('ROLE_ADMIN', $user->getRoles())) {
-                    return $this->redirectToRoute('admin_home');
-                }
+
                 return $this->redirectToRoute('etudiant_home');
                 // }
             }

@@ -74,6 +74,7 @@ class User implements UserInterface
      */
     private $userFavorites;
 
+    private $captcha;
     public function __construct()
     {
         $this->userFavorites = new ArrayCollection();
