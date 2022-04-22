@@ -1,0 +1,138 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/select2/dist/css/select2.min.css')}}"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/jquery-minicolors/jquery.minicolors.css')}}"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}"/>
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/quill/dist/quill.snow.css')}}"/>
+	<link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet"/>
+	<form class="form-horizontal" action="/route_to_your_controller_action" method="POST">
+
+		<div class="card">
+			<div class="card-body">
+
+				<div class="form-group row">
+					<label class="col-md-3 mt-3">User Select</label>
+					<div class="col-md-9">
+						<select id="users" class="select2 form-select shadow-none mt-3" multiple="multiple" style="height: 36px; width: 100%">
+							<optgroup label="All Users">
+								{% for u in tab %}
+									<option value={{u.getEmail()}}>{{u.getEmail()}}</option>
+								{% endfor %}
+							</optgroup>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- editor -->
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Quill Editor</h4>
+						<!-- Create the editor container -->
+						<div id="editor" style="height: 300px">
+							<p>Hello World!</p>
+							<p>Some initial
+								<strong>bold</strong>
+								text</p>
+							<p>
+								<br/>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# var html = quill.root.innerHTML; #}
+		<button type="submit" onclick="myFunction()" class="btn btn-success text-white">sss</button>
+	</form>
+
+	<script>
+		function myFunction() {
+console.log("html");
+var html = quill.root.innerHTML;
+
+var users = document.getElementById("users");
+var option = users.options[users.selectedIndex];
+var strUser = users.value;
+
+var result = [];
+var options = users && users.options;
+var opt;
+for (var i = 0, iLen = options.length; i < iLen; i++) {
+opt = options[i];
+
+if (opt.selected) {
+result.push(opt.value || opt.text);
+}
+}
+
+
+// return result;
+
+console.log(result);
+
+console.log(html);
+}
+	</script>
+
+	<script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+	<script src="{{asset('assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
+	<script src="{{asset('dist/js/pages/mask/mask.init.js')}}"></script>
+	<script src="{{asset('assets/libs/select2/dist/js/select2.full.min.js')}}"></script>
+	<script src="{{asset('assets/libs/select2/dist/js/select2.min.js')}}"></script>
+	<script src="{{asset('assets/libs/jquery-asColor/dist/jquery-asColor.min.js')}}"></script>
+	<script src="{{asset('assets/libs/jquery-asGradient/dist/jquery-asGradient.js')}}"></script>
+	<script src="{{asset('assets/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js')}}"></script>
+	<script src="{{asset('assets/libs/jquery-minicolors/jquery.minicolors.min.js')}}"></script>
+	<script src="{{asset('assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{asset('assets/libs/quill/dist/quill.min.js')}}"></script>
+
+	<script>
+		// ***********************************//
+// For select 2
+// ***********************************//
+$(".select2").select2();
+
+/*colorpicker*/
+$(".demo").each(function () {
+//
+// Dear reader, it's actually very easy to initialize MiniColors. For example:
+//
+// $(selector).minicolors();
+//
+// The way I've done it below is just for the demo, so don't get confused
+// by it. Also, data- attributes aren't supported at this time...they're
+// only used for this demo.
+//
+$(this).minicolors({
+control: $(this).attr("data-control") || "hue",
+position: $(this).attr("data-position") || "bottom left",
+
+change: function (value, opacity) {
+if (! value) 
+return;
+
+
+
+if (opacity) 
+value += ", " + opacity;
+
+
+
+if (typeof console === "object") {
+console.log(value);
+}
+},
+theme: "bootstrap"
+});
+});
+/*datwpicker*/
+jQuery(".mydatepicker").datepicker();
+jQuery("#datepicker-autoclose").datepicker({autoclose: true, todayHighlight: true});
+var quill = new Quill("#editor", {theme: "snow"});
+	</script>
+{% endblock %}

@@ -12,13 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
+ * @Route("/user")
  */
 class UserController extends AbstractController
 {
     /**
-     *  @Route("/user", name="app_user")
+     *  @Route("/", name="app_user")
      */
     public function index(UserRepository $repository): Response
     {
@@ -47,7 +50,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/updateuser/{id}" , name="UserUpdate")
+     * @Route ("/update/{id}" , name="UserUpdate")
      */
     public function update($id, UserRepository $repository, Request $request)
     {
@@ -103,5 +106,26 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('app_user');
+    }
+    /**
+     * @Route ("/email/{id}" , name="UserEmail")
+     */
+    public function sendEmail(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            // ->from('hello@example.com')
+            ->to('mr.ramibendhia@gmail.com')
+            // ->to('hana.mensia@esprit.tn')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $mailer->send($email);
+        return $this->redirectToRoute('app_user');
+        // ...
     }
 }
