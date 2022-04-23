@@ -20,7 +20,12 @@ function bindChallengeToSubmitButtons(form, reCaptchaId) {
         });
     });
 }
-
+function onGoogleReCaptchaApiLoad() {
+    var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+    for (var i = 0; i < widgets.length; i++) {
+        renderReCaptcha(widgets[i]);
+    }
+}
 function renderReCaptcha(widget) {
     var form = widget.closest('form');
     var widgetType = widget.getAttribute('data-type');

@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Form\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Mime\Email;
@@ -108,24 +109,42 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
     /**
-     * @Route ("/email/{id}" , name="UserEmail")
+     * @Route ("/email" , name="UserEmail")
      */
-    public function sendEmail(MailerInterface $mailer): Response
+    public function sendEmail(MailerInterface $mailer, Request $request): Response
     {
-        $email = (new Email())
-            // ->from('hello@example.com')
-            ->to('mr.ramibendhia@gmail.com')
-            // ->to('hana.mensia@esprit.tn')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+        $repository = $this->getDoctrine()->getRepository(User::class);
 
-        $mailer->send($email);
-        return $this->redirectToRoute('app_user');
-        // ...
+        $form = $this->createForm(EmailType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $user = $form->get('users')->getData();
+            $subject = $form->get('subject')->getData();
+            $body = $form->get('body')->getData();
+
+            $email = (new Email())
+                ->from('mouhamedrami.bendhia@esprit.tn')
+                ->to($user->getEmail())
+                // ->to('hana.mensia@esprit.tn')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject($subject)
+                ->text('Sending emails is fun again!')
+                ->html($body);
+            $mailer->send($email);
+            return $this->redirectToRoute('app_user');
+        }
+
+        $tabuser = $repository->findAll();
+        // return $this->redirectToRoute('app_user');
+        return $this->render('mailling/index.html.twig', [
+            'form' => $form->createView(),
+            'tab' => $tabuser,
+
+        ]);
     }
 }

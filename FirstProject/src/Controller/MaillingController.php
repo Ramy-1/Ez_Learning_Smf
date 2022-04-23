@@ -22,4 +22,19 @@ class MaillingController extends AbstractController
             'tab' => $tabuser,
         ]);
     }
+    /**
+     * @Route("/mails/{list}", name="app_maillings")
+     */
+    public function Multipale($list): Response
+    {
+        // $repository = $this->getDoctrine()->getRepository(User::class);
+        // $tabuser = $repository->findAll();
+
+
+        
+        return $this->render('mailling/index.html.twig', [
+            // 'controller_name' => 'MaillingController',
+            'tab' => $list,
+        ]);
+    }
 }

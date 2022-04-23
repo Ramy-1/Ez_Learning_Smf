@@ -1,13 +1,15 @@
 {% extends 'backbase.html.twig' %}
 {% block body %}
 
+
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/select2/dist/css/select2.min.css')}}"/>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/jquery-minicolors/jquery.minicolors.css')}}"/>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}"/>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/libs/quill/dist/quill.snow.css')}}"/>
 	<link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet"/>
-	<form class="form-horizontal" action="/route_to_your_controller_action" method="POST">
+	<form class="form-horizontal" method="POST">
 
+		{{form_start(form)}}
 		<div class="card">
 			<div class="card-body">
 
@@ -16,9 +18,13 @@
 					<div class="col-md-9">
 						<select id="users" class="select2 form-select shadow-none mt-3" multiple="multiple" style="height: 36px; width: 100%">
 							<optgroup label="All Users">
+								{# {% for u in form.users %} #}
 								{% for u in tab %}
+									{# {{form_label(u)}} #}
+									{# {{u.email}} #}<option value={{u.getEmail()}}> {{u.getEmail()}}</option>
 									<option value={{u.getEmail()}}>{{u.getEmail()}}</option>
 								{% endfor %}
+								{# {{form_widget(form.users)}} #}
 							</optgroup>
 						</select>
 					</div>
@@ -30,13 +36,13 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="card-title">Quill Editor</h4>
+						<h4 class="card-title">Body</h4>
 						<!-- Create the editor container -->
-						<div id="editor" style="height: 300px">
+						<div
+							id="editor" style="height: 300px">
+							{# {{form_widget(form.body)}} #}
 							<p>Hello World!</p>
-							<p>Some initial
-								<strong>bold</strong>
-								text</p>
+							
 							<p>
 								<br/>
 							</p>
@@ -47,9 +53,10 @@
 		</div>
 
 		{# var html = quill.root.innerHTML; #}
-		<button type="submit" onclick="myFunction()" class="btn btn-success text-white">sss</button>
+		{# <button type="submit" href="{{path('app_maillings',{'list',myFunction()})}}" onclick="myFunction()" class="btn btn-success text-white">sss</button> #}
+		<button type="submit" class="btn btn-success text-white">Send Email</button>
+		{{form_end(form)}}
 	</form>
-
 	<script>
 		function myFunction() {
 console.log("html");
@@ -68,6 +75,7 @@ opt = options[i];
 if (opt.selected) {
 result.push(opt.value || opt.text);
 }
+return result;
 }
 
 
