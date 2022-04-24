@@ -87,6 +87,7 @@ class UserType extends AbstractType
             // ->add('faceID')
             // ->add('isVerified')
             ->add('captcha', ReCaptchaType::class, [
+                'mapped' => false,
                 'type' => 'invisible' // (invisible, checkbox)
             ]);;
         ;

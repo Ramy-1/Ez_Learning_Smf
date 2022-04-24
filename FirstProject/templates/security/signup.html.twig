@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card">
-				<form class="form-horizontal">
+				<form id = "form"class="form-horizontal">
 					<div class="card-body">
 						<h4 class="card-title">Personal Info</h4>
 						<div class="form-group row">
@@ -58,7 +58,7 @@
 							</div>
 						</div>
 
-						<div data-toggle="recaptcha" data-type="{{ type }}"></div>
+						<div data-toggle="recaptcha" ></div>
 						{# <div class="form-group row">
 																																																<label for="cono1" class="col-sm-3 text-end control-label col-form-label">Contact No</label>
 																																																<div class="col-sm-9">
@@ -92,6 +92,10 @@ for (var i = 0; i < widgets.length; i++) {
 renderReCaptcha(widgets[i]);
 }
 }
+
+
+
+
 	</script>
 	<script type="text/javascript" src="{{ asset('js/recaptcha.js') }}"></script>
 	<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{ app.request.locale }}" async defer></script>
