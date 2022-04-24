@@ -3,7 +3,12 @@
 {% block title %}Edit Evenement{% endblock %}
 
 {% block body %}
-    <h1 style="font-style:inherit;" class="btn-secondary" >Edit Evenement</h1>
+<div class="row">
+    <div  style="display: list-item;align-items: normal;justify-content: normal;margin-top: 15px; padding: 10px;">
+
+        <div class="card">
+            <div class="card-body">
+    <h1 style="font-style:italic;" class="" >Edit Evenement</h1>
 
     {{ include('evenement/_form.html.twig', {'button_label': 'Update'}) }}
 

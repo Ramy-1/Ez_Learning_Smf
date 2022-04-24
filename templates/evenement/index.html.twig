@@ -3,11 +3,14 @@
 {% block title %}Evenement index{% endblock %}
 
 {% block body %}
-    <h1 class="btn-secondary">Evenement index</h1>
+
+    <h1 class="btn-danger">Evenement index</h1>
+<div class="card">
+    <div class="card-body">
     <div class="container my-2">
         <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
     </div>
-    <table class="table" id="mytable">
+    <table class="table table-striped" id="mytable">
         <thead>
         <tr>
             <th style="font-style: oblique" class="btn-danger">idorg</th>
@@ -23,7 +26,7 @@
         </thead>
         <tbody>
 
-        <a href="{{ path('app_evenement_new') }}" class="btn-secondary">Create new</a>
+        <a href="{{ path('app_evenement_new') }}" class="btn-danger" >Create new</a>
         {% for evenement in evenements |reverse %}
             <tr>
                 <td>{{ evenement.idorg }}</td>
@@ -36,8 +39,8 @@
                 <td>{{ evenement.heure }}</td>
                 <td>{{ evenement.nbrparticipant }}</td>
                 <td>
-                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="btn-secondary">show</a>
-                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn-secondary">edit</a>
+                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="btn-danger">show</a>
+                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn-danger">edit</a>
                 </td>
             </tr>
         {% else %}

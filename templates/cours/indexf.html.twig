@@ -71,6 +71,12 @@
                             <b>Description: </b>{{ cour.description }}
                             <b>Lien: </b><a href="{{ cour.support }}">{{ cour.support}}</a>
                             <a href="{{ path('app_cours_show', {'id': cour.id}) }}" >show</a>
+                            <a href="{{ path('app_like_cours_new',{'id':cour.id})}}" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> like
+                            </a>
+                            <a href="{{ path('app_like_cours_newd',{'id':cour.id})}}" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> dislike
+                            </a>
                         </div>
                     </div>
                 </div>
