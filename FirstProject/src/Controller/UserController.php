@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use App\Form\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 
@@ -124,7 +124,7 @@ class UserController extends AbstractController
             $subject = $form->get('subject')->getData();
             $body = $form->get('body')->getData();
 
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from('mouhamedrami.bendhia@esprit.tn')
                 ->to($user->getEmail())
                 // ->to('hana.mensia@esprit.tn')
@@ -133,8 +133,13 @@ class UserController extends AbstractController
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject($subject)
-                ->text('Sending emails is fun again!')
-                ->html($body);
+                // ->text('Sending emails is fun again!')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->context([
+                    'Description' => 'foo',
+                ])
+                ;
+
             $mailer->send($email);
             return $this->redirectToRoute('app_user');
         }
