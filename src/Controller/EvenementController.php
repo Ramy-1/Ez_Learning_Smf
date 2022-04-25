@@ -107,7 +107,7 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('info', 'added successefully  ');
+            $this->addFlash('info', 'added successfully  ');
             $entityManager->persist($evenement);
             $entityManager->flush();
         }

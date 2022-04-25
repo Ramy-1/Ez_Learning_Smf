@@ -73,4 +73,12 @@ class CoursRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByDate()
+    {
+        return $this->createQueryBuilder('cours')
+            ->where('cours.etat = 1')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

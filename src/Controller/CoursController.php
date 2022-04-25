@@ -34,9 +34,8 @@ class CoursController extends AbstractController
      */
     public function indexf(EntityManagerInterface $entityManager): Response
     {
-        $cours = $entityManager
-            ->getRepository(Cours::class)
-            ->findAll();
+        $repository = $this->getDoctrine()->getRepository(Cours::class);
+        $cours = $repository->findByDate();
 
         return $this->render('cours/indexf.html.twig', [
             'cours' => $cours,
@@ -77,7 +76,28 @@ class CoursController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    /**
+     * @Route("/{id}/archive", name="coursarchiver", methods={"GET","POST"})
+     */
+    public function archiver($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Cours::class)->find($id);
+        $reclamation->setEtat(0);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_cours_index');
+    }
+    /**
+     * @Route("/{id}/activer", name="coursinarchiver", methods={"GET","POST"})
+     */
+    public function archiver2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Cours::class)->find($id);
+        $reclamation->setEtat(1);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_cours_index');
+    }
     /**
      * @Route("/{id}", name="app_cours_show", methods={"GET"})
      */

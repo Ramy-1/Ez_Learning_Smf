@@ -7,6 +7,7 @@ use App\Form\UniversiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,11 +32,15 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/front", name="app_universite_indexf", methods={"GET"})
      */
-    public function index2(EntityManagerInterface $entityManager): Response
+    public function index2(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
     {
         $universites = $entityManager
             ->getRepository(Universite::class)
             ->findAll();
+        $universites = $paginator->paginate(
+            $universites,
+            $request->query->getInt('page', 1),
+            3);
 
         return $this->render('universite/indexf.html.twig', [
             'universites' => $universites,

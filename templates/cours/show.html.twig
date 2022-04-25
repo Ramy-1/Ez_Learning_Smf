@@ -44,8 +44,10 @@
 
 
 
-    <a href="{{ path('reclamation_etatdonAction',{'id':cour.id})}}" class="btn btn-success">
-    <i class="bi bi-cart-plus"></i> archiver
+    <a href="{{ path('coursarchiver',{'id':cour.id})}}" class="btn btn-success">
+        <i class="bi bi-cart-plus"></i> archiver
+        <a href="{{ path('coursinarchiver',{'id':cour.id})}}" class="btn btn-success">
+            <i class="bi bi-cart-plus"></i> activer
 </a>
     <a href="{{ path('app_categorie_show',{'idcat':cour.idcat})}}" class="btn btn-success">
         <i class="bi bi-cart-plus"></i> cat
