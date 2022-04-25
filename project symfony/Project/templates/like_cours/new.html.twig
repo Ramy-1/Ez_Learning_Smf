@@ -1,0 +1,11 @@
+
+
+{% block title %}New LikeCours{% endblock %}
+
+{% block body %}
+    <h1>Create new LikeCours</h1>
+
+    {{ include('like_cours/_form.html.twig') }}
+
+    <a href="{{ path('app_like_cours_index') }}">back to list</a>
+{% endblock %}
