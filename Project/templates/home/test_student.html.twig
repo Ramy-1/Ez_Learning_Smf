@@ -1,0 +1,176 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}EZ Learning{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+      <link href="{{asset('assets/backoffice/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
+            <!-- Custom CSS -->
+            <link href="{{asset('assets/backoffice/dist/css/style.min.css')}}" rel="stylesheet" />
+            <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+            
+{% endblock %}
+{% block javascript %}
+    {{parent()}}
+     
+      <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+       <!-- Bootstrap tether Core JavaScript -->
+            <script src="{{asset('assets/backoffice/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+{{parent()}}
+<div class="site-section courses-title" id="courses-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-7 text-center aos-init" data-aos="fade-up" data-aos-delay="">
+            <h2 class="section-title">Tests</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section courses-entry-wrap aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
+
+      <div class="row">
+            <!-- column -->
+            <div class="col-lg-6">
+              <div class="card ">
+                <div class="card-body " >
+                  <h4 class="card-title">Latest Test</h4>
+                </div>
+                <div class="comment-widgets  scrollable ps-container ps-theme-default ps-active-y" data-ps-id="e20d2b11-285a-b5ab-54f6-9743273b4379"  >
+                  {% for test in tests%}
+                  <!-- Comment Row -->
+                  <div class="d-flex flex-row comment-row mt-0">
+                    <div class="p-2">
+                     {% if test.image == null %}
+                     <img src="{{asset('assets/backoffice/assets/images/big/img3.jpg')}}" alt="user" width="100" style="border-radius:4%;">
+                     {% else %}
+                      <img src="{{asset('uploads/imageTest/'~test.image)}}" alt="user" width="100" style="border-radius:4%;">
+                    
+                     {% endif %}
+                     </div>
+                    <div class="comment-text w-100">
+                      <h6 class="font-medium">{{test.titre}}</h6>
+                      <span class="mb-3 d-block">{{test.description|raw}}
+                      </span>
+                      <div class="comment-footer">
+                        <span class="text-muted float-end">{{test.createdAt|date("M d.Y")}}</span>
+                        <a href="{{path('app_test_pass',{'testid':test.id})}}" class="btn btn-cyan btn-sm text-white">
+                          Passer Test
+                        </a>
+                        {#<button type="button" class="btn btn-success btn-sm text-white">
+                          Publish
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm text-white">
+                          Delete
+                        </button>#}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+                <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+              </div></div>
+            <div class="col-lg-6">
+              
+              <!-- card new -->
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-0">News Updates</h4>
+                </div>
+                <ul class="list-style-none">
+                  <li class="d-flex no-block card-body">
+                    <i class="mdi mdi-check-circle fs-4 w-30px mt-1"></i>
+                    <div>
+                      <a href="#" class="mb-0 font-medium p-0">Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit.</a>
+                      <span class="text-muted">dolor sit amet, consectetur adipiscing</span>
+                    </div>
+                    <div class="ms-auto">
+                      <div class="tetx-right">
+                        <h5 class="text-muted mb-0">20</h5>
+                        <span class="text-muted font-16">Jan</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="d-flex no-block card-body border-top">
+                    <i class="mdi mdi-gift fs-4 w-30px mt-1"></i>
+                    <div>
+                      <a href="#" class="mb-0 font-medium p-0">Congratulation Maruti, Happy Birthday</a>
+                      <span class="text-muted">many many happy returns of the day</span>
+                    </div>
+                    <div class="ms-auto">
+                      <div class="tetx-right">
+                        <h5 class="text-muted mb-0">11</h5>
+                        <span class="text-muted font-16">Jan</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="d-flex no-block card-body border-top">
+                    <i class="mdi mdi-plus fs-4 w-30px mt-1"></i>
+                    <div>
+                      <a href="#" class="mb-0 font-medium p-0">Maruti is a Responsive Admin theme</a>
+                      <span class="text-muted">But already everything was solved. It will ...</span>
+                    </div>
+                    <div class="ms-auto">
+                      <div class="tetx-right">
+                        <h5 class="text-muted mb-0">19</h5>
+                        <span class="text-muted font-16">Jan</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="d-flex no-block card-body border-top">
+                    <i class="mdi mdi-leaf fs-4 w-30px mt-1"></i>
+                    <div>
+                      <a href="#" class="mb-0 font-medium p-0">Envato approved Maruti Admin template</a>
+                      <span class="text-muted">i am very happy to approved by TF</span>
+                    </div>
+                    <div class="ms-auto">
+                      <div class="tetx-right">
+                        <h5 class="text-muted mb-0">20</h5>
+                        <span class="text-muted font-16">Jan</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="d-flex no-block card-body border-top">
+                    <i class="mdi mdi-comment-question-outline fs-4 w-30px mt-1"></i>
+                    <div>
+                      <a href="#" class="mb-0 font-medium p-0">
+                        I am alwayse here if you have any question</a>
+                      <span class="text-muted">we glad that you choose our template</span>
+                    </div>
+                    <div class="ms-auto">
+                      <div class="tetx-right">
+                        <h5 class="text-muted mb-0">15</h5>
+                        <span class="text-muted font-16">Jan</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- column -->
+
+            
+              
+           
+        <div class="row justify-content-center">
+          <div class="col-7 text-center">
+            <button class="customPrevBtn btn btn-primary m-1">Prev</button>
+            <button class="customNextBtn btn btn-primary m-1">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+{% endblock %}

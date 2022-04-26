@@ -1,0 +1,123 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours index{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Questions</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_test_index') }}">Test</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Questions
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block body %}
+{{parent()}}
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h1 class="btn-secondary">Cours index</h1>
+
+    <section class="product bg-white">
+        {% for cour in cours %}
+            <div class=container>
+                <div class=row>
+                    <h2>{{ cour.titre }}</h2>
+                    <p2>{{ cour.description }}</p2>
+                    <h2>{{ cour.support }}</h2>
+
+                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}" >show</a>
+                    <hr>
+
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    <a href="{{ path('app_cours_new') }}" class="btn-secondary">Create new</a>
+    <script>
+
+
+        id="mytable"
+        function myFunction1() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+    <script>
+
+
+        id="mytable"
+        function myFunction1() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+
+{% endblock %}

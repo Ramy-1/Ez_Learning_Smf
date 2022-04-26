@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cours{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Questions</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_test_index') }}">Test</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Questions
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block body %}
+{{parent()}}
+    <h1 class="btn-secondary">Create new Cours</h1>
+
+    {{ include('cours/_form.html.twig') }}
+
+    <a href="{{ path('app_cours_index') }}" class="btn-success">back to list</a>
+{% endblock %}

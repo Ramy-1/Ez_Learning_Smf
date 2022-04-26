@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Test{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Tests</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Tests
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block body %}
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h3>Liste des Tests</h3>
+    
+    <table class="table-responsive" id="table">
+        <thead>
+            <tr>
+               <th>#</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for test in tests %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ test.titre }}</td>
+                <td style="text-overflow: ellipsis;
+                            overflow: hidden; 
+                            width: 160px; 
+                            height: 1.2em; 
+                            white-space: nowrap;">
+                {{ test.description|raw }}</td>
+                <td>
+                  <div class="comment-footer">
+                       
+                        <a type="button" href="{{ path('app_questions_index', {'testid': test.id}) }}" class="btn btn-info btn-sm text-white">
+                           Questions
+                        </a>
+                        <a type="button" href="{{ path('app_test_show', {'id': test.id}) }}" class="btn btn-success btn-sm text-white">
+                          Afficher
+                        </a>
+                        <a type="button" href="{{ path('app_test_edit', {'id': test.id}) }}" class="btn btn-warning btn-sm">
+                          Modifier
+                        </a>
+                        
+                        
+                        
+                      </div>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_test_new') }}">Ajouter</a>
+
+     <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+
+$(document).ready(function() {
+document.getElementById("zero_config_paginate").classList.add('dataTables_paginate paging_simple_numbers');
+document.getElementById("zero_config_previous").classList.add('page-item ');
+} );
+
+</script>
+{% endblock %}

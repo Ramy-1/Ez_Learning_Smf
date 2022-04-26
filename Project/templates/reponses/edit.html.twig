@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Reponses{% endblock %}
+
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Reponses</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item " aria-current="page">
+                      <a href="{{ path('app_reponses_index',{'questionid':question.id}) }}">Reponses</a> 
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Edit reponse {{reponse.contenu}}
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block body %}
+{{parent()}}
+<!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h1>Edit Reponses</h1>
+
+    {{ include('reponses/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_reponses_index',{'questionid':question.id}) }}">back to list</a>
+
+    {{ include('reponses/_delete_form.html.twig') }}
+{% endblock %}

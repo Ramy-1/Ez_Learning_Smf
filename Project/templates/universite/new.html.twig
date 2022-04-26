@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}New Universite{% endblock %}
+
+{% block body %}
+    <h1 class="btn-secondary">Create new Universite</h1>
+
+    {{ include('universite/_form.html.twig') }}
+
+    <a href="{{ path('app_universite_index') }}" class="btn-googleplus">back to list</a>
+{% endblock %}

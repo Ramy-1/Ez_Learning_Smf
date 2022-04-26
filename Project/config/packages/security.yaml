@@ -1,0 +1,56 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+    role_hierarchy:
+       ROLE_ADMIN: [ROLE_USER,ROLE_ETUDIANT,ROLE_RECRUTEUR,ROLE_ENSIEGNANT,ROLE_UNIVERSITE,ROLE_SOCIETE]     
+       ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ETUDIANT]
+    
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+        # used to reload user from session & other features (e.g. switch_user)
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: lazy
+            provider: app_user_provider
+            logout:
+                path:   app_logout
+                target: app_login
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+
+            # login_throttling:
+            #     max_attempts: 3
+            #     interval: '15 minutes'
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/etudiant, roles: ROLE_ETUDIANT }
+        - { path: ^/recruteur, roles: ROLE_RECRUTEUR }
+        - { path: ^/enseignant, roles: ROLE_ENSIEGNANT }
+        - { path: ^/universite, roles: ROLE_UNIVERSITE }
+        - { path: ^/societe, roles: ROLE_SOCIETE }
+        - { path: ^/profile, roles: ROLE_USER }
+
+    
+

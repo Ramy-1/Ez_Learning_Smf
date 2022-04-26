@@ -1,0 +1,58 @@
+{{ form_start(form) }}
+    <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    {% for input in form %}
+                    {% if 'token' not in form_label(input) %}
+                    <div class="form-group row">
+                        
+                        <label class="text-bluee">{{form_label(input)}}</label>
+                        <div class="col-sm-12">
+                        {{form_widget(input)}}                       
+                        </div>
+                        <div class="invalid-feedback" style="display:block;">{{form_errors(input)}}</div>
+                        
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                        </div>
+                    </div>
+                  </div>
+             </div>
+            </div>
+         </div>
+
+         <script>
+         $( document ).ready(function() {
+          if(input[type='checkbox'].checked) {
+                  $( "#reponses_note" ).prop( "readonly", false );
+                 
+              }
+              else{
+                $( "#reponses_note" ).prop( "readonly", true );
+                 $( "#reponses_note" ).val(0);
+               
+               
+              }
+          });
+          $("input[type='checkbox']").change(function() {
+              if(this.checked) {
+                  $( "#reponses_note" ).prop( "readonly", false );
+              }
+              else{
+                $( "#reponses_note" ).prop( "readonly", true );
+                $( "#reponses_note" ).val(0);
+               
+              }
+          });
+         </script>
+{{ form_end(form) }}
