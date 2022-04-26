@@ -4,82 +4,101 @@
 {% endblock %}
 
 {% block body %}
-	<form
-		method="post">
-		{# {% if error %}
-							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-							<script>
-								$(function () { // Success Type
-				$("#ts-success").on("click", function () {
-				toastr.success("Have fun storming the castle!", "Miracle Max Says");
-				});
-				});
-						#}
-		{{form_start(SignUpForm)}}
+<div elass-"g-cecaptche brochure form captcha" data-sitekey ="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt">
+</div>
 
-		<div class="row">
-			<div class="col-md-6">
-				<div class="card">
-					<form class="form-horizontal">
+	{# {% if error %}
+															<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+															<script>
+																$(function () { // Success Type
+												$("#ts-success").on("click", function () {
+												toastr.success("Have fun storming the castle!", "Miracle Max Says");
+												});
+												});
+														#}
+	{{form_start(SignUpForm)}}
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<form id = "form"class="form-horizontal">
+					<div class="card-body">
+						<h4 class="card-title">Personal Info</h4>
+						<div class="form-group row">
+							<label for="fname" class="col-sm-3 text-end control-label col-form-label">First Name</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.name)}}
+								{{form_errors(SignUpForm.name)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Last Name</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.lastName)}}
+								{{form_errors(SignUpForm.lastName)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.plainPassword)}}
+								{{form_errors(SignUpForm.plainPassword)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="email1" class="col-sm-3 text-end control-label col-form-label">Email</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.email)}}
+								{{form_errors(SignUpForm.email)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="email1" class="col-sm-3 text-end control-label col-form-label">Roles</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.roles)}}
+								{{form_errors(SignUpForm.roles)}}
+							</div>
+						</div>
+
+						<div data-toggle="recaptcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt" ></div>
+						{# <div class="form-group row">
+																																																<label for="cono1" class="col-sm-3 text-end control-label col-form-label">Contact No</label>
+																																																<div class="col-sm-9">
+																																																	<input{{form_row(SignUpForm.faceID)}} type="text" class="form-control" id="cono1" placeholder="Contact No Here"/>
+																																																</div>
+																																															</div> #}
+
+					</div>
+					<div class="border-top">
 						<div class="card-body">
-							<h4 class="card-title">Personal Info</h4>
-							<div class="form-group row">
-								<label for="fname" class="col-sm-3 text-end control-label col-form-label">First Name</label>
-								<div class="col-sm-9">
-									{{form_widget(SignUpForm.name)}}
-									{{form_errors(SignUpForm.name)}}
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="lname" class="col-sm-3 text-end control-label col-form-label">Last Name</label>
-								<div class="col-sm-9">
-									{{form_widget(SignUpForm.lastName)}}
-									{{form_errors(SignUpForm.lastName)}}
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
-								<div class="col-sm-9">
-									{{form_widget(SignUpForm.plainPassword)}}
-									{{form_errors(SignUpForm.plainPassword)}}
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="email1" class="col-sm-3 text-end control-label col-form-label">Email</label>
-								<div class="col-sm-9">
-									{{form_widget(SignUpForm.email)}}
-									{{form_errors(SignUpForm.email)}}
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="email1" class="col-sm-3 text-end control-label col-form-label">Roles</label>
-								<div class="col-sm-9">
-									{{form_widget(SignUpForm.roles)}}
-									{{form_errors(SignUpForm.roles)}}
-								</div>
-							</div>
-							{# <div class="form-group row">
-															<label for="cono1" class="col-sm-3 text-end control-label col-form-label">Contact No</label>
-															<div class="col-sm-9">
-																<input{{form_row(SignUpForm.faceID)}} type="text" class="form-control" id="cono1" placeholder="Contact No Here"/>
-															</div>
-														</div> #}
-
+							<button type="submit" class="btn btn-primary">
+								Submit
+							</button>
 						</div>
-						<div class="border-top">
-							<div class="card-body">
-								<button type="submit" class="btn btn-primary">
-									Submit
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 
-				{# {{form_widget(SignUpForm)}} #}
-				{# <button class="btn btn-lg btn-primary" type="submit">
-					Sign in
-				</button> #}
-				{{form_end(SignUpForm)}}
-			{% endblock %}
+	{{form_end(SignUpForm)}}
+	<script type="text/javascript">
+		/**
+	 * The callback function executed
+	 * once all the Google dependencies have loaded
+	 */
+function onGoogleReCaptchaApiLoad() {
+var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+for (var i = 0; i < widgets.length; i++) {
+renderReCaptcha(widgets[i]);
+}
+}
+
+
+
+
+	</script>
+	<script type="text/javascript" src="{{ asset('js/recaptcha.js') }}"></script>
+	<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{ app.request.locale }}" async defer></script>
+{% endblock %}

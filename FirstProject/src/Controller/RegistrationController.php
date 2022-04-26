@@ -83,7 +83,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/signup", name="app_signup")
      */
-    public function signIn(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function signUp(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $user->setPassword("");

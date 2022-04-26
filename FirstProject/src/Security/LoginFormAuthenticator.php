@@ -72,6 +72,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
+        if ($user->isBlocked()) {
+            throw new UsernameNotFoundException('User is Blocked');
+        }
+        if (!$user->isVerified()) {
+            throw new UsernameNotFoundException('User not validated');
+        }
 
         return $user;
     }
@@ -95,7 +101,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        return new RedirectResponse($this->urlGenerator->generate('app_login'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

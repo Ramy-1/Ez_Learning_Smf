@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -61,6 +63,22 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBlocked = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserFavorite::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userFavorites;
+
+    private $captcha;
+    public function __construct()
+    {
+        $this->userFavorites = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,6 +205,48 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserFavorite>
+     */
+    public function getUserFavorites(): Collection
+    {
+        return $this->userFavorites;
+    }
+
+    public function addUserFavorite(UserFavorite $userFavorite): self
+    {
+        if (!$this->userFavorites->contains($userFavorite)) {
+            $this->userFavorites[] = $userFavorite;
+            $userFavorite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavorite(UserFavorite $userFavorite): self
+    {
+        if ($this->userFavorites->removeElement($userFavorite)) {
+            // set the owning side to null (unless already changed)
+            if ($userFavorite->getUser() === $this) {
+                $userFavorite->setUser(null);
+            }
+        }
 
         return $this;
     }

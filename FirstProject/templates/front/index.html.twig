@@ -1,0 +1,76 @@
+{% extends 'frontbase.html.twig' %}
+{% block signin %}{% endblock %}
+
+{% block programs %}
+	<div class="row mb-5 justify-content-center">
+		<div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
+			<h2 class="section-title">Your Favorites</h2>
+			<p>List Favorites</p>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title mb-0">Recent Activity</h4>
+		</div>
+		{% for o in tab %}
+			<ul class="list-style-none">
+				<li class="d-flex no-block card-body">
+					<i class="mdi mdi-check-circle fs-4 w-30px mt-1"></i>
+					<div>
+						<a href="#" class="mb-0 font-medium p-0">{{o.titre}}</a>
+						<span class="text-muted">{{o.description}}</span>
+					</div>
+					<div class="ms-auto">
+						<div class="tetx-right">
+							<h5 class="text-muted mb-0">20</h5>
+							<span class="text-muted font-16">{{o.datecreate|date}}</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		{% endfor %}
+	</div>
+	<link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet"/>
+	<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../assets/extra-libs/sparkline/sparkline.js"></script>
+	<!--Wave Effects -->
+	<script src="../dist/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="../dist/js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="../dist/js/custom.min.js"></script>
+{% endblock %}
+{% block cour %}
+	{% for o in tabc %}
+		<div class="course bg-white h-100 align-self-stretch">
+			<figure class="m-0">
+				<a href="course-single.html"><img src="{{asset('images/img_1.jpg')}}" alt="Image" class="img-fluid"></a>
+			</figure>
+			<div class="course-inner-text py-4 px-4">
+				<span class="course-price">{{o.id}}</span>
+				<div class="meta">
+					<span class="icon-clock-o"></span>
+					{{o.duree}}</div>
+				<h3>
+					<a href="#">{{o.titre}}</a>
+				</h3>
+				<p>{{o.description}}
+				</p>
+			</div>
+			<div class="d-flex border-top stats">
+				<div class="py-3 px-4">
+					<span class="icon-users"></span>
+					2,193 students</div>
+				<div class="py-3 px-4 w-25 ml-auto border-left">
+					<span class="icon-chat"></span>
+					add</div>
+				<a href="{{ path('AddToFav',{'id':o.id}) }}">ADD</a>
+
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}

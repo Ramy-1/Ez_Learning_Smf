@@ -1,0 +1,30 @@
+{% extends "backbase.html.twig" %}
+{% block body %}
+	{{form_start(form)}}
+
+	{# {{form_widget(form.users)}} #}
+	{# {{form_widget(form.subject)}} #}
+		<div class="row"> <div class="col-md-6">
+			<div class="card">
+				<form class="form-horizontal">
+					<div class="card-body">
+						<h4 class="card-title">Notification</h4>
+						<div class="form-group row">
+
+							<div
+								class="col-sm-9">
+								{{form_widget(form.body, {'attr': {'class': 'form-control'}})}}
+								{# <textarea class="form-control"></textarea> #}
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success text-white">sss</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	{{form_end(form, {'render_rest': false})}}
+
+{% endblock %}

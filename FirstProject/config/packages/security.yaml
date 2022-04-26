@@ -25,6 +25,17 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
+
+                # token_provider:
+                #     doctrine: true
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
 
             # login_throttling:
             #     max_attempts: 3

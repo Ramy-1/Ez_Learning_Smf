@@ -6,15 +6,6 @@
 {% block body %}
 	<form
 		method="post">
-		{# {% if error %}
-							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-							<script>
-								$(function () { // Success Type
-				$("#ts-success").on("click", function () {
-				toastr.success("Have fun storming the castle!", "Miracle Max Says");
-				});
-				});
-						#}
 		{{form_start(UserForm)}}
 
 		<div class="row">
