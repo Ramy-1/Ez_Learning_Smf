@@ -17,9 +17,10 @@ class EmailType extends AbstractType
             ->add('users', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'email',
+                'required' => false,
                 // 'multiple' => 'true',
             ])
-            ->add('subject')
+            ->add('subject', null, ['required' => false])
             ->add('body', TextareaType::class, [
                 
             ])
@@ -32,6 +33,8 @@ class EmailType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'allow_extra_fields' => true,
+            ['required' => false]
         ]);
     }
 }

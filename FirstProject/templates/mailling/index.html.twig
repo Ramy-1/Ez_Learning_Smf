@@ -10,6 +10,12 @@
 	<form class="form-horizontal" method="POST">
 
 		{{form_start(form)}}
+		<div class="form-group row">
+			<label for="email1" class="col-sm-3 text-end control-label col-form-label">Address</label>
+			<div class="col-sm-9">
+				{{form_widget(form.users)}}
+			</div>
+		</div>
 		<div class="card">
 			<div class="card-body">
 
@@ -18,13 +24,15 @@
 					<div class="col-md-9">
 						<select id="users" class="select2 form-select shadow-none mt-3" multiple="multiple" style="height: 36px; width: 100%">
 							<optgroup label="All Users">
+								{# {{form_widget(form.users)}} #}
 								{# {% for u in form.users %} #}
-								{% for u in tab %}
+									{% for u in tab %}
 									{# {{form_label(u)}} #}
-									{# {{u.email}} #}<option value={{u.getEmail()}}> {{u.getEmail()}}</option>
+									{# {{u.email}} #}
+										<option value={{u.getEmail()}}> {{u.getEmail()}}</option>
 									<option value={{u.getEmail()}}>{{u.getEmail()}}</option>
 								{% endfor %}
-								{# {{form_widget(form.users)}} #}
+
 							</optgroup>
 						</select>
 					</div>
@@ -42,7 +50,7 @@
 							id="editor" style="height: 300px">
 							{# {{form_widget(form.body)}} #}
 							<p>Hello World!</p>
-							
+
 							<p>
 								<br/>
 							</p>
@@ -52,40 +60,37 @@
 			</div>
 		</div>
 
-		{# var html = quill.root.innerHTML; #}
-		{# <button type="submit" href="{{path('app_maillings',{'list',myFunction()})}}" onclick="myFunction()" class="btn btn-success text-white">sss</button> #}
+		{# var  html = quill.root.innerHTML; #}
+		<button onclick="haja(form)" class="btn btn-success text-white">sss</button>
+		{# <button type="submit" href="{{path('app_maillings',{'list',myFunction())}}" onclick="myFunction()" class="btn btn-success text-white">sss</button> #}
 		<button type="submit" class="btn btn-success text-white">Send Email</button>
+		<div class="col-sm-9">
+			<textarea class="form-control"></textarea>
+		</div>
 		{{form_end(form)}}
 	</form>
 	<script>
-		function myFunction() {
-console.log("html");
+		function haja(form) {
 var html = quill.root.innerHTML;
-
-var users = document.getElementById("users");
-var option = users.options[users.selectedIndex];
-var strUser = users.value;
-
-var result = [];
-var options = users && users.options;
-var opt;
-for (var i = 0, iLen = options.length; i < iLen; i++) {
-opt = options[i];
-
-if (opt.selected) {
-result.push(opt.value || opt.text);
+var selected = [];
+for (var option of document.getElementById('users').options) {
+if (option.selected) {
+selected.push(option.value);
 }
-return result;
 }
-
-
-// return result;
-
-console.log(result);
-
+console.log(selected);
 console.log(html);
+
+
+form.users = selected;
+form.subject = "TEST";
+form.body = html;
+// console.log(form);
+form.submit();
+
 }
 	</script>
+
 
 	<script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
 	<script src="{{asset('assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>

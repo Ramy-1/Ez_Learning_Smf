@@ -30,6 +30,10 @@ class UserController extends AbstractController
         //     'controller_name' => 'UserController',
         // ]);
         $tabuser = $repository->findAll();
+
+        $o = new User();
+        foreach ($o as $tabuser) {
+        }
         return $this->render('user/index.html.twig', [
             'tab' => $tabuser
         ]);
@@ -134,11 +138,11 @@ class UserController extends AbstractController
                 //->priority(Email::PRIORITY_HIGH)
                 ->subject($subject)
                 // ->text('Sending emails is fun again!')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-                ->context([
-                    'Description' => 'foo',
-                ])
-                ;
+                ->html($body)
+                // ->context([
+                //     'Description' => 'foo',
+                // ])
+            ;
 
             $mailer->send($email);
             return $this->redirectToRoute('app_user');
@@ -147,6 +151,52 @@ class UserController extends AbstractController
         $tabuser = $repository->findAll();
         // return $this->redirectToRoute('app_user');
         return $this->render('mailling/index.html.twig', [
+            'form' => $form->createView(),
+            'tab' => $tabuser,
+
+        ]);
+    }
+    /**
+     * @Route ("/emailall" , name="UserEmailtoALL")
+     */
+    public function sendEmailToAll(MailerInterface $mailer, Request $request): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $tab = $repository->findAll();
+
+
+        $form = $this->createForm(EmailType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            // $user = $form->get('users')->getData();
+            // $subject = $form->get('subject')->getData();
+            $body = $form->get('body')->getData();
+            foreach ($tab as $user) {
+                $email = (new TemplatedEmail())
+                    ->from('mouhamedrami.bendhia@esprit.tn')
+                    ->to($user->getEmail())
+                    // ->to('hana.mensia@esprit.tn')
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject("Email From Ez-learning")
+                    // ->text('Sending emails is fun again!')
+                    ->html($body)
+                    // ->context([
+                    //     'Description' => 'foo',
+                    // ])
+                ;
+                $mailer->send($email);
+            }
+            return $this->redirectToRoute('app_user');
+        }
+
+        $tabuser = $repository->findAll();
+        // return $this->redirectToRoute('app_user');
+        return $this->render('mailling/notif.html.twig', [
             'form' => $form->createView(),
             'tab' => $tabuser,
 
