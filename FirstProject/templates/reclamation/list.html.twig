@@ -1,0 +1,51 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+<h1 align="center"> <br>Tableau des reclamations</h1>
+{{totRec}}
+<div class="table-responsive" align="center" >
+			<table class="table" border="2" >
+				<thead class="thead-light">
+					<tr>
+						<th>
+							<label class="customcheckbox mb-3">
+								<input type="checkbox" id="mainCheckbox"/>
+								<span class="checkmark"></span>
+							</label>
+						</th>
+						<td>type</td>
+                        <td>description</td>
+                        <td>id etudiant</td>
+                       <td> id cours</td>
+                      <td> date reclamation</td>
+					</tr>
+				</thead>
+				<tbody class="customtable">
+					
+						{% for reclamation in reclamations %}
+        <tr>
+							<th>
+								<label class="customcheckbox">
+									<input type="checkbox" class="listCheckbox"/>
+									<span class="checkmark"></span>
+								</label>
+							</th>
+            <td>{{ reclamation.type}}</td>
+            <td>{{ reclamation.description }}</td>
+            <td>{{ reclamation.idetudiant }}</td>
+            <td>{{ reclamation.idcours }}</td>
+            <td>{{ reclamation.getDaterec()|date('d M Y') }}</td>
+           
+            <td><a href="{{ path('addReponse',{'idrec':reclamation.idrec}) }}">répondre</a>
+
+            <td><a href="{{ path('updateReclamation',{'idrec':reclamation.idrec}) }}">Update</a>
+            <a href="{{ path('deleteReclamation',{'idrec':reclamation.idrec}) }}">Delete</a> 
+        </tr>
+    {% endfor %}
+				</tbody>
+			</tr>
+		</tbody>
+	</table>
+</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+
+<a href="{{ path('addReclamation') }}">Add Reclamation</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'backbase.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %} 
+{% block body %}
+<br><br><br>
+<div  class="card" style="margin: auto; width: 70%; border: 3px solid blue;padding: 30px;">
+<table>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+{{ form_errors(form.description) }} 
+ {{ form_label(form.description,"Description de la reponse :") }} 
+  {{ form_widget(form.description)}} 
+
+  {{ form_end(form) }}
+  </table>
+  </div>
+{% endblock %}

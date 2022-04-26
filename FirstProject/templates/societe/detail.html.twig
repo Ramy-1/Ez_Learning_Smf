@@ -1,0 +1,14 @@
+{% extends 'frontbase.html.twig' %}
+{% block body %}
+<br><br><br><br><br>
+<div class="col-sm-4" align="center">
+    <div class="card" style="width: 18rem;" align="center">
+  <img class="card-img-top" src="../uploads/{{ societe.imgsoc }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ societe.nom}}</h5>
+    <p class="card-text">{{ societe.adresse }}</p>
+    <a href="#" class="btn btn-primary">Voir les offres d'embauche</a>
+  </div>
+</div>
+</div>
+{% endblock %}
