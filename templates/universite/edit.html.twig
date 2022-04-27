@@ -8,11 +8,11 @@
 
         <div class="card">
             <div class="card-body">
-    <h1 class="">Edit Universite</h1>
+    <h1 style="color: coral">Edit Universite</h1>
 
     {{ include('universite/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_universite_index') }}" class="btn-success">back to list</a>
+    <a href="{{ path('app_universite_index') }}" >back to list</a>
 
     {{ include('universite/_delete_form.html.twig') }}
 {% endblock %}

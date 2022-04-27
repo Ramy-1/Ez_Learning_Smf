@@ -4,8 +4,8 @@
 
 {% block body %}
 
-    <h1 class="btn-danger" align="center" style="background-color: darkgrey">Evenement index</h1>
-<div class="card">
+    <h1 class="btn-danger" align="center" style="background-color: darkgrey;color: white">Evenement index</h1>
+<div class="container">
     <div class="card-body">
     <div class="container my-2">
         <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
@@ -13,20 +13,20 @@
     <table class="table table-striped" id="mytable">
         <thead>
         <tr>
-            <th style="font-style: oblique" class="btn-danger">idorg</th>
-            <th class="btn-danger">description</th>
-            <th class="btn-danger">date</th>
-            <th class="btn-danger">photo</th>
-            <th class="btn-danger">lien</th>
-            <th class="btn-danger">heure</th>
-            <th class="btn-danger">nb participants</th>
+            <th style="font-style: oblique" class="btn-danger" >Idorg</th>
+            <th class="btn-danger">Description</th>
+            <th class="btn-danger">Date</th>
+            <th class="btn-danger">Photo</th>
+            <th class="btn-danger">Lien</th>
+            <th class="btn-danger">Heure</th>
+            <th class="btn-danger">Nb participants</th>
 
             <th class="btn-danger">actions</th>
         </tr>
         </thead>
         <tbody>
 
-        <a href="{{ path('app_evenement_new') }}" class="btn-danger" >Create new</a>
+        <a href="{{ path('app_evenement_new') }}" class="" style="color:darkorange" >Create new</a>
         {% for evenement in evenements |reverse %}
             <tr>
                 <td>{{ evenement.idorg }}</td>
@@ -39,8 +39,8 @@
                 <td>{{ evenement.heure }}</td>
                 <td>{{ evenement.nbrparticipant }}</td>
                 <td>
-                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="btn-danger">show</a>
-                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn-danger">edit</a>
+                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="" style="color: darkorange">show</a>
+                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="" style="color: darkorange">edit</a>
                 </td>
             </tr>
         {% else %}

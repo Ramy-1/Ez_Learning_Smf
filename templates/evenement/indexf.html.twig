@@ -54,11 +54,11 @@
                     </br>
                         <b>Heure: </b>{{ evenement.heure}}
                         <br>
-                        {% if date(evenement.date) > date('-0days') %}<h2 align="center" style="color: palevioletred">pas encore passé </h2> {% else %} <h3 align="center" style="color:palevioletred"> a la prochaine </h3> {% endif %}
+                        {% if date(evenement.date) > date('-0days') %}<h2 align="center" style="color: palevioletred"> Evènement pas encore passé </h2> {% else %} <h3 align="center" style="color:palevioletred"> Evènement déja passé </h3> {% endif %}
 
                         <b>Lien: </b><a href="{{ evenement.lien }}">{{ evenement.lien }}</a>
                         {% if evenement.nbrParticipant < 20 %}
-                        <button name="ssss" class="btn-flickr"> participer
+                        <button name="ssss" style="background-color: greenyellow;"> participer
                         </button>                       {% else%} <h1 style="background-color: ghostwhite" >Evènement plein pour le moment</h1> {% endif %}
 
                     </br>
