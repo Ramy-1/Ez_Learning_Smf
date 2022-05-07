@@ -1,0 +1,91 @@
+{% extends 'frontbase.html.twig' %}
+{% block programs %}
+  <br> 
+<div class="card" style="margin: auto; width: 100%; border: 3px;padding: 150px;">
+<div style ="width: 60%;margin:auto;">
+ <div class="sidebar-search" >
+      <div class="input-group custom-search-form">
+          <input type="text" id="search" class="form-control" placeholder="Search item">
+      </div>
+      <!-- /input-group -->
+  </div>
+  <ul class="nav" id="side-menu">
+      <li>
+          <ul class="nav nav-second-level" id="entitiesNav">
+          </ul>
+      </li>
+  </ul>
+  </div>
+  <br><br><br>
+ <div class = "row">
+    {% for societe in societes %}
+
+<div class="col-md-4">
+    <div class="card" style="width: 20rem;" align="center">
+  <img class="card-img-top" src="uploads/{{ societe.imgsoc }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ societe.nom}}</h5>
+    <p class="card-text">
+      <h4>
+        <iframe style="border:1; width: 100%; height: 200px;" class="img-fluid" src="https://maps.google.com/maps?q=+{{ societe.adresse }}+&hl=fr&z=14&amp;output=embed" frameborder="0" allowfullscreen></iframe>          
+            <div class="map-wrapper-300 mb-3">
+      </h4>
+                      
+    {{ societe.adresse }}</p>
+    <a href="#" class="btn btn-primary">Voir les offres d'embauche</a>
+  </div>
+</div>
+</div>
+       
+    {% endfor %}
+</div>
+<div>
+</div>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var searchRequest = null;
+        $("#search").keyup(function() {
+            var minlength = 1;
+            var that = this;
+            var value = $(this).val();
+            var entitySelector = $("#entitiesNav").html('');
+            if (value.length >= minlength ) {
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('ajax_search') }}",
+                    data: {
+                        'q' : value
+                    },
+                    dataType: "text",
+                    success: function(msg){
+                        //we need to check if the value is the same
+                        
+                        if (value==$(that).val()) {
+                            var result = JSON.parse(msg);
+                            $.each(result, function(key, arr) {
+                                $.each(arr, function(id, value) {
+                                    if (key == 'societes') {
+                                        if (id != 'error') {
+                                             
+                                            console.log(id , value)
+                                           entitySelector.append('<li><b>'+value[0]+' '+value[1]+'</b><a href="/detailSociete/'+id+'">'+'<img src="/uploads/'+value[2]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
+                                                    
+                                                    
+                                        } else {
+                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                     }
+                });
+            }
+        });
+    });
+</script>
+</div>
+{% endblock %}

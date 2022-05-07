@@ -1,0 +1,33 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+
+<h1 align ="center" > <br>Tableau des reponses </h1>
+
+<div class="table-responsive">
+			<table class="table" border="2">
+				<thead class="thead-light">
+					<tr>
+						 <td>id reclamation</td>
+                         <td>description</td>
+                         <td>date reponse</td>
+					</tr>
+				</thead>
+				<tbody class="customtable">
+					
+				 {% for reponse in reponses %}
+        <tr>
+            <td>{{ reponse.getReclamation().getId()}}</td>
+            <td>{{ reponse.description }}</td>
+            <td>{{ reponse.getDaterep()|date('d M Y') }}</td>
+         
+
+            <td><a href="{{ path('updateReponse',{'idreponse':reponse.idreponse}) }}">Update</a>
+            <a href="{{ path('deleteReponse',{'idreponse':reponse.idreponse}) }}">Delete</a>
+            
+        </tr>
+    {% endfor %}
+		
+		</tbody>
+	</table>
+</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+{% endblock %}

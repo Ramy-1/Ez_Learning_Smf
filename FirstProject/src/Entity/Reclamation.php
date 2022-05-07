@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,16 +15,17 @@ class Reclamation
     /**
      * @var int
      *
-     * @ORM\Column(name="idrec", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idrec;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="TYPE is required") 
      */
     private $type;
 
@@ -32,6 +33,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="DESCRIPTION is required") 
      */
     private $description;
 
@@ -39,6 +41,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="idetudiant", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="YOUR ID is required") 
      */
     private $idetudiant;
 
@@ -56,9 +59,9 @@ class Reclamation
      */
     private $daterec;
 
-    public function getIdrec(): ?int
+    public function getId(): ?int
     {
-        return $this->idrec;
+        return $this->id;
     }
 
     public function getType(): ?string

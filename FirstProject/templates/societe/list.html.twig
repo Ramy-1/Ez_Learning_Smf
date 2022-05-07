@@ -1,0 +1,56 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+<div class="table-responsive">
+<h1 align ="center"> <br>Tableau des societes</h1>
+
+
+			<table class="table" border="2">
+				<thead class="thead-light">
+					<tr>
+						<th>
+							<label class="customcheckbox mb-3">
+								<input type="checkbox" id="mainCheckbox"/>
+								<span class="checkmark"></span>
+							</label>
+						</th>
+						 <td>nom</td>
+                         <td>email</td>
+                         <td>adresse</td>
+                         <td> imgsoc</td>
+                         <td> mdpsoc</td>
+					</tr>
+				</thead>
+				<tbody class="customtable">
+					
+				  {% for societe in societes %}
+        <tr>
+							<th>
+								<label class="customcheckbox">
+									<input type="checkbox" class="listCheckbox"/>
+									<span class="checkmark"></span>
+								</label>
+							</th>
+          
+            <td>{{ societe.nom}}</td>
+            <td>{{ societe.email }}</td>
+            <td>{{ societe.adresse }}</td>
+            <td>{{ societe.imgsoc }}</td>
+            <td>{{ societe.mdpsoc }}</td>
+         
+
+            <td><a href="{{ path('updateSociete',{'idsoc':societe.idsoc}) }}">Update</a>
+            <a href="{{ path('deleteSociete',{'idsoc':societe.idsoc}) }}">Delete</a>
+            
+        </tr>
+    {% endfor %}
+</table>
+</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+
+				</tbody>
+			</tr>
+		</tbody>
+	</table>
+    <a href="{{ path('addSociete') }}">Add Societe</a>
+</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+
+{% endblock %}

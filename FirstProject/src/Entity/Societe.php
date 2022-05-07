@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,7 +17,6 @@ class Societe
      *
      * @ORM\Column(name="idsoc", type="string", length=200, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idsoc;
 
@@ -25,6 +24,7 @@ class Societe
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="DUNS is required") 
      */
     private $nom;
 
@@ -32,6 +32,8 @@ class Societe
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="Email is required") 
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid  email.") 
      */
     private $email;
 
@@ -51,14 +53,20 @@ class Societe
 
     /**
      * @var string
-     *
      * @ORM\Column(name="mdpsoc", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="PASSWORD is required") 
      */
     private $mdpsoc;
 
     public function getIdsoc(): ?string
     {
         return $this->idsoc;
+    }
+    public function setIdsoc(string $idsoc): self
+    {
+        $this->idsoc = $idsoc;
+
+        return $this;
     }
 
     public function getNom(): ?string

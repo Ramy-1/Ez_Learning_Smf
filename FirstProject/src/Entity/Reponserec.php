@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +32,7 @@ class Reponserec
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=250, nullable=false)
+     * @Assert\NotBlank(message="DESCRIPTION is required") 
      */
     private $description;
 
@@ -41,6 +42,12 @@ class Reponserec
      * @ORM\Column(name="daterep", type="date", nullable=false)
      */
     private $daterep;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Reclamation::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $reclamation;
 
     public function getIdreponse(): ?int
     {
@@ -79,6 +86,18 @@ class Reponserec
     public function setDaterep(\DateTimeInterface $daterep): self
     {
         $this->daterep = $daterep;
+
+        return $this;
+    }
+
+    public function getReclamation(): ?Reclamation
+    {
+        return $this->reclamation;
+    }
+
+    public function setReclamation(Reclamation $reclamation): self
+    {
+        $this->reclamation = $reclamation;
 
         return $this;
     }

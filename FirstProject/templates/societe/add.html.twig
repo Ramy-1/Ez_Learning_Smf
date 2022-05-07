@@ -1,0 +1,20 @@
+{% extends 'backbase.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %} 
+{% block body %}
+<br><br><br>
+<div  class="card" style="margin: auto; width: 70%; border: 3px solid blue;padding: 30px;">
+<table>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ,class="col-md-6") }}
+{{ form_errors(form.nom) }} 
+ {{ form_label(form.nom,"Nom de la societe") }}
+  {{ form_widget(form.nom) }} 
+{{ form_errors(form.email) }} 
+ {{ form_label(form.email,"Email") }} 
+  {{ form_widget(form.email)}} 
+{{ form_errors(form.mdpsoc) }} 
+ {{ form_label(form.mdpsoc,"Mot de passe") }}
+  {{ form_widget(form.mdpsoc) }}
+{{ form_end(form) }}
+</table>
+</div>
+{% endblock %}
