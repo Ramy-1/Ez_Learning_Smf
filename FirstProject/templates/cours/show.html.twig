@@ -1,4 +1,4 @@
-{% extends 'backbase.html.twig' %}
+{% extends 'basef.html.twig' %}
 
 {% block title %}Cours{% endblock %}
 
@@ -43,18 +43,16 @@
     <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn btn-dark"><i class="bi bi-cart-plus"></i>edit</a>
 
 
-    <a href="{{ path('app_like_cours_new',{'id':cour.id})}}" class="btn btn-success">
-        <i class="bi bi-cart-plus"></i> like
-    </a>
-    <a href="{{ path('reclamation_etatdonAction',{'id':cour.id})}}" class="btn btn-success">
-    <i class="bi bi-cart-plus"></i> archiver
+
+    <a href="{{ path('coursarchiver',{'id':cour.id})}}" class="btn btn-success">
+        <i class="bi bi-cart-plus"></i> archiver
+        <a href="{{ path('coursinarchiver',{'id':cour.id})}}" class="btn btn-success">
+            <i class="bi bi-cart-plus"></i> activer
 </a>
     <a href="{{ path('app_categorie_show',{'idcat':cour.idcat})}}" class="btn btn-success">
         <i class="bi bi-cart-plus"></i> cat
     </a>
-    <a href="{{ path('app_like_cours_newd',{'id':cour.id})}}" class="btn btn-success">
-        <i class="bi bi-cart-plus"></i> dislike
-    </a>
+
 
     {{ include('cours/_delete_form.html.twig') }}
 {% endblock %}

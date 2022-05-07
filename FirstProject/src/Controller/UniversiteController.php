@@ -7,14 +7,11 @@ use App\Form\UniversiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 /**
- * 
- *  @IsGranted("ROLE_ADMIN","ROLE_UNIVERSITE")
  * @Route("/universite")
  */
 class UniversiteController extends AbstractController
@@ -35,11 +32,15 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/front", name="app_universite_indexf", methods={"GET"})
      */
-    public function index2(EntityManagerInterface $entityManager): Response
+    public function index2(EntityManagerInterface $entityManager, Request $request): Response
     {
         $universites = $entityManager
             ->getRepository(Universite::class)
             ->findAll();
+        // $universites = $paginator->paginate(
+        //     $universites,
+        //     $request->query->getInt('page', 1),
+        //     3);
 
         return $this->render('universite/indexf.html.twig', [
             'universites' => $universites,
@@ -104,7 +105,7 @@ class UniversiteController extends AbstractController
      */
     public function delete(Request $request, Universite $universite, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $universite->getIduni(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$universite->getIduni(), $request->request->get('_token'))) {
             $entityManager->remove($universite);
             $entityManager->flush();
         }

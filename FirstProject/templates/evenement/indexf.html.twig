@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+
     <h1>Evenement index</h1>
 
     <div class="intro-section" id="home-section">
@@ -25,22 +26,7 @@
 
                             </div>
 
-                            <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                                <form action="" method="post" class="form-box">
-                                    <h3 class="h4 text-black mb-4">Sign Up</h3>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email Addresss">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password">
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <input type="password" class="form-control" placeholder="Re-type Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
-                                    </div>
-                                </form>
+
 
                             </div>
                         </div>
@@ -51,28 +37,35 @@
         </div>
     </div>
     <section class="product bg-white">
+        <button type="submit" style="background-color:lavender"><a href="top2events">Consulter "Top 2 events"</a></button>
         {% for evenement in evenements %}
-            <div class="container">
+            <div class="container" style="background-color:lavender">
                 <div class="row mt-3 mb-4">
                     <div class="col-md-4">
 
                         <img class="w-100" src="{{ asset('images/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
                     </div>
-                    <div class="col-md-8">
-                        <h1 class="mt-4 mt-md-0">le  {{ evenement.date ? evenement.date|date('m-d') : ''}}</h1>
-                        <h2>{{ evenement.nbrParticipant}} participants </h2>
+                    <div class="col-md-8" align="center">
+                        <h1 class="mt-4 mt-md-0" style="color: purple">le  {{ evenement.date ? evenement.date|date('m-d') : ''}}</h1>
+                        <h2 style="color: rebeccapurple">{{ evenement.nbrParticipant}} participants </h2>
                         <hr>
                         <br>
-                        <b class="btn-secondary">Description: </b>{{ evenement.description }}
+                        <b class="btn-primary">Description: </b>{{ evenement.description }}
                     </br>
                         <b>Heure: </b>{{ evenement.heure}}
                         <br>
-                        <b>Lien: </b>{{ evenement.lien }}
+                        {% if date(evenement.date) > date('-0days') %}<h2 align="center" style="color: palevioletred"> Evènement pas encore passé </h2> {% else %} <h3 align="center" style="color:palevioletred"> Evènement déja passé </h3> {% endif %}
+
+                        <b>Lien: </b><a href="{{ evenement.lien }}">{{ evenement.lien }}</a>
+                        {% if evenement.nbrParticipant < 20 %}
+                        <button name="ssss" style="background-color: greenyellow;"> participer
+                        </button>                       {% else%} <h1 style="background-color: ghostwhite" >Evènement plein pour le moment</h1> {% endif %}
+
                     </br>
                     </div>
                 </div>
             </div>
-
         {% endfor %}
     </section>
+    <a href="/evenement/listp" class="btn btn-success "> <i class="fas fa-check"> pdf</i> </a>
 {% endblock %}

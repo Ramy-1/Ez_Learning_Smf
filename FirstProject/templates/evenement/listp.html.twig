@@ -1,0 +1,57 @@
+
+
+{% block title %}Evenement index{% endblock %}
+
+{% block body %}
+
+    <style>
+        body{
+            border-style: double;
+            border-width: 10px;
+            border-color: cadetblue;
+            margin-color:blue;
+
+        }
+    </style>
+    <h1 class="btn-danger" align="center" style="font-style: oblique"></h1>
+
+    <img src="C:\xampp\htdocs\Project\public\assets\images\users\easy learning.jpg" align="center" />
+
+    <h1 class="btn-flickry" align="center" style="color: cadetblue">Liste des évènements</h1>
+
+    <table class="table" id="mytable" style="color:darkcyan" bgcolor="#ffebcd" width="'400" l>
+        <thead>
+        <tr>
+
+            <th class="btn-danger">Description</th>
+            <th class="btn-danger">Date</th>
+            <th class="btn-danger">Lien</th>
+            <th class="btn-danger">Heure</th>
+            <th class="btn-danger">Nb participants</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements |reverse %}
+            <tr>
+
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : ''}}</td>
+                <td>{{ evenement.lien }}</td>
+                <td>{{ evenement.heure }}</td>
+                <td>{{ evenement.nbrparticipant }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+
+    <img src="C:\xampp\htdocs\Project\public\assets\images\users\signature.jpg" width="200" />
+{% endblock %}

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+
     <h1>universite index</h1>
 
     <div class="intro-section" id="home-section">
@@ -25,24 +26,7 @@
 
                             </div>
 
-                            <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                                <form action="" method="post" class="form-box">
-                                    <h3 class="h4 text-black mb-4">Sign Up</h3>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email Addresss">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password">
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <input type="password" class="form-control" placeholder="Re-type Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-pill" value="Sign up">
-                                    </div>
-                                </form>
 
-                            </div>
                         </div>
                     </div>
 
@@ -51,23 +35,27 @@
         </div>
     </div>
 
-    <section class="product bg-white">
+    <section class="container">
         {% for universite in universites %}
-            <div class="container">
-                <div class="row mt-3 mb-4">
-                    <div class="col-md-4">
+            <div class="hide-menu" align="center">
+                <div class="row mt-3 mb-4" style="background-color: lavender">
+                    <div class="col-md-4" style="background-color: lavender" align="center">
                         <img class="w-100" src="{{ asset('images/'~ universite.imguni) }}" alt="Image de {{ universite.nom }}">
                     </div>
 <br>
-                    <b class="mt-4 mt-md-0"> email : </b>{{ universite.email}}
+                    <table class="display" style="background-color: plum"> email :{{ universite.email}}</table>
                 </br>
-                    <br>
-                        <b>/lieu :</b>{{ universite.adresse}}
+<br>
+                    <table style="color: rebeccapurple" > lieu :{{ universite.adresse}} </table>
                 </br>
-                    </div>
                 </div>
+
             </div>
 
         {% endfor %}
+        <button class="pagination pagination-lg" style="background-color: greenyellow" size="1233888888">
+
+            {{ knp_pagination_render(universites) }}
+        </button>
     </section>
 {% endblock %}

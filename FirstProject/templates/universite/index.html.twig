@@ -1,27 +1,42 @@
 {% extends 'backbase.html.twig' %}
-
 {% block title %}Universite index{% endblock %}
 
 {% block body %}
-    <h1 class="btn-secondary">Universite index</h1>
+    <div class="row">
+    <div  style="display: list-item;align-items: normal;justify-content: normal;margin-top: 15px; padding: 10px;">
+    <style>
+        {
+
+            border: 5px solid black;
+            
+            color:green;
+
+        }
+    </style>
+
+    <div class="container">
+    <div class="card-body">
+    <h1 class="btn-danger" align="center" style="background-color: lightsalmon">Universite index</h1>
     <div class="container my-2">
-        <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
+        <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput" >
     </div>
-    <table class="table" id="mytable">
+    <table class="table table-striped" id="mytable" style="background-color: aliceblue" align="center"  >
         <thead>
             <tr>
-                <th class="btn-success">Iduni</th>
+                <th class="btn-danger">Iduni</th>
 
-                <th class="btn-success">Nom</th>
-                <th class="btn-success">Email</th>
-                <th class="btn-success">Adresse</th>
-                <th class="btn-success">Imguni</th>
-                <th class="btn-success">Mdpuni</th>
-                <th class="btn-success">actions</th>
+                <th class="btn-danger">Nom</th>
+                <th class="btn-danger">Email</th>
+                <th class="btn-danger">Adresse</th>
+                <th class="btn-danger">Imguni</th>
+                <th class="btn-danger">Mdpuni</th>
+                <th class="btn-danger">actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for universite in universites %}
+
+        <a href="{{ path('app_universite_new') }}" >Create new</a>
+        {% for universite in universites |reverse %}
             <tr>
                 <td>{{ universite.iduni }}</td>
                 <td>{{ universite.nom }}</td>
@@ -31,8 +46,8 @@
                 <td><img class="w-100" src="{{ asset('images/'~ universite.imguni) }}" alt="Image de {{ universite.imguni }}">
                 <td>{{ universite.mdpuni }}</td>
                 <td>
-                    <a href="{{ path('app_universite_show', {'iduni': universite.iduni}) }}" class="btn-secondary">show</a>
-                    <a href="{{ path('app_universite_edit', {'iduni': universite.iduni}) }}" class="btn-secondary">edit</a>
+                    <a href="{{ path('app_universite_show', {'iduni': universite.iduni}) }}" >show</a>
+                    <a href="{{ path('app_universite_edit', {'iduni': universite.iduni}) }}" >edit</a>
 
 
                 </td>
@@ -45,7 +60,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_universite_new') }}" class="btn-secondary">Create new</a>
     <script>
 
 
