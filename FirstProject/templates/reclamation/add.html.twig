@@ -1,0 +1,27 @@
+{% extends 'frontbase.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %} 
+{% block body %}
+
+
+<br> <br> <br> <br><br> <br>
+ <div class="card" style="margin: auto; width: 30%; border: 2px solid blue;padding: 60px; position: relative;top: 520px; left: 400px;">
+ <h2>En moyenne, nous traitons les reclamations dans {{rt}} jours </h2>
+ </div>
+ <br> <br>
+<div class="col-md-8" >
+    <div class="card" style="margin: auto; width: 70%; border: 3px solid blue;padding: 30px;">
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+{{ form_errors(form.type) }} 
+ {{ form_label(form.type,"Type de reclamation :") }}
+  {{ form_widget(form.type) }} 
+{{ form_errors(form.description) }} 
+ {{ form_label(form.description,"Description de la reclamation :") }} 
+  {{ form_widget(form.description)}} 
+{# {{ form_errors(form.idetudiant) }} 
+ {{ form_label(form.idetudiant,"Votre ID :") }}
+  {{ form_widget(form.idetudiant) }} #}
+
+{{ form_end(form) }}
+</div>
+</div>
+{% endblock %}

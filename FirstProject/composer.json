@@ -10,6 +10,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
         "google/recaptcha": "1.2",
+        "knplabs/knp-paginator-bundle": "^5.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "raulfraile/ladybug": "^1.0",
         "sensio/framework-extra-bundle": "^5.1",

@@ -1,0 +1,126 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+<div class="container">
+    <br> <br>
+    <h1>Statistiques des reclamations</h1>
+
+{# render_chart(chart) #}
+
+  <canvas id="graph"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script>
+const graph = document.getElementById("graph").getContext("2d");
+
+Chart.defaults.global.defaultFontSize = 18;
+
+let massPopChart = new Chart(graph, {
+  type: "doughnut", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  data: {
+    labels: [
+      "Reclamations Traitées",
+      "Reclamations Non Traités",
+    ],
+    datasets: [
+      {
+        label: "Statistiques traitement",
+        data: [{{totRep}}, {{totNon}}],
+        // backgroundColor: "blue",
+        backgroundColor: [
+          "blue",
+          "grey",
+        ],
+        hoverBorderWidth: 5,
+      },
+    ],
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Statistiques des reclamations selon leur traitement ",
+      fontSize: 24,
+    },
+    legend: {
+      display: true,
+    },
+    // start at 0
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+    layout: {
+      padding: {
+        left: 100,
+        right: 10,
+        top: 50,
+      },
+    },
+  },
+});
+</script>
+
+ <canvas id="graph2"></canvas>
+
+<script>
+
+const graph2 = document.getElementById("graph2").getContext("2d");
+
+Chart.defaults.global.defaultFontSize = 20;
+
+let massPopChart2 = new Chart(graph2, {
+  type: "bar", 
+  data: {
+    labels: [
+      "Reclamations techniques",
+      "Reclamations concernant un cours",
+    ],
+    datasets: [
+      {
+         label:  "Reclamations techniques",
+        // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data: [{{totech}}, {{totcours}}],
+        // backgroundColor: "blue",
+        backgroundColor: [
+          "turquoise",
+          "green",
+        ],
+        hoverBorderWidth: 2,
+      },
+    ],
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Statistiques des reclamations selon le type",
+      fontSize: 24,
+    },
+    legend: {
+      display: false,
+    },
+    // start at 0
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+    layout: {
+      padding: {
+        left: 100,
+        right: 10,
+        top: 50,
+      },
+    },
+  },
+});
+</script>
+</div>
+{% endblock %}
