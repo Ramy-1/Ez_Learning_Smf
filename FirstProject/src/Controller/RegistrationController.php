@@ -137,7 +137,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/user/add", name="admin_addUser")
      */
-    public function addUserWithrole(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function addUserWithrole(Request $request, UserPasswordEncoderInterface $userPasswordEncoder , EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $user->setPassword("");
@@ -162,27 +162,27 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+            // $this->emailVerifier->sendEmailConfirmation(
+            //     'app_verify_email',
+            //     $user,
+            //     (new TemplatedEmail())
+            //         ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
+            //         ->to($user->getEmail())
+            //         ->subject('Please Confirm your Email')
+            //         ->htmlTemplate('registration/confirmation_email.html.twig')
+            // );
             // do anything else you need here, like send an email
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+            // return $guardHandler->authenticateUserAndHandleSuccess(
+            //     $user,
+            //     $request,
+            //     $authenticator,
+            //     'main' // firewall name in security.yaml
+            // );
         }
         $haja = 1;
         return $this->render('user/newUser.html.twig', [
-            'SignUpForm' => $form->createView(),
+            'UserForm' => $form->createView(),
             'haja' => $haja
         ]);
     }
