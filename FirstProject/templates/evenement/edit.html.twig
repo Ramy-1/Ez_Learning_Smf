@@ -1,13 +1,17 @@
 
-{% extends 'backbase.html.twig' %}
-{% block title %}Edit Evenement{% endblock %}
+{% extends 'backbase.html.twig' %}{% block title %}Edit Evenement{% endblock %}
 
 {% block body %}
-    <h1 style="font-style:inherit;" class="btn-secondary" >Edit Evenement</h1>
+<div class="row">
+    <div  style="display: list-item;align-items: normal;justify-content: normal;margin-top: 15px; padding: 10px;">
+
+        <div class="card">
+            <div class="card-body">
+    <h1 style="color: coral" class="" >Edit Evenement</h1>
 
     {{ include('evenement/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_evenement_index') }}" class="btn-secondary" style="font-style:italic">back to list</a>
+    <a href="{{ path('app_evenement_index') }}"  style="font-style:italic">back to list</a>
 
     {{ include('evenement/_delete_form.html.twig') }}
 {% endblock %}

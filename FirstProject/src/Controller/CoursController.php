@@ -9,11 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_ADMIN","ROLE_ENSIEGNANT","ROLE_UNIVERSITE","ROLE_ETUDIANT")
- * 
  * @Route("/cours")
  */
 class CoursController extends AbstractController
@@ -37,9 +34,8 @@ class CoursController extends AbstractController
      */
     public function indexf(EntityManagerInterface $entityManager): Response
     {
-        $cours = $entityManager
-            ->getRepository(Cours::class)
-            ->findAll();
+        $repository = $this->getDoctrine()->getRepository(Cours::class);
+        $cours = $repository->findByDate();
 
         return $this->render('cours/indexf.html.twig', [
             'cours' => $cours,
@@ -58,6 +54,19 @@ class CoursController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($cour);
             $entityManager->flush();
+            $contact = $form->getData();
+            // /* mail*/
+            // $message= (new \Swift_Message('EasyLearning'))
+            //     ->setTo('asmazr586@gmail.com')
+            //     ->setFrom('asmazr586@gmail.com')
+            //     ->setBody(
+            //         $this->renderView(
+            //             'emails/contact.html.twig',compact('contact')
+            //         ),
+            //         'text/html'
+            //     )
+            // ;
+            // $mailer->send($message);
 
             return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,7 +76,28 @@ class CoursController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    /**
+     * @Route("/{id}/archive", name="coursarchiver", methods={"GET","POST"})
+     */
+    public function archiver($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Cours::class)->find($id);
+        $reclamation->setEtat(0);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_cours_index');
+    }
+    /**
+     * @Route("/{id}/activer", name="coursinarchiver", methods={"GET","POST"})
+     */
+    public function archiver2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Cours::class)->find($id);
+        $reclamation->setEtat(1);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_cours_index');
+    }
     /**
      * @Route("/{id}", name="app_cours_show", methods={"GET"})
      */

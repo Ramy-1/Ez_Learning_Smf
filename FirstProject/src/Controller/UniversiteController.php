@@ -3,18 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Universite;
+use App\Entity\User;
 use App\Form\UniversiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
- * 
- *  @IsGranted("ROLE_ADMIN","ROLE_UNIVERSITE")
  * @Route("/universite")
  */
 class UniversiteController extends AbstractController
@@ -35,11 +33,15 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/front", name="app_universite_indexf", methods={"GET"})
      */
-    public function index2(EntityManagerInterface $entityManager): Response
+    public function index2(EntityManagerInterface $entityManager, Request $request): Response
     {
         $universites = $entityManager
             ->getRepository(Universite::class)
             ->findAll();
+        // $universites = $paginator->paginate(
+        //     $universites,
+        //     $request->query->getInt('page', 1),
+        //     3);
 
         return $this->render('universite/indexf.html.twig', [
             'universites' => $universites,
@@ -49,7 +51,7 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/new", name="app_universite_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
         $universite = new Universite();
         $form = $this->createForm(UniversiteType::class, $universite);
@@ -57,6 +59,22 @@ class UniversiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $universite->setImguni(basename($universite->getImguni()));
+
+            $user = new User();
+            $user->setName($universite->getNom());
+            $user->setLastName($universite->getAdresse());
+            $user->setEmail($universite->getEmail());
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $universite->getMdpuni()
+                )
+            );
+            $user->setRoles(array("ROLE_UNIVERSITE"));
+          
+
+            $entityManager->persist($user);
+
             $entityManager->persist($universite);
             $entityManager->flush();
 
@@ -104,7 +122,7 @@ class UniversiteController extends AbstractController
      */
     public function delete(Request $request, Universite $universite, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $universite->getIduni(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$universite->getIduni(), $request->request->get('_token'))) {
             $entityManager->remove($universite);
             $entityManager->flush();
         }

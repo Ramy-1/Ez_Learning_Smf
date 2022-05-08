@@ -72,7 +72,7 @@ class UserController extends AbstractController
     }
 
     /**
-     *  @Route("/newuser", name="newuser")
+     *  @Route("/new", name="newuser")
      */
     public function newUser(Request $request): Response
     {

@@ -11,18 +11,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 /**
- * @IsGranted("ROLE_ADMIN","ROLE_RECRUTEUR","ROLE_UNIVERSITE")
  * @Route("/evenement")
  */
-// $this->denyAccessUnlessGranted('ROLE_ADMIN');
 class EvenementController extends AbstractController
 {
-    /** 
-     *
+
+    /**
      * @Route("/", name="app_evenement_index", methods={"GET"})
      */
     public function index(EntityManagerInterface $entityManager): Response
@@ -34,6 +32,56 @@ class EvenementController extends AbstractController
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenements,
         ]);
+    }
+
+
+    /**
+     * @Route("/top2events", name="top2events")
+     */
+    public function top2(Request $request): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Evenement::class);
+        $evenement = $repository->top2();
+
+        return $this->render('evenement/indexf.html.twig', [
+            'evenements' => $evenement,
+        ]);
+    }
+    /**
+     * @Route("/listp", name="app_evenement_indexx", methods={"GET"})
+     */
+    public function indexd(EntityManagerInterface $entityManager): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $evenements = $entityManager
+            ->getRepository(Evenement::class)
+            ->findAll();
+
+
+        // Retrieve the HTML generated in our twig file
+        $html =  $this->render('evenement/listp.html.twig', [
+            'evenements' => $evenements,
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+        return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/front", name="app_evenement_indexf", methods={"GET"})
@@ -55,15 +103,13 @@ class EvenementController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $evenement = new Evenement();
-        $evenement->setIdorg($this->getUser()->getId());
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('info', 'added successfully  ');
             $entityManager->persist($evenement);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('evenement/new.html.twig', [
@@ -107,7 +153,7 @@ class EvenementController extends AbstractController
      */
     public function delete(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $evenement->getIdevent(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$evenement->getIdevent(), $request->request->get('_token'))) {
             $entityManager->remove($evenement);
             $entityManager->flush();
         }

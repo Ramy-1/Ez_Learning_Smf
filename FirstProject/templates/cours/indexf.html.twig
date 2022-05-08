@@ -1,6 +1,5 @@
 
-{% extends 'frontbase.html.twig' %}
-{% block title %}EZ Learning{% endblock %}
+{% extends 'frontbase.html.twig' %}{% block title %}EZ Learning{% endblock %}
 {% block stylesheets %}
     {{parent()}}
 {% endblock %}
@@ -51,8 +50,15 @@
             </div>
         </div>
     </div>
-
-
+    <!-- translate -->
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">// <![CDATA[
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+        // ]]></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+    <!-- translate -->
         <section class="product bg-white">
             {% for cour in cours %}
                 <div class="container">
@@ -62,7 +68,14 @@
                             <h2>titre:{{ cour.titre}}  </h2>
                             <hr>
                             <b>Description: </b>{{ cour.description }}
-
+                            <b>Lien: </b><a href="{{ cour.support }}">{{ cour.support}}</a>
+                            <a href="{{ path('app_cours_show', {'id': cour.id}) }}" >show</a>
+                            <a href="{{ path('app_like_cours_new',{'id':cour.id})}}" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> like
+                            </a>
+                            <a href="{{ path('app_like_cours_newd',{'id':cour.id})}}" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> dislike
+                            </a>
                         </div>
                     </div>
                 </div>
