@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SocieteType;
 use App\Entity\Societe;
+use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\SocieteRepository;
@@ -16,6 +17,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SocieteController extends AbstractController
 {
@@ -49,7 +52,7 @@ class SocieteController extends AbstractController
       /**
      * @Route("/addSociete", name="addSociete")
      */
-    public function addSociete(Request $request)
+    public function addSociete(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $societe = new Societe();
         $form = $this->createForm(SocieteType::class, $societe);
@@ -57,15 +60,31 @@ class SocieteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $image = $form->get('imgsoc')->getData();
-            $fichier=$societe->getNom().'.'.$image->guessExtension();
-            $image->move(
-                $this->getParameter('images_directory'),
-                $fichier
-            );
+            // $image = $form->get('imgsoc')->getData();
+            // $fichier=$societe->getNom().'.'.$image->guessExtension();
+            // $image->move(
+            //     $this->getParameter('images_directory'),
+            //     $fichier
+            // );
+            $fichier = 0;
             $societe->setImgsoc($fichier);
             $em = $this->getDoctrine()->getManager();
             //$societe->setMoyenne(0);
+
+            $user = new User();
+            $user->setName($societe->getNom());
+            $user->setLastName($societe->getAdresse());
+            $user->setEmail($societe->getEmail());
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $societe->getMdpsoc()
+                )
+            );
+            $user->setRoles(array("ROLE_SOCIETE"));
+          
+
+            $em->persist($user);
             $em->persist($societe);
             $em->flush();
             return $this->redirectToRoute('listSociete');

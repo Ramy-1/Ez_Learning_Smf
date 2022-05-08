@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordEncoder->encodePassword(
+                $userPasswordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -58,7 +58,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
                     ->to($user->getEmail())
@@ -97,18 +99,20 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordEncoder->encodePassword(
+                $userPasswordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
 
-            // $user->setRoles(array("ROLE_ETUDIANT"));
+            $user->setRoles(array("ROLE_ETUDIANT"));
             $entityManager->persist($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
                     ->to($user->getEmail())
@@ -124,9 +128,62 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-
+        $haja = 0;
         return $this->render('security/signup.html.twig', [
             'SignUpForm' => $form->createView(),
+            'haja' => $haja
+        ]);
+    }
+    /**
+     * @Route("/user/add", name="admin_addUser")
+     */
+    public function addUserWithrole(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $user = new User();
+        $user->setPassword("");
+
+        // $form = $this->createForm(Type::class, $user);
+        $form = $this->createForm(UserType::class, $user);
+        // $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            // $user->setRoles(array("ROLE_ETUDIANT"));
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                (new TemplatedEmail())
+                    ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
+        }
+        $haja = 1;
+        return $this->render('user/newUser.html.twig', [
+            'SignUpForm' => $form->createView(),
+            'haja' => $haja
         ]);
     }
 
