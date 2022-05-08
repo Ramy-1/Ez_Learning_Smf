@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Universite;
+use App\Entity\User;
 use App\Form\UniversiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @Route("/universite")
  */
@@ -50,7 +51,7 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/new", name="app_universite_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
         $universite = new Universite();
         $form = $this->createForm(UniversiteType::class, $universite);
@@ -58,6 +59,22 @@ class UniversiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $universite->setImguni(basename($universite->getImguni()));
+
+            $user = new User();
+            $user->setName($universite->getNom());
+            $user->setLastName($universite->getAdresse());
+            $user->setEmail($universite->getEmail());
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $universite->getMdpuni()
+                )
+            );
+            $user->setRoles(array("ROLE_UNIVERSITE"));
+          
+
+            $entityManager->persist($user);
+
             $entityManager->persist($universite);
             $entityManager->flush();
 
