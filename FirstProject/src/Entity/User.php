@@ -10,7 +10,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,9 +25,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
-     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -64,7 +60,7 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
-    /**
+     /**
      * @ORM\Column(type="boolean")
      */
     private $isBlocked = 0;
@@ -75,9 +71,23 @@ class User implements UserInterface
     private $userFavorites;
 
     private $captcha;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Test::class, mappedBy="user")
+     */
+    private $tests;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReponseEtudiant::class, mappedBy="user")
+     */
+    private $reponseEtudiants;
+
+    
+
     public function __construct()
     {
-        $this->userFavorites = new ArrayCollection();
+        $this->tests = new ArrayCollection();
+        $this->reponseEtudiants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,7 +218,6 @@ class User implements UserInterface
 
         return $this;
     }
-
     public function isBlocked(): bool
     {
         return $this->isBlocked;
@@ -250,4 +259,66 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Test>
+     */
+    public function getTests(): Collection
+    {
+        return $this->tests;
+    }
+
+    public function addTest(Test $test): self
+    {
+        if (!$this->tests->contains($test)) {
+            $this->tests[] = $test;
+            $test->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTest(Test $test): self
+    {
+        if ($this->tests->removeElement($test)) {
+            // set the owning side to null (unless already changed)
+            if ($test->getUser() === $this) {
+                $test->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReponseEtudiant>
+     */
+    public function getReponseEtudiants(): Collection
+    {
+        return $this->reponseEtudiants;
+    }
+
+    public function addReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+    {
+        if (!$this->reponseEtudiants->contains($reponseEtudiant)) {
+            $this->reponseEtudiants[] = $reponseEtudiant;
+            $reponseEtudiant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+    {
+        if ($this->reponseEtudiants->removeElement($reponseEtudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($reponseEtudiant->getUser() === $this) {
+                $reponseEtudiant->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }

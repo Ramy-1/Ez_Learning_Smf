@@ -1,0 +1,89 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}EZ Learning{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+      <link href="{{asset('assets/backoffice/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
+            <!-- Custom CSS -->
+            <link href="{{asset('assets/backoffice/dist/css/style.min.css')}}" rel="stylesheet" />
+            <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+            
+{% endblock %}
+{% block javascript %}
+    {{parent()}}
+     
+      <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+       <!-- Bootstrap tether Core JavaScript -->
+            <script src="{{asset('assets/backoffice/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+{{parent()}}
+<div class="site-section courses-title" id="courses-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-7 text-center aos-init" data-aos="fade-up" data-aos-delay="">
+            <h2 class="section-title"></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="container">
+     <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h3>Liste des Reclamations</h3>
+    
+    <table class="table-responsive" id="table">
+        <thead>
+            <tr>
+               <th>#</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rec in reclamations %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ rec.type }}</td>
+                <td style="text-overflow: ellipsis;
+                            overflow: hidden; 
+                            width: 160px; 
+                            height: 1.2em; 
+                            white-space: nowrap;">
+                {{ rec.description|raw }}</td>
+
+                <td>{{rec.daterec|date('Y-m-d')}}</td>
+                <td>
+                  <div class="comment-footer">
+                       
+
+                        <a type="button" href="" class="btn btn-success btn-sm text-white">
+                          Afficher
+                        </a>
+                        <a type="button" href="" class="btn btn-warning btn-sm">
+                          Modifier
+                        </a>
+                      </div>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

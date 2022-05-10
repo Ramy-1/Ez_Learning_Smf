@@ -19,7 +19,7 @@ class ReclamationType extends AbstractType
                         'Concernant un cours' => 'Concernant un cours'
                     ]])
             ->add('description')
-            ->add('idetudiant')
+           // ->add('idetudiant')
             ->add('idcours')
         ;
     }

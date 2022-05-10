@@ -1,0 +1,39 @@
+ {% block menu %}
+
+           <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
+                        <li><a href="#" class="nav-link">Acceuil</a></li>
+                        <li><a href="{{path('app_cours_indexf')}}" class="nav-link">Courses</a></li>
+                       
+                        <li><a href="{{path('app_test_home')}}" class="nav-link">Mes Tests</a></li>
+                        <li><a href="{{path('app_teachers')}}" class="nav-link">Ensegniant</a></li>
+                        <li>
+                         <div class="dropdown">
+                            <a class="nav-link "  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% for category in categories %}
+                                <a href="{{path('app_cours_indexfcat',{'id':category.idcat})}}" class="dropdown-item" href="#">{{category.nomcat}}</a>
+                                
+                            {% endfor %}
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                         <div class="dropdown">
+                            <a class="nav-link "  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Partenaires
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            
+                                <a class="dropdown-item" href="{{path('app_universite_indexf')}}">Univeristés</a>
+                                <a class="dropdown-item" href="{{path('list1Societe')}}">Societés</a>
+                                
+                            
+                            </div>
+                          </div>
+                        </li>
+                        <li><a href="{{path('app_reclamation_etudiant',{'id':app.user.id})}}" class="nav-link">Reclamation</a></li>
+                         <li><a href="{{path('app_logout')}}" class="nav-link">Logout</a></li>
+                    </ul>
+         {% endblock %}

@@ -1,7 +1,49 @@
-{% extends 'backbase.html.twig' %}
-{% block title %}Universite index{% endblock %}
-
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Universités{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Universités</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Accuiel</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Universités
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
     <div class="row">
     <div  style="display: list-item;align-items: normal;justify-content: normal;margin-top: 15px; padding: 10px;">
     <style>
@@ -35,7 +77,7 @@
         </thead>
         <tbody>
 
-        <a href="{{ path('app_universite_new') }}" >Create new</a>
+        <a class="btn btn-primary" href="{{ path('app_universite_new') }}" >Ajouter</a>
         {% for universite in universites |reverse %}
             <tr>
                 <td>{{ universite.iduni }}</td>
@@ -43,11 +85,11 @@
                 <td>{{ universite.email }}</td>
                 <td>{{ universite.adresse }}</td>
 
-                <td><img class="w-100" src="{{ asset('images/'~ universite.imguni) }}" alt="Image de {{ universite.imguni }}">
+                <td><img style="width:50%;" class="" src="{{ asset('uploads/'~ universite.imguni) }}" alt="Image de {{ universite.imguni }}">
                 <td>{{ universite.mdpuni }}</td>
                 <td>
-                    <a href="{{ path('app_universite_show', {'iduni': universite.iduni}) }}" >show</a>
-                    <a href="{{ path('app_universite_edit', {'iduni': universite.iduni}) }}" >edit</a>
+                    <a class="btn btn-success btn-sm text-white" href="{{ path('app_universite_show', {'iduni': universite.iduni}) }}" >Afficher</a>
+                    <a href="{{ path('app_universite_edit', {'iduni': universite.iduni}) }}" class="btn btn-warning btn-sm">Modifier</a>
 
 
                 </td>

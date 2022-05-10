@@ -1,28 +1,38 @@
-{% extends 'frontbase.html.twig' %}
-{% block programs %}
-  <br> 
-<div class="card" style="margin: auto; width: 100%; border: 3px;padding: 150px;">
-<div style ="width: 60%;margin:auto;">
- <div class="sidebar-search" >
-      <div class="input-group custom-search-form">
-          <input type="text" id="search" class="form-control" placeholder="Search item">
+{% extends 'base_front.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block body %}
+{{parent()}}
+<div class="intro-section single-cover" id="home-section">
+      
+      <div class="slide-1 " style="background-image: url('{{asset('images/img_2.jpg')}}');" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                  <h1 data-aos="fade-up" data-aos-delay="0"></h1>
+                  <p data-aos="fade-up" data-aos-delay="100"></p>
+                </div>
+
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
       </div>
-      <!-- /input-group -->
-  </div>
-  <ul class="nav" id="side-menu">
-      <li>
-          <ul class="nav nav-second-level" id="entitiesNav">
-          </ul>
-      </li>
-  </ul>
-  </div>
-  <br><br><br>
+    </div>
  <div class = "row">
     {% for societe in societes %}
 
 <div class="col-md-4">
     <div class="card" style="width: 20rem;" align="center">
-  <img class="card-img-top" src="uploads/{{ societe.imgsoc }}" alt="Card image cap">
+  <img class="card-img-top" src="uploads/{{ societe.imgsoc }}" style="width: 63%;margin-left: 18%;" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">{{ societe.nom}}</h5>
     <p class="card-text">

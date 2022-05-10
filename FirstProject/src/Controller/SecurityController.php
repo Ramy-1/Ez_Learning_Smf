@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/","/login", name="app_login")
+     * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -29,16 +29,16 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('app_user');
                 }
                 if (in_array('ROLE_ETUDIANT', $user->getRoles())) {
-                    return $this->redirectToRoute('etudiant_home');
+                    return $this->redirectToRoute('app_cours_indexf');
                 }
                 if (in_array('ROLE_RECRUTEUR', $user->getRoles())) {
                     return $this->redirectToRoute('recruteur_home');
                 }
                 if (in_array('ROLE_ENSIEGNANT', $user->getRoles())) {
-                    return $this->redirectToRoute('ensiegnant_home');
+                    return $this->redirectToRoute('app_cours_index');
                 }
                 if (in_array('ROLE_UNIVERSITE', $user->getRoles())) {
-                    return $this->redirectToRoute('universite_home');
+                    return $this->redirectToRoute('app_teachers_universite', array('id' => $user->getId()));
                 }
                 if (in_array('ROLE_SOCIETE', $user->getRoles())) {
                     return $this->redirectToRoute('societe_home');

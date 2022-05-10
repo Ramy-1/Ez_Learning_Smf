@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Universite;
 use App\Entity\User;
+use App\Entity\Categorie;
 use App\Form\UniversiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,10 @@ class UniversiteController extends AbstractController
         $universites = $entityManager
             ->getRepository(Universite::class)
             ->findAll();
+        
+            $categories = $entityManager
+            ->getRepository(Categorie::class)
+            ->findAll();
         // $universites = $paginator->paginate(
         //     $universites,
         //     $request->query->getInt('page', 1),
@@ -45,6 +50,7 @@ class UniversiteController extends AbstractController
 
         return $this->render('universite/indexf.html.twig', [
             'universites' => $universites,
+            'categories' => $categories,
         ]);
     }
 
@@ -58,7 +64,13 @@ class UniversiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $universite->setImguni(basename($universite->getImguni()));
+            $image = $form->get('imguni')->getData();
+            $fichier=$universite->getNom().'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $universite->setImguni($fichier);
 
             $user = new User();
             $user->setName($universite->getNom());
@@ -106,6 +118,13 @@ class UniversiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('imguni')->getData();
+            $fichier=$universite->getNom().'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $universite->setImguni($fichier);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_universite_index', [], Response::HTTP_SEE_OTHER);
@@ -130,3 +149,4 @@ class UniversiteController extends AbstractController
         return $this->redirectToRoute('app_universite_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+

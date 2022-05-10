@@ -9,7 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Repository\TestRepository;
+use App\Repository\CategorieRepository;
 /**
  * @Route("/cours")
  */
@@ -20,6 +21,7 @@ class CoursController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager): Response
     {
+        
         $cours = $entityManager
             ->getRepository(Cours::class)
             ->findAll();
@@ -32,13 +34,15 @@ class CoursController extends AbstractController
     /**
      * @Route("/front", name="app_cours_indexf", methods={"GET"})
      */
-    public function indexf(EntityManagerInterface $entityManager): Response
+    public function indexf(EntityManagerInterface $entityManager,CategorieRepository $categorieRepository): Response
     {
         $repository = $this->getDoctrine()->getRepository(Cours::class);
-        $cours = $repository->findByDate();
-
+        //$cours = $repository->findByDate();
+        $cours = $repository->findAll();
+        $categories=$categorieRepository->findAll();
         return $this->render('cours/indexf.html.twig', [
             'cours' => $cours,
+            'categories'=>$categories
         ]);
     }
 
@@ -52,6 +56,7 @@ class CoursController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $cour->setDatecreate(new \DateTime('now'));
             $entityManager->persist($cour);
             $entityManager->flush();
             $contact = $form->getData();
@@ -101,10 +106,12 @@ class CoursController extends AbstractController
     /**
      * @Route("/{id}", name="app_cours_show", methods={"GET"})
      */
-    public function show(Cours $cour): Response
+    public function show(Cours $cour,CategorieRepository $categorieRepository): Response
     {
+        $categories=$categorieRepository->findAll();
         return $this->render('cours/show.html.twig', [
             'cour' => $cour,
+            'categories'=>$categories
         ]);
 
     }
@@ -151,5 +158,35 @@ class CoursController extends AbstractController
         }
 
         return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/front/{id}", name="app_cours_indexfcat", methods={"GET"})
+     */
+    public function indexfcat($id,EntityManagerInterface $entityManager,CategorieRepository $categorieRepository): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Cours::class);
+        //$cours = $repository->findByDate();
+        $cours = $repository->findby(['idcat'=>$id]);
+        $categories=$categorieRepository->findAll();
+        return $this->render('cours/indexf.html.twig', [
+            'cours' => $cours,
+            'categories'=>$categories
+        ]);
+    }
+
+    /**
+     * @Route("/univeriste/{id}", name="app_cours_index_univer", methods={"GET"})
+     */
+    public function indexUniver($id,EntityManagerInterface $entityManager,CategorieRepository $categorieRepository): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Cours::class);
+        //$cours = $repository->findByDate();
+        $cours = $repository->findby(['idcat'=>$id]);
+        $categories=$categorieRepository->findAll();
+        return $this->render('cours/index.html.twig', [
+            'cours' => $cours,
+            'categories'=>$categories
+        ]);
     }
 }

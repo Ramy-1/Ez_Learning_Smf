@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CategorieRepository;
 
 /**
  * @Route("/user")
@@ -202,4 +204,64 @@ class UserController extends AbstractController
 
         ]);
     }
+/**
+     * @Route ("/students" , name="app_student")
+     */
+    public function findStudent()
+    {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery(
+                'SELECT u FROM App:User u WHERE u.roles LIKE :role'
+            )->setParameter('role', '%"ROLE_ETUDIANT"%');
+
+        $users = $query->getResult();
+       
+       // dump($qb);
+        return $this->render('user/students.html.twig', [
+            
+            'students' => $users,
+
+        ]);
+    }
+
+    /**
+     * @Route ("/teachers" , name="app_teachers")
+     */
+    public function findTeachers(CategorieRepository $categorieRepository)
+    {
+        $categories=$categorieRepository->findAll();
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery(
+                'SELECT u FROM App:User u WHERE u.roles LIKE :role'
+            )->setParameter('role', '%"ROLE_ENSIEGNANT"%');
+
+        $users = $query->getResult();
+       
+       // dump($qb);
+        return $this->render('home/teachers.html.twig', [
+            
+            'teachers' => $users,
+            'categories'=>$categories
+
+        ]);
+    }
+
+    /**
+     * @Route ("/teachers/universite/{id}" , name="app_teachers_universite")
+     */
+    public function findTeachersByUniversite($id,CategorieRepository $categorieRepository,UserRepository $userRepository)
+    {
+       // $teachers=$userRepository->findby(['universite'=>$id]);
+       $teachers=$userRepository->findAll();
+        $categories=$categorieRepository->findAll();
+
+        return $this->render('user/teacher.html.twig', [
+            
+            'teachers' => $teachers,
+            'categories'=>$categories
+
+        ]);
+    }
+
+    
 }

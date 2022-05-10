@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Cours
  *
  * @ORM\Table(name="cours")
- * @ORM\Entity(repositoryClass="App\Repository\CoursRepository")
+ * @ORM\Entity
  */
 class Cours
 {
@@ -51,7 +53,7 @@ class Cours
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datecreate", type="datetime", length=200, nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="datecreate", type="datetime", length=200, nullable=false)
      */
     private $datecreate;
 
@@ -59,9 +61,6 @@ class Cours
      * @var string
      *
      * @ORM\Column(name="support", type="string", length=200, nullable=false)
-     * @Assert\Url(
-     *    message = "The url '{{ value }}' is not a valid url."
-     * )
      */
     private $support;
 
@@ -78,6 +77,13 @@ class Cours
      * @ORM\Column(name="idcat", type="integer", nullable=false)
      */
     private $idcat;
+
+    
+
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -206,6 +212,10 @@ class Cours
     {
         $this->idcat = $idcat;
     }
+    public function __toString() {
+        return $this->titre;
+    }
 
+    
 
 }

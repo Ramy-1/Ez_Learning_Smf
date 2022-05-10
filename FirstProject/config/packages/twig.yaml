@@ -6,4 +6,5 @@ twig:
     globals:
         gg_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - 'recaptcha.html.twig'

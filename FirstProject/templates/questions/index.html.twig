@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Questions</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_test_index') }}">Test</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Questions
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block title %}Questions index{% endblock %}
+
+{% block body %}
+    {{parent()}}
+
+     <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+                    <h4 class="card-title">Questions du Test {{test.titre}}</h4>
+    <h1></h1>
+
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Contenu</th>
+                <th>Support</th>
+                
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ question.contenu }}</td>
+                <td>{{ question.support }}</td>
+               
+                <td>
+                    <div class="comment-footer">
+                        <a type="button" href="{{ path('app_reponses_index', {'questionid': question.id}) }}" class="btn btn-info btn-sm text-white">
+                           Reponses
+                        </a>
+                        <a type="button" href="{{ path('app_questions_show', {'id': question.id}) }}" class="btn btn-success btn-sm text-white">
+                          Afficher
+                        </a>
+                        <a type="button" href="{{ path('app_questions_edit', {'id': question.id}) }}" class="btn btn-warning btn-sm">
+                          Modifier
+                        </a>
+                    </div>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    <div class="border-top">
+                        <div class="card-body">
+                           <a class="btn btn-primary" href="{{ path('app_questions_new',{'testid':test.id}) }}">Ajouter</a>
+                        </div>
+                    </div>
+                  </div>
+             </div>
+            </div>
+         </div>
+
+         <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+} );
+</script>
+{% endblock %}
+
+

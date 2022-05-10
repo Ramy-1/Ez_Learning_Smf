@@ -1,12 +1,12 @@
 
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-<div class="col-md-8" >
+<div class="col-md" >
     <div class="card" style="margin: auto; width: 70%; border: 3px solid blue;padding: 30px;">
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
     {{ form_widget(form) }}
 
-<button class="btn-secondary">{{ button_label|default('Save') }}</button>
+<button class="btn-secondary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 
 

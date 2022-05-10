@@ -1,8 +1,50 @@
-{% extends 'backbase.html.twig' %}
-{% block title %}Categorie index{% endblock %}
-
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Categories{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Categories</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Accuiel</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Categories
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
-    <h1 class="btn-secondary">Categorie index</h1>
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h1 >Categorie index</h1>
 
     <div class="container my-2">
         <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
@@ -23,8 +65,8 @@
                 <td>{{ categorie.domaine }}</td>
                 <td>{{ categorie.nomcat }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_show', {'idcat': categorie.idcat}) }}" class="btn-secondary">show</a>
-                    <a href="{{ path('app_categorie_edit', {'idcat': categorie.idcat}) }}" class="btn-secondary">edit</a>
+                    <a href="{{ path('app_categorie_show', {'idcat': categorie.idcat}) }}" class="btn btn-success btn-sm text-white">Afficher</a>
+                    <a href="{{ path('app_categorie_edit', {'idcat': categorie.idcat}) }}" class="btn btn-warning btn-sm">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -35,7 +77,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_new') }}" class="btn-secondary">Create new</a>
+    <a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Ajouter</a>
     <script>
 
 

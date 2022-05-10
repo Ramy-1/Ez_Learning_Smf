@@ -1,6 +1,49 @@
-{% extends 'backbase.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Societe{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Cours</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Societe
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
-<div class="table-responsive">
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
 <h1 align ="center"> <br>Tableau des societes</h1>
 
 
@@ -38,8 +81,8 @@
             <td>{{ societe.mdpsoc }}</td>
          
 
-            <td><a href="{{ path('updateSociete',{'idsoc':societe.idsoc}) }}">Update</a>
-            <a href="{{ path('deleteSociete',{'idsoc':societe.idsoc}) }}">Delete</a>
+            <td><a class="btn btn-warning btn-sm" href="{{ path('updateSociete',{'idsoc':societe.idsoc}) }}">Modifier</a>
+            <a class="btn btn-danger btn-sm" href="{{ path('deleteSociete',{'idsoc':societe.idsoc}) }}">Supprimer</a>
             
         </tr>
     {% endfor %}
@@ -50,7 +93,8 @@
 			</tr>
 		</tbody>
 	</table>
-    <a href="{{ path('addSociete') }}">Add Societe</a>
+	</div>
+    <a class="btn btn-primary" href="{{ path('addSociete') }}">Ajouter une societe</a>
 </div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
 
 {% endblock %}

@@ -1,13 +1,101 @@
-
-{% extends 'backbase.html.twig' %}
-{% block title %}Cours index{% endblock %}
-
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Cours{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Cours</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cours
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
-    <h1 class="btn-secondary">Cours index</h1>
 
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h1 >Cours index</h1>
+  <table class="table-responsive" id="table">
+        <thead>
+            <tr>
+               <th style="padding-right: 30px;">#</th>
+                <th style="padding-right: 30px;">Titre</th>
+                <th style="padding-right: 30px;">Description</th>
+                <th style="padding-right: 30px;">Support</th>
+                <th style="padding-right: 30px;width: 100%;">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td style="padding-right: 30px;">{{loop.index}}</td>
+                <td style="margin:auto;">{{ cour.titre }}</td>
+                <td style="text-overflow: ellipsis;
+                            overflow: hidden; 
+                            width: 160px; 
+                            height: 1.2em; 
+                            white-space: nowrap;">
+                {{  cour.description }}</td>
+                <td style="padding-right: 30px;">{{ cour.support }}</td>
+                
+                <td style="padding-right: 30px;">
+                  <div class="comment-footer">
+                       
+                        <a href="{{ path('app_cours_show', {'id': cour.id}) }}"class="btn btn-success btn-sm text-white" >Afficher</a>
+                    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}"class="btn btn-warning btn-sm">Modifier</a>
+                      </div>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<a href="{{ path('app_cours_new') }}" class="btn btn-primary">Ajouter</a>
+
+    <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
+{#}
     <section class="product bg-white">
 
-        <a href="{{ path('app_cours_new') }}" class="btn-secondary">Create new</a>
+        <a href="{{ path('app_cours_new') }}" class="btn btn-primary">Ajouter</a>
         {% for cour in cours |reverse %}
             <div class=container>
                 <div class=row>
@@ -15,8 +103,8 @@
                     <p2>{{ cour.description }}</p2>
                     <h2>{{ cour.support }}</h2>
 
-                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}" class="btn-secondary">show</a>
-                    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn-secondary">edit</a>
+                    <a href="{{ path('app_cours_show', {'id': cour.id}) }}"class="btn btn-success btn-sm text-white" >Afficher</a>
+                    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}"class="btn btn-warning btn-sm">Modifier</a>
                     <hr>
 
                 </div>
@@ -79,5 +167,5 @@
 
 
     </script>
-
+#}
 {% endblock %}

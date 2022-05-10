@@ -1,0 +1,112 @@
+
+<style>
+#images{
+    width: 90%;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+figure{
+    width:45%;
+}
+
+figcaption{
+    text-align: center;
+    font-size: 2.4vmin;
+    margin-top: 0.5vmin;
+}
+input[type="file"]{
+    display: none;
+}
+.label-input{
+    display: block;
+    position: relative;
+    background-color: #025bee;
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    width: 300px;
+    padding: 18px 0;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+{{ form_start(form) }}
+    <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             {{ form_widget(form.imageFile, { 'attr': {'onchange': 'preview()'} }) }}
+             
+             <label class="label-input" for="test_imageFile">
+                <i class="fas fa-upload"></i> &nbsp; {{ form_label(form.imageFile) }}
+            </label>
+             <p id="num-of-files"></p>
+             <div id="images">    
+                <figure id="figure">
+                <img id="img2" src="{% if test.image != null %}{{asset('uploads/imageTest/'~test.image)}} {% else %}{{asset('assets/images/no-image-found.png')}} {% endif %}" alt="user" width="100%" style="border-radius:4%;">
+                <figcaption id="figcaption">{{test.image}}</figcaption>
+                </figure>
+             </div>
+
+           
+                  <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    {% for input in form %}
+                    <div class="form-group row">
+                        
+                        <label class="text-bluee">{% if input !="imageFile"%}{{form_label(input)}}{% endif %}</label>
+                        <div class="col-sm-12">
+                        {{form_widget(input)}}
+                        <div class="invalid-feedback" style="display:block;">{{form_errors(input)}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    {% do form.imageFile.setRendered %}
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                        </div>
+                    </div>
+                  </div>
+             </div>
+            </div>
+         </div>
+         
+{{ form_end(form) }}
+
+
+<script>
+let fileInput = document.getElementById("test_imageFile");
+let imageContainer = document.getElementById("images");
+let numOfFiles = document.getElementById("num-of-files");
+let img =  document.getElementById("img2");
+ let figure = document.getElementById("figure");
+ let figCap = document.getElementById("figcaption");
+function preview(){
+    imageContainer.innerHTML = "";
+   // numOfFiles.textContent = `${fileInput.files.length} image Choisie`;
+
+    for(i of fileInput.files){
+        let reader = new FileReader();
+       
+       
+        figCap.innerText = i.name;
+        figure.appendChild(figCap);
+        reader.onload=()=>{
+            
+            img.setAttribute("src",reader.result);
+            figure.insertBefore(img,figCap);
+        }
+        imageContainer.appendChild(figure);
+        reader.readAsDataURL(i);
+    }
+}
+</script>

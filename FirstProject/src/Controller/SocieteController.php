@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\SocieteType;
 use App\Entity\Societe;
 use App\Entity\User;
+use App\Entity\Categorie;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\SocieteRepository;
@@ -38,7 +39,9 @@ class SocieteController extends AbstractController
     public function listStudenSocietes()
     {
         $societes = $this->getDoctrine()->getRepository(Societe::class)->findAll();
-        return $this->render('Societe/list.html.twig', ["societes" => $societes]);
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        return $this->render('Societe/list.html.twig', ["societes" => $societes,
+    "categories"=>$categories]);
     }
     /**
      * @Route("/list1Societe", name="list1Societe")
@@ -46,8 +49,9 @@ class SocieteController extends AbstractController
     public function listFrontStudenSocietes(Request $request)
     {
         $societes = $this->getDoctrine()->getRepository(Societe::class)->findAll();
-        
-        return $this->render('Societe/list1.html.twig', ["societes" => $societes]);
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        return $this->render('Societe/list1.html.twig', ["societes" => $societes,
+        "categories"=>$categories]);
     }
       /**
      * @Route("/addSociete", name="addSociete")
@@ -66,7 +70,12 @@ class SocieteController extends AbstractController
             //     $this->getParameter('images_directory'),
             //     $fichier
             // );
-            $fichier = 0;
+            $image = $form->get('imgsoc')->getData();
+            $fichier=$societe->getNom().'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
             $societe->setImgsoc($fichier);
             $em = $this->getDoctrine()->getManager();
             //$societe->setMoyenne(0);
