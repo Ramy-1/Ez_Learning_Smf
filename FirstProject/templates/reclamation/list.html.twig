@@ -1,51 +1,105 @@
-{% extends 'backbase.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Reclamation{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Reclamation</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Reclamation
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
 <h1 align="center"> <br>Tableau des reclamations</h1>
 {{totRec}}
-<div class="table-responsive" align="center" >
-			<table class="table" border="2" >
+
+			 <table class="table-responsive mb-3" id="table" >
 				<thead class="thead-light">
 					<tr>
-						<th>
-							<label class="customcheckbox mb-3">
+						<th style="padding-right: 30px;"> 
+							<label class="customcheckbox ">
 								<input type="checkbox" id="mainCheckbox"/>
 								<span class="checkmark"></span>
 							</label>
 						</th>
-						<td>type</td>
-                        <td>description</td>
-                        <td>id etudiant</td>
-                       <td> id cours</td>
-                      <td> date reclamation</td>
+						<th style="padding-right: 30px;">type</th>
+                        <th style="padding-right: 30px;">description</th>
+                        <th style="padding-right: 30px;">id etudiant</th>
+                       <th style="padding-right: 30px;"> id cours</th>
+                      <th style="padding-right: 30px;"> date reclamation</th>
+					  <th style="padding-right: 30px;">action </th>
+					 
 					</tr>
 				</thead>
 				<tbody class="customtable">
 					
 						{% for reclamation in reclamations %}
-        <tr>
-							<th>
+        					<tr>
+							<td>
 								<label class="customcheckbox">
 									<input type="checkbox" class="listCheckbox"/>
 									<span class="checkmark"></span>
 								</label>
-							</th>
-            <td>{{ reclamation.type}}</td>
-            <td>{{ reclamation.description }}</td>
-            <td>{{ reclamation.idetudiant }}</td>
-            <td>{{ reclamation.idcours }}</td>
-            <td>{{ reclamation.getDaterec()|date('d M Y') }}</td>
-           
-            <td><a href="{{ path('addReponse',{'idrec':reclamation.id}) }}">répondre</a>
+							</td>
+							<td style="padding-right: 30px;">{{ reclamation.type}}</td>
+							<td>{{ reclamation.description }}</td>
+							<td>{{ reclamation.idetudiant }}</td>
+							<td>{{ reclamation.idcours }}</td>
+							<td>{{ reclamation.getDaterec()|date('d M Y') }}</td>
+						
+							<td><a class="btn btn-info btn-sm text-white" href="{{ path('addReponse',{'idrec':reclamation.id}) }}">répondre</a>
 
-            <td><a href="{{ path('updateReclamation',{'idrec':reclamation.id}) }}">Update</a>
-            <a href="{{ path('deleteReclamation',{'idrec':reclamation.id}) }}">Delete</a> 
+							<a class="btn btn-warning btn-sm" href="{{ path('updateReclamation',{'idrec':reclamation.id}) }}">Modifier</a>
+							<a class="btn btn-danger btn-sm" href="{{ path('deleteReclamation',{'idrec':reclamation.id}) }}">Supprimer</a> </td>
         </tr>
     {% endfor %}
 				</tbody>
-			</tr>
+			
 		</tbody>
 	</table>
-</div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
 
-<a href="{{ path('addReclamation') }}">Add Reclamation</a>
+	<a class="btn btn-primary" href="{{ path('addReclamation') }}">Ajouter une Reclamation</a>
+</div>
+
+</div>
+</div>
+</div>
+<link rel="stylesheet" type="text/css" href="{{asset('assets/extra-libs/multicheck/multicheck.css')}}"/>
+<script src="{{asset('assets/extra-libs/multicheck/datatable-checkbox-init.js')}}"></script>
+
+
 {% endblock %}

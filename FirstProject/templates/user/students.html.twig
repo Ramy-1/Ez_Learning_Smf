@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Etudiant{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Etudiants</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Etudiants
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block body %}
+
+{{parent()}}
+
+ <!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h3>Liste des etudiant</h3>
+    
+    <table class="table-responsive" id="table">
+        <thead>
+            <tr>
+               <th>#</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Role</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+                <th>Bloquer</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <tr>
+                <td>{{loop.index}}</td>
+                    <td style="padding-right:30px;">{{student.email}}</td>
+                    {# <td>{{u.password}}</td> #}
+                    <td>{{student.name}}</td>
+                    <td>{{student.lastName}}</td>
+                    <td>
+                        {% for arole in student.roles %}
+                            <li>{{arole}}</li>
+                        {% endfor %}
+                    </td>
+                    {# <td>{{u.isVerified}}</td> #}
+                    <td>
+                        <a id="updated" href="{{ path('UserUpdate',{'id':student.id}) }}">modifier</a>
+                        <i class="mdi mdi-account-convert"></td>
+                    </td>
+                    <td>
+                        <a href="{{ path('UserDelete',{'id':student.id}) }}">Supprimer</a>
+                        <i class="mdi mdi-account-multiple-minus"></td>
+                    </td>
+                    <td>
+                        <a href="{{ path('UserBlock',{'id':student.id}) }}">
+                            {% if student.isBlocked() %}
+                                Un
+                            {% endif %}
+                            Block
+                        </a>
+                        <i class="mdi mdi-account-alert"></td>
+                    </td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    
+
+      <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
+
+ 
+{% endblock %}

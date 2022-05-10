@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Universite
  *
  * @ORM\Table(name="universite")
- * @ORM\Entity(repositoryClass="App\Repository\UniversiteRepository")
+ * @ORM\Entity
  */
 class Universite
 {
@@ -41,7 +41,7 @@ class Universite
      * @ORM\Column(name="email", type="string", length=200, nullable=false)
      * @Assert\NotBlank
      * @Assert\Email(
-     *     message = "The emails '{{ value }}' is not a valid emails."
+     *     message = "The email '{{ value }}' is not a valid email."
      * )
      */
     private $email;

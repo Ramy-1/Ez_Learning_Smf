@@ -2,52 +2,52 @@
 
 namespace App\Entity;
 
+use App\Repository\ReponsesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Reponses
- *
- * @ORM\Table(name="reponses", indexes={@ORM\Index(name="question", columns={"question"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=ReponsesRepository::class)
  */
 class Reponses
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="contenu", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $contenu;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="question", type="integer", nullable=false)
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $isCorrect;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $note;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReponseEtudiant::class, mappedBy="reponse")
+     */
+    private $reponseEtudiants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Questions::class, inversedBy="reponses")
      */
     private $question;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="correct", type="boolean", nullable=false)
-     */
-    private $correct;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="note", type="integer", nullable=false)
-     */
-    private $note;
+    public function __construct()
+    {
+        $this->reponseEtudiants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,41 +66,69 @@ class Reponses
         return $this;
     }
 
-    public function getQuestion(): ?int
+    public function getIsCorrect(): ?bool
     {
-        return $this->question;
+        return $this->isCorrect;
     }
 
-    public function setQuestion(int $question): self
+    public function setIsCorrect(bool $isCorrect): self
     {
-        $this->question = $question;
+        $this->isCorrect = $isCorrect;
 
         return $this;
     }
 
-    public function getCorrect(): ?bool
-    {
-        return $this->correct;
-    }
-
-    public function setCorrect(bool $correct): self
-    {
-        $this->correct = $correct;
-
-        return $this;
-    }
-
-    public function getNote(): ?int
+    public function getNote(): ?float
     {
         return $this->note;
     }
 
-    public function setNote(int $note): self
+    public function setNote(float $note): self
     {
         $this->note = $note;
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, ReponseEtudiant>
+     */
+    public function getReponseEtudiants(): Collection
+    {
+        return $this->reponseEtudiants;
+    }
 
+    public function addReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+    {
+        if (!$this->reponseEtudiants->contains($reponseEtudiant)) {
+            $this->reponseEtudiants[] = $reponseEtudiant;
+            $reponseEtudiant->setReponse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+    {
+        if ($this->reponseEtudiants->removeElement($reponseEtudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($reponseEtudiant->getReponse() === $this) {
+                $reponseEtudiant->setReponse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Questions
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Questions $question): self
+    {
+        $this->question = $question;
+
+        return $this;
+    }
 }

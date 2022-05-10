@@ -2,59 +2,83 @@
 
 namespace App\Entity;
 
+use App\Repository\QuestionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * Questions
- *
- * @ORM\Table(name="questions")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=QuestionsRepository::class)
+ * @Vich\Uploadable
  */
 class Questions
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="contenu", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $contenu;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="testid", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Test::class, inversedBy="questions")
+     * ORM\JoinColumn(name="test_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $testid;
+    private $test;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
-     *
-     * @ORM\Column(name="reponses", type="string", length=255, nullable=false)
+     */
+    private $support;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $supportUpdatedAt;
+
+    /**
+     * @Assert\File(maxSize="2M")
+     * @Vich\UploadableField(mapping="questions", fileNameProperty="support")
+     * @var File
+     */
+    private $supportFile;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reponses::class, mappedBy="question")
      */
     private $reponses;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="reponsecorrect", type="integer", nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $reponsecorrect;
+    private $type;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="note", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\OneToMany(targetEntity=ReponseEtudiant::class, mappedBy="question")
      */
-    private $note;
+    private $reponseEtudiants;
+
+    public function __construct()
+    {
+        $this->reponses = new ArrayCollection();
+        $this->reponseEtudiants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,53 +97,125 @@ class Questions
         return $this;
     }
 
-    public function getTestid(): ?int
+    public function getTest(): ?Test
     {
-        return $this->testid;
+        return $this->test;
     }
 
-    public function setTestid(int $testid): self
+    public function setTest(?Test $test): self
     {
-        $this->testid = $testid;
+        $this->test = $test;
 
         return $this;
     }
 
-    public function getReponses(): ?string
+    public function getDescription(): ?string
     {
-        return $this->reponses;
+        return $this->description;
     }
 
-    public function setReponses(string $reponses): self
+    public function setDescription(?string $description): self
     {
-        $this->reponses = $reponses;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getReponsecorrect(): ?int
-    {
-        return $this->reponsecorrect;
-    }
+    public function setSupportFile(File $support = null)
+     {
+         $this->supportFile = $support;
 
-    public function setReponsecorrect(int $reponsecorrect): self
-    {
-        $this->reponsecorrect = $reponsecorrect;
+         if ($support) {
+             
+             $this->supportUpdatedAt = new \DateTime('now');
+         }
+     }
+ 
+     public function getSupportFile()
+     {
+         return $this->supportFile;
+     }
+ 
+     public function setSupport($support)
+     {
+         $this->support = $support;
+     }
+ 
+     public function getSupport()
+     {
+         return $this->support;
+     }
 
-        return $this;
-    }
+     /**
+      * @return Collection<int, Reponses>
+      */
+     public function getReponses(): Collection
+     {
+         return $this->reponses;
+     }
 
-    public function getNote(): ?float
-    {
-        return $this->note;
-    }
+     public function addReponse(Reponses $reponse): self
+     {
+         if (!$this->reponses->contains($reponse)) {
+             $this->reponses[] = $reponse;
+             $reponse->setQuestion($this);
+         }
 
-    public function setNote(float $note): self
-    {
-        $this->note = $note;
+         return $this;
+     }
 
-        return $this;
-    }
+     public function removeReponse(Reponses $reponse): self
+     {
+         if ($this->reponses->removeElement($reponse)) {
+             // set the owning side to null (unless already changed)
+             if ($reponse->getQuestion() === $this) {
+                 $reponse->setQuestion(null);
+             }
+         }
 
+         return $this;
+     }
+
+     public function getType(): ?string
+     {
+         return $this->type;
+     }
+
+     public function setType(string $type): self
+     {
+         $this->type = $type;
+
+         return $this;
+     }
+
+     /**
+      * @return Collection<int, ReponseEtudiant>
+      */
+     public function getReponseEtudiants(): Collection
+     {
+         return $this->reponseEtudiants;
+     }
+
+     public function addReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+     {
+         if (!$this->reponseEtudiants->contains($reponseEtudiant)) {
+             $this->reponseEtudiants[] = $reponseEtudiant;
+             $reponseEtudiant->setQuestion($this);
+         }
+
+         return $this;
+     }
+
+     public function removeReponseEtudiant(ReponseEtudiant $reponseEtudiant): self
+     {
+         if ($this->reponseEtudiants->removeElement($reponseEtudiant)) {
+             // set the owning side to null (unless already changed)
+             if ($reponseEtudiant->getQuestion() === $this) {
+                 $reponseEtudiant->setQuestion(null);
+             }
+         }
+
+         return $this;
+     }
 
 }

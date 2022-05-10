@@ -42,13 +42,17 @@ class LikeCoursController extends AbstractController
         $likeCour->setLikeEtat(1);
 
         $likeCour->setIduser(1);
-        $form->isSubmitted()==false;
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($likeCour);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cours_indexf', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_like_cours_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-
+        return $this->render('like_cours/new.html.twig', [
+            'like_cour' => $likeCour,
+            'form' => $form->createView(),
+        ]);
     }
     /**
      * @Route("/newd/{id}", name="app_like_cours_newd", methods={"GET", "POST"})
@@ -62,14 +66,17 @@ class LikeCoursController extends AbstractController
         $likeCour->setLikeEtat(0);
 
         $likeCour->setIduser(1);
-
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($likeCour);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cours_indexf', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_like_cours_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-
-
+        return $this->render('cours/new.html.twig', [
+            'like_cour' => $likeCour,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

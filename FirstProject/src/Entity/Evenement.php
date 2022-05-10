@@ -49,7 +49,7 @@ class Evenement
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="date", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="date", type="datetime", nullable=false)
      * @var string A "Y-m-d" formatted value
      * @Assert\GreaterThan("today", message="La date de l'évènement doit être ultérieur à la date d'aujourd'hui")
      *@Assert\NotBlank

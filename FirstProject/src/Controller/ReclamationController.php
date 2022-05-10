@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Form\ReclamationType;
 use App\Entity\Reclamation;
 use App\Entity\Reponserec;
+use App\Entity\Categorie;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ReclamationRepository;
@@ -43,13 +44,17 @@ class ReclamationController extends AbstractController
      */
     public function addReclamation(Request $request)
     {
+        $user=$this->getUser();
+        
         $reclamation = new Reclamation();
         $reclamation->setDaterec(new \DateTime('now'));
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->add("Ajouter", SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+           
             $em = $this->getDoctrine()->getManager();
+            $reclamation->setIdetudiant(strval($user->getId()));
             //$reclamation->setMoyenne(0);
             $em->persist($reclamation);
             $em->flush();
@@ -57,6 +62,7 @@ class ReclamationController extends AbstractController
         }
         $recs = $this->getDoctrine()->getRepository(Reclamation::class)->findAll();
         $reps = $this->getDoctrine()->getRepository(Reponserec::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $sum=0;
         foreach ($reps as $o){
             $rec = $o->getReclamation();
@@ -64,11 +70,17 @@ class ReclamationController extends AbstractController
             $sum += $abs_diff;
         }
         $tot = sizeof($reps);
-        $rt = $sum/$tot;
+        if($tot!=0){
+            $rt = $sum/$tot;
+        }else{
+            $rt = 0;
+        }
+        
+    
 
 
-
-        return $this->render("reclamation/add.html.twig",['form' => $form->createView(),'rt'=> $rt]);
+        return $this->render("reclamation/add.html.twig",['form' => $form->createView(),'rt'=> $rt,
+    "categories"=>$categories]);
     }
 
      /**
@@ -179,6 +191,21 @@ return new JsonResponse("id reclamation invalide");
             $formatted=$serialize->normalize("reclamation modifiee avec succes");
             return new JsonResponse($formatted);
 
+    }
+
+     /**
+     * @Route("/reclamation/etudiant/{id}", name="app_reclamation_etudiant")
+     */
+    public function indexetudiant($id): Response
+    {
+        $user=$this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        $rec=$em->getRepository(Reclamation::class)->findby(['idetudiant'=>strval($user->getId())]);
+        return $this->render('reclamation/index_etudiant.html.twig', [
+            'reclamations'=>$rec,
+            'categories'=>$categories
+        ]);
     }
 
 }

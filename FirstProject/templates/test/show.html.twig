@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title">Tests</h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{path('app_test_index')}}">Tests</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      {{test.titre}}
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block title %}Test{% endblock %}
+
+{% block body %}
+
+{{parent()}}
+<!-- ============================================================== -->
+          <!-- Start Page Content -->
+          <!-- ============================================================== -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+             
+                  <div class="card-body">
+    <h1>Test</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ test.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ test.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ test.description|raw }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_test_index') }}" class="btn btn-info btn-sm text-white">Afficher la Liste</a>
+
+    <a href="{{ path('app_test_edit', {'id': test.id}) }}" class="btn btn-warning btn-sm text-white">Modifier</a>
+
+    {{ include('test/_delete_form.html.twig') }}
+{% endblock %}

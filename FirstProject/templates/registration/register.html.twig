@@ -1,109 +1,77 @@
-{% extends 'backbase.html.twig' %}
 
-
-{# <title>Register</title> #}
-
+{% extends 'base_front.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
 {% block body %}
-	<link href="../assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet"/>
-	<link href="../assets/libs/jquery-steps/steps.css" rel="stylesheet"/>
-	<link href="../dist/css/style.min.css" rel="stylesheet"/>
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-				      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-				      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-				    <![endif]-->
-
-		{% for flash_error in app.flashes('verify_email_error') %}
-			<div class="alert alert-danger" role="alert"> {{ flash_error }}</div>
-	{% endfor %}
-
-	<h1>Sign Up</h1>
-
-	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.email) }}
-	{{ form_row(registrationForm.plainPassword, {
-	            label: 'Password'
-	        }) }}
-	{{ form_row(registrationForm.agreeTerms) }}
-
-	<button type="submit" class="btn">Register</button>
-	{{ form_end(registrationForm) }}
-			 {# <div class="container-fluid"> <div class="card">
-				<div class="card-body wizard-content">
-					<h4 class="card-title">Basic Form Example</h4>
-					<h6 class="card-subtitle"></h6>
-					{{ form_start(UserForm, {'attr': {'novalidate': 'novalidate'}}) }} #}
-					{# {{ form_start(registrationForm) }}
-
-	<form id="example-form" action="#" class="mt-5">
-		<div>
-			<h3>Account</h3>
-			<section>
-				<label for="userName">E-mail *</label>
-				<input {{ form_row(UserForm.email) }} id="userName" name="userName" type="text" class="required form-control"/>
-				<label for="password">Password *</label>
-				<input {{ form_row(UserForm.password) }} id="password" name="password" type="text" class="required form-control"/>
-				<label for="confirm">Confirm Password *</label>
-				<input id="confirm" name="confirm" type="text" class="required form-control"/>
-				<p>(*) Mandatory</p>
-			</section>
-			<h3>Profile</h3>
-			<section>
-				<label for="name">First name *</label>
-				<input{{form_row(UserForm.name)}} id="name" name="name" type="text" class="required form-control"/>
-				<label for="surname">Last name *</label>
-				<input
-				{{ form_row(UserForm.lastName) }} id="surname" name="surname" type="text" class="required form-control"/>
-			{# <label for="email">Email *</label>
-										<input id="email" name="email" type="text" class="required email form-control"/>
-										<label for="address">Address</label>
-										<input id="address" name="address" type="text" class="form-control"/>
-										<p>(*) Mandatory</p> #}
-			{# </section>
-			<h3>Hints</h3>
-			<section>
-				<ul>
-					<li>Foo</li>
-					<li>Bar</li>
-					<li>Foobar</li>
-				</ul>
-			</section>
-			<h3>Finish</h3>
-			<section>
-				<input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"/>
-				<label for="acceptTerms">I agree with the Terms and Conditions.</label>
-			</section>
+{{parent()}}
+<div class="intro-section single-cover" id="home-section">
+      <div class="site-section courses-title" id="courses-section">
+				<div class="container">
+					<div class="row mb-5 justify-content-center">
+						<div class="col-lg-7 text-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="">
+							<h2 class="section-title"></h2>
+						</div>
+					</div>
+				</div>
 		</div>
-		{{form_end(UserForm)}} 
-	</form>
-</div></div></div><script src="../assets/libs/jquery/dist/jquery.min.js"></script><!-- Bootstrap tether Core JavaScript --><script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script><!-- slimscrollbar scrollbar JavaScript --><script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script><script src="../assets/extra-libs/sparkline/sparkline.js"></script><!--Wave Effects --><script src="../dist/js/waves.js"></script><!--Menu sidebar --><script src="../dist/js/sidebarmenu.js"></script><!--Custom JavaScript --><script src="../dist/js/custom.min.js"></script><!-- this page js --><script src="../assets/libs/jquery-steps/build/jquery.steps.min.js"></script><script src="../assets/libs/jquery-validation/dist/jquery.validate.min.js"></script><script>// Basic Example with form
-    
-var form = $("#example-form");
-form.validate({
-errorPlacement: function errorPlacement(error, element) {
-element.before(error);
-},
-rules: {
-confirm: {
-equalTo: "#password"
+	
+</div>
+     <div class="intro-section" id="home-section">
+
+        <div class="slide-1" style="background-image: url(&quot;/assets/frontoffice/images/hero_1.jpg&quot;); background-position: 50% 68.6094px;" data-stellar-background-ratio="0.5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 mb-4">
+                                <h1 data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">S'inscrire</h1>
+                                <p class="mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">Vous n'avez pas un compte? vous pouvez s'inscrire et commencer à etudier facilement.</p>
+                                <p data-aos="fade-up" data-aos-delay="300" class="aos-init"><a href="{{path('app_register')}}" class="btn btn-primary py-3 px-5 btn-pill">Register</a></p>
+
+                            </div>
+
+                            <div class="col-lg-5 ml-auto aos-init aos-animate" data-aos="fade-up" data-aos-delay="500">
+
+									<h3 class="h4 text-black mb-4">Sign In</h3>
+							
+
+										{{ form_start(registrationForm,{'attr':{'class':'form-box'}}) }}
+								{{ form_row(registrationForm.email) }}
+								{{ form_row(registrationForm.plainPassword, {
+											label: 'Password'
+										}) }}
+								{{ form_row(registrationForm.agreeTerms) }}
+
+								<button type="submit" class="btn">Register</button>
+								
+								{{form_end(registrationForm)}}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+	<div elass-"g-cecaptche brochure form captcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt"></div>
+	<script type="text/javascript">
+	/**
+	 * The callback function executed
+	 * once all the Google dependencies have loaded
+	 */
+function onGoogleReCaptchaApiLoad() {
+var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+for (var i = 0; i < widgets.length; i++) {
+renderReCaptcha(widgets[i]);
 }
 }
-});
-form.children("div").steps({
-headerTag: "h3",
-bodyTag: "section",
-transitionEffect: "slideLeft",
-onStepChanging: function (event, currentIndex, newIndex) {
-form.validate().settings.ignore = ":disabled,:hidden";
-return form.valid();
-},
-onFinishing: function (event, currentIndex) {
-form.validate().settings.ignore = ":disabled";
-return form.valid();
-},
-onFinished: function (event, currentIndex) {
-alert("Submitted!");
-}
-});</script></body></html>#}
+</script>
+<script type="text/javascript" src="{{ asset('js/recaptcha.js') }}"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{ app.request.locale }}" async defer></script>
+
 {% endblock %}

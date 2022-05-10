@@ -41,7 +41,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="idetudiant", type="string", length=200, nullable=false)
-     * @Assert\NotBlank(message="YOUR ID is required") 
+     * 
      */
     private $idetudiant;
 

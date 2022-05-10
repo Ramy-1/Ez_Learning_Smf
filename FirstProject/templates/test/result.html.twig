@@ -1,0 +1,87 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}EZ Learning{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+      <link href="{{asset('assets/backoffice/assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
+            <!-- Custom CSS -->
+            <link href="{{asset('assets/backoffice/dist/css/style.min.css')}}" rel="stylesheet" />
+            <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+            
+{% endblock %}
+{% block javascript %}
+    {{parent()}}
+     
+      <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+       <!-- Bootstrap tether Core JavaScript -->
+            <script src="{{asset('assets/backoffice/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+            <script src="{{asset('assets/backoffice/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+{{parent()}}
+<div class="site-section courses-title" id="courses-section">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-7 text-center aos-init" data-aos="fade-up" data-aos-delay="">
+            <h2 class="section-title">Resultat</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section courses-entry-wrap aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
+
+      <div class="row">
+            <!-- column -->
+            <div class="col-lg-12">
+              <div class="card ">
+                <div class="card-body " >
+                  <h4 class="card-title">Latest Test</h4>
+                </div>
+                <div class="comment-widgets  scrollable ps-container ps-theme-default ps-active-y" data-ps-id="e20d2b11-285a-b5ab-54f6-9743273b4379"  >
+                {% if test.successscore <= note %}
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Bien!</h4>
+                    <p>
+                     Vous avez passer le test 
+                     {{test.titre}}
+                    </p>
+                    <hr>
+                    <p class="mb-0">
+                      Vous pouvez telecharger votre certificat <a href="{{path('pdfgenerator',{'testid':test.id})}}">ici</a>.
+                    </p>
+                  </div>
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Ooops!</h4>
+                    <p>
+                      Malheureusement vous n'avez pas passe le test
+                      {{test.titre}}
+                    </p>
+                    <hr>
+                    <p class="mb-0">
+                      Vous pouvez re-etudier le cours de ce test.
+                    </p>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <!-- column -->
+
+            
+              
+           
+        
+      </div>
+    </div>
+
+
+
+    
+{% endblock %}
