@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('app_front');
                 }
                 if (in_array('ROLE_RECRUTEUR', $user->getRoles())) {
-                    return $this->redirectToRoute('recruteur_home');
+                    return $this->redirectToRoute('listSociete');
                 }
                 if (in_array('ROLE_ENSIEGNANT', $user->getRoles())) {
                     return $this->redirectToRoute('ensiegnant_home');
@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('universite_home');
                 }
                 if (in_array('ROLE_SOCIETE', $user->getRoles())) {
-                    return $this->redirectToRoute('societe_home');
+                    return $this->redirectToRoute('listSociete');
                 }
 
                 return $this->redirectToRoute('app_front');

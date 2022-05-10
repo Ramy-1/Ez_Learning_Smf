@@ -16,6 +16,11 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
+
 /**
  * @Route("/user")
  */
@@ -72,28 +77,41 @@ class UserController extends AbstractController
     }
 
     /**
-     *  @Route("/new", name="newuser")
+     * @Route("/signup/{arg}", name="user_addBytype")
      */
-    public function newUser(Request $request): Response
+    public function signUp($arg, Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $user->setPassword("");
 
+        // $form = $this->createForm(Type::class, $user);
         $form = $this->createForm(UserType::class, $user);
+        // $form = $this->createForm(RegistrationFormType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
-            $em->persist($user);
-            $em->flush();
+            $user->setRoles(array($arg));
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            return $this->redirectToRoute('app_user');
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
         }
-
-        return $this->render('user/newUser.html.twig', [
-            'UserForm' => $form->createView(),
+        return $this->render('security/signup.html.twig', [
+            'SignUpForm' => $form->createView(),
         ]);
     }
     /**

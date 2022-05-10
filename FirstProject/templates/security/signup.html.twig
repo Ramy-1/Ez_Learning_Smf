@@ -31,13 +31,6 @@ rel="icon" type="image/png" sizes="16x16" href="{{asset('/assets/images/favicon.
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
-							<div class="col-sm-9">
-								{{form_widget(SignUpForm.plainPassword)}}
-								{{form_errors(SignUpForm.plainPassword)}}
-							</div>
-						</div>
-						<div class="form-group row">
 							<label for="email1" class="col-sm-3 text-end control-label col-form-label">Email</label>
 							<div class="col-sm-9">
 								{{form_widget(SignUpForm.email)}}
@@ -45,6 +38,14 @@ rel="icon" type="image/png" sizes="16x16" href="{{asset('/assets/images/favicon.
 							</div>
 						</div>
 
+						<div class="form-group row">
+							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.plainPassword)}}
+								{{form_errors(SignUpForm.plainPassword)}}
+							</div>
+						</div>
+						
 						{% do SignUpForm.roles.setRendered() %}
 						{{form_widget(SignUpForm.roles, { 'attr': {'class': 'hidden-row'}})}}
 
