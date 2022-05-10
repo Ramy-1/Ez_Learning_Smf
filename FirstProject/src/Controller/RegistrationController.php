@@ -179,6 +179,8 @@ class RegistrationController extends AbstractController
             //     $authenticator,
             //     'main' // firewall name in security.yaml
             // );
+            return $this->redirectToRoute('app_user');
+
         }
         $haja = 1;
         return $this->render('user/newUser.html.twig', [

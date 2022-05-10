@@ -46,7 +46,7 @@
 								{{form_errors(UserForm.roles)}}
 							</div>
 						</div>
-
+						{{ form_row(UserForm._token) }}
 						<div data-toggle="recaptcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt"></div>
 						{# <div class="form-group row">
 																																																																																				<label for="cono1" class="col-sm-3 text-end control-label col-form-label">Contact No</label>
@@ -56,6 +56,8 @@
 																																																																																			</div> #}
 
 					</div>
+					
+					
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 					<div class="border-top">
 						<div class="card-body">

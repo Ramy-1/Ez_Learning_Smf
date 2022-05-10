@@ -1,57 +1,57 @@
-{% extends 'backbase.html.twig' %}
+<link
+rel="icon" type="image/png" sizes="16x16" href="{{asset('/assets/images/favicon.png')}}"/>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{asset('/dist/css/style.min.css')}}" rel="stylesheet"/>
+<link href="{{asset('/assets/libs/toastr/build/toastr.min.css')}}" rel="stylesheet"/>
 
-{% block title %}Log in!
-{% endblock %}
 
-{% block body %}
-	<form method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			<script>
-				$(function () { // Success Type
-$("#ts-success").on("click", function () {
-toastr.success("Have fun storming the castle!", "Miracle Max Says");
-});
-});
-			</script>
+{# <div class="container-scroller">
+	<div class="container-fluid page-body-wrapper full-page-wrapper">
+		<div class="content-wrapper d-flex align-items-center auth px-0"> #}
+		<div class="card d-flex align-items-center auth px-0">
+		<div class="card-body">
+		<div class="content">
+		<div class="container-fluid">
 
-		{% endif %}
-		{% if errormsg %}
-			<div class="alert alert-danger">{{errormsg}}</div>
-		{% endif %}
-		{% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.username }},
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</div>
-		{% endif %}
+			<form method="post">
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
 
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputEmail">Email</label>
-		<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+				{% if app.user %}
+					<div class="mb-3">
+						You are logged in as
+						{{ app.user.username }},
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</div>
+				{% endif %}
 
-		<input
-		type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-		{# 
-			<label>
-		        <input type="checkbox" name="_remember_me" checked/>
-		        Keep me logged in
-		    </label> #}
+				<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+				<label for="inputEmail">Email</label>
+				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+				<label for="inputPassword">Password</label>
+				<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-		<div class="checkbox mb-3">
-			<label>
-				<input type="checkbox" name="_remember_me">
-				Remember me
-			</label>
+				<input
+				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				{# 
+											<label>
+										        <input type="checkbox" name="_remember_me" checked/>
+										        Keep me logged in
+										    </label> #}
+
+				<div class="checkbox mb-3">
+					<label>
+						<input type="checkbox" name="_remember_me">
+						Remember me
+					</label>
+				</div>
+
+
+				<button class="btn btn-lg btn-primary" type="submit">
+					Sign in
+				</button>
+			</form>
 		</div>
-
-
-		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
-		</button>
-	</form>
-
-{% endblock %}
+	</div>
+</div>

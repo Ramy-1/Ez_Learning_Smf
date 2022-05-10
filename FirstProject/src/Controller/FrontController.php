@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * @Route("/front")
@@ -18,9 +19,46 @@ class FrontController extends AbstractController
     /**
      * @Route("/", name="app_front")
      */
-    public function index(): Response
+    public function index(AuthenticationUtils $authenticationUtils): Response
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
+        if ($user = $this->getUser()) {
+            if ($user->isBlocked()) {
+                $errormsg = 'User blocker par Admin';
+            } else if (!$user->IsVerified()) {
+                $errormsg = 'Mail pas encour verifier';
+            } else {
+                // if ($user->isVerified()) {
+                if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                    return $this->redirectToRoute('app_user');
+                }
+                if (in_array('ROLE_ETUDIANT', $user->getRoles())) {
+                    return $this->redirectToRoute('app_front');
+                }
+                if (in_array('ROLE_RECRUTEUR', $user->getRoles())) {
+                    return $this->redirectToRoute('recruteur_home');
+                }
+                if (in_array('ROLE_ENSIEGNANT', $user->getRoles())) {
+                    return $this->redirectToRoute('ensiegnant_home');
+                }
+                if (in_array('ROLE_UNIVERSITE', $user->getRoles())) {
+                    return $this->redirectToRoute('universite_home');
+                }
+                if (in_array('ROLE_SOCIETE', $user->getRoles())) {
+                    return $this->redirectToRoute('societe_home');
+                }
+
+                return $this->redirectToRoute('app_front');
+                // }
+            }
+        }
         return $this->render('front/signin.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
             'controller_name' => 'FrontController',
         ]);
     }

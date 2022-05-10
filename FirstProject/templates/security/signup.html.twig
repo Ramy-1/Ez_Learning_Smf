@@ -1,216 +1,235 @@
-<style>
-	body {
-		margin: 0;
-		padding: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-		font-family: 'Jost', sans-serif;
-		background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-	}
-	.main {
-		width: 350px;
-		height: 500px;
-		background: red;
-		overflow: hidden;
-		background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
-		border-radius: 10px;
-		box-shadow: 5px 20px 50px #000;
-	}
-	#chk {
-		display: none;
-	}
-	.signup {
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
-	label {
-		color: #fff;
-		{
-			# font-size: 2.3em; #
-		}
-		justify-content: left;
-		display: flex;
-		margin: 60px;
+<link
+rel="icon" type="image/png" sizes="16x16" href="{{asset('/assets/images/favicon.png')}}"/>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{asset('/dist/css/style.min.css')}}" rel="stylesheet"/>
+<link href="{{asset('/assets/libs/toastr/build/toastr.min.css')}}" rel="stylesheet"/>
 
-		font-weight: bold;
-		cursor: pointer;
-		transition: 0.5s ease-in-out;
-	}
-	input {
-		width: 60%;
-		height: 20px;
-		background: #e0dede;
-		justify-content: center;
-		display: flex;
-		margin: 20px auto;
-		padding: 10px;
-		border: none;
-		outline: none;
-		border-radius: 5px;
-	}
-	button {
-		width: 60%;
-		height: 40px;
-		margin: 20px auto 10px;
-		justify-content: center;
-		display: block;
-		color: #fff;
-		background: #573b8a;
-		font-size: 1em;
-		font-weight: bold;
-		outline: none;
-		border: none;
-		border-radius: 5px;
-		transition: 0.2s ease-in;
-		cursor: pointer;
-	}
-	button:hover {
-		background: #6d44b8;
-	}
-	.login {
-		height: 460px;
-		background: #eee;
-		border-radius: 60% / 10%;
-		transform: translateY(-180px);
-		transition: 0.8s ease-in-out;
-	}
-	.login label {
-		color: #573b8a;
-		transform: scale(0.6);
-	}
-
-	#chk:checked ~ .login {
-		transform: translateY(-500px);
-	}
-	#chk:checked ~ .login label {
-		transform: scale(1);
-	}
-	#chk:checked ~ .signup label {
-		transform: scale(0.6);
-	}
-</style>
-
-
-<div class="main">
-	<input type="checkbox" id="chk" aria-hidden="true">
-
-	<div class="signup">
-		<form id="form" class="form-horizontal">
-
-			<label for="chk" aria-hidden="true" style=" color: #fff;
-																			font-size: 2.3em;
-																			justify-content: center;
-																			display: flex;
-																			margin: 60px;
-																			font-weight: bold;
-																			cursor: pointer;
-																			transition: 0.5s ease-in-out;">Sign up</label>
-
-			{{form_start(SignUpForm)}}
-
-			{{form_widget(SignUpForm.name)}}
-			{{form_errors(SignUpForm.name)}}
-			{# {{form_row(SignUpForm.name)}} #}
-
-			{{form_widget(SignUpForm.lastName)}}
-			{{form_errors(SignUpForm.lastName)}}
-
-			{{form_widget(SignUpForm.email)}}
-			{{form_errors(SignUpForm.email)}}
-			
-			{{form_widget(SignUpForm.plainPassword)}}
-			{{form_errors(SignUpForm.plainPassword)}}
-
-
-			{% do SignUpForm.roles.setRendered() %}
-
-			<button type="submit">Sign up</button>
-			{{form_end(SignUpForm)}}
-
-		</form>
-	</div>
-
-	<div class="login">
-		<form>
-			<label for="chk" aria-hidden="true" style="
-															font-size: 2.3em;
-															justify-content: center;
-															display: flex;
-															margin: 60px;
-															font-weight: bold;
-															cursor: pointer;
-															transition: 0.5s ease-in-out;">Login</label>
-			<input type="email" name="email" placeholder="Email" required="">
-			<input type="password" name="pswd" placeholder="Password" required="">
-			<button type="submit">Login</button>
-		</form>
-	</div>
-</div>
-
-
+{# {% block body %} #}
+{# {% endblock %} #}
 <div elass-"g-cecaptche brochure form captcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt"></div>
-{# {{form_start(SignUpForm)}}
+{{form_start(SignUpForm)}}
+	{{ form_row(SignUpForm._token) }}
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="card">
-			<form id="form" class="form-horizontal">
-				<div class="card-body">
-					<h4 class="card-title">Personal Info</h4>
-					<div class="form-group row">
-						<label for="fname" class="col-sm-3 text-end control-label col-form-label">First Name</label>
-						<div class="col-sm-9">
-							{{form_widget(SignUpForm.name)}}
-							{{form_errors(SignUpForm.name)}}
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="lname" class="col-sm-3 text-end control-label col-form-label">Last Name</label>
-						<div class="col-sm-9">
-							{{form_widget(SignUpForm.lastName)}}
-							{{form_errors(SignUpForm.lastName)}}
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
-						<div class="col-sm-9">
-							{{form_widget(SignUpForm.plainPassword)}}
-							{{form_errors(SignUpForm.plainPassword)}}
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="email1" class="col-sm-3 text-end control-label col-form-label">Email</label>
-						<div class="col-sm-9">
-							{{form_widget(SignUpForm.email)}}
-							{{form_errors(SignUpForm.email)}}
-						</div>
-					</div>
-
-					{% do SignUpForm.roles.setRendered() %}
-					{{form_widget(SignUpForm.roles, { 'attr': {'class': 'hidden-row'}})}}
-
-
-					<div data-toggle="recaptcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt"></div>
-				</div>
-				<div class="border-top">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<form id="form" class="form-horizontal">
 					<div class="card-body">
-						<button type="submit" class="btn btn-primary">
-							Submit
-						</button>
+						<h4 class="card-title">Personal Info</h4>
+						<div class="form-group row">
+							<label for="fname" class="col-sm-3 text-end control-label col-form-label">First Name</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.name)}}
+								{{form_errors(SignUpForm.name)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Last Name</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.lastName)}}
+								{{form_errors(SignUpForm.lastName)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="lname" class="col-sm-3 text-end control-label col-form-label">Password</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.plainPassword)}}
+								{{form_errors(SignUpForm.plainPassword)}}
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="email1" class="col-sm-3 text-end control-label col-form-label">Email</label>
+							<div class="col-sm-9">
+								{{form_widget(SignUpForm.email)}}
+								{{form_errors(SignUpForm.email)}}
+							</div>
+						</div>
+
+						{% do SignUpForm.roles.setRendered() %}
+						{{form_widget(SignUpForm.roles, { 'attr': {'class': 'hidden-row'}})}}
+
+
+						<div data-toggle="recaptcha" data-sitekey="6LfmDYMfAAAAAJ7BGxjCTSAoF8fLfvMRIXPReZEt"></div>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 					</div>
-				</div>
-			</form>
+					<div class="border-top">
+						<div class="card-body">
+							<button type="submit" class="btn btn-primary">
+								Submit
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
 
 
-{{form_end(SignUpForm)}} #}
-<script type="text/javascript">
-	/**
+	{{form_end(SignUpForm)}}
+
+{# {% endblock %} #}
+
+{# {% extends 'backbase.html.twig' %}
+{% block body %} #}
+	{# <style>
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			font-family: 'Jost', sans-serif;
+			background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+		}
+		.main {
+			width: 350px;
+			height: 500px;
+			background: red;
+			overflow: hidden;
+			background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+			border-radius: 10px;
+			box-shadow: 5px 20px 50px #000;
+		}
+		#chk {
+			display: none;
+		}
+		.signup {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		label {
+			color: #fff;
+			{
+				# font-size: 2.3em; #
+			}
+			justify-content: left;
+			display: flex;
+			margin: 60px;
+
+			font-weight: bold;
+			cursor: pointer;
+			transition: 0.5s ease-in-out;
+		}
+		input {
+			width: 60%;
+			height: 20px;
+			background: #e0dede;
+			justify-content: center;
+			display: flex;
+			margin: 20px auto;
+			padding: 10px;
+			border: none;
+			outline: none;
+			border-radius: 5px;
+		}
+		button {
+			width: 60%;
+			height: 40px;
+			margin: 20px auto 10px;
+			justify-content: center;
+			display: block;
+			color: #fff;
+			background: #573b8a;
+			font-size: 1em;
+			font-weight: bold;
+			outline: none;
+			border: none;
+			border-radius: 5px;
+			transition: 0.2s ease-in;
+			cursor: pointer;
+		}
+		button:hover {
+			background: #6d44b8;
+		}
+		.login {
+			height: 460px;
+			background: #eee;
+			border-radius: 60% / 10%;
+			transform: translateY(-180px);
+			transition: 0.8s ease-in-out;
+		}
+		.login label {
+			color: #573b8a;
+			transform: scale(0.6);
+		}
+
+		#chk:checked ~ .login {
+			transform: translateY(-500px);
+		}
+		#chk:checked ~ .login label {
+			transform: scale(1);
+		}
+		#chk:checked ~ .signup label {
+			transform: scale(0.6);
+		}
+	</style> #}
+
+{# 
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+		<div class="signup">
+			<form id="form" class="form-horizontal">
+
+				<label for="chk" aria-hidden="true" style=" color: #fff;
+																									font-size: 2.3em;
+																									justify-content: center;
+																									display: flex;
+																									margin: 60px;
+																									font-weight: bold;
+																									cursor: pointer;
+																									transition: 0.5s ease-in-out;">Sign up</label>
+
+				{{form_start(SignUpForm)}}
+
+				{{form_widget(SignUpForm.name)}}
+				{{form_errors(SignUpForm.name)}}
+
+				{{form_widget(SignUpForm.lastName)}}
+				{{form_errors(SignUpForm.lastName)}}
+
+				{{form_widget(SignUpForm.email)}}
+				{{form_errors(SignUpForm.email)}}
+
+				{{form_widget(SignUpForm.plainPassword)}}
+				{{form_errors(SignUpForm.plainPassword)}}
+
+				{{ form_row(SignUpForm._token) }}
+
+
+				{% do SignUpForm.roles.setRendered() %}
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+				<button type="submit">Sign up</button>
+				{{form_end(SignUpForm)}}
+
+			</form>
+		</div>
+
+		<div class="login">
+			<form>
+				<label for="chk" aria-hidden="true" style="
+																					font-size: 2.3em;
+																					justify-content: center;
+																					display: flex;
+																					margin: 60px;
+																					font-weight: bold;
+																					cursor: pointer;
+																					transition: 0.5s ease-in-out;">Login</label>
+				<input type="email" name="email" placeholder="Email" required="">
+				<input type="password" name="pswd" placeholder="Password" required="">
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	</div> #}
+
+
+	
+	<script type="text/javascript">
+		/**
 	 * The callback function executed
 	 * once all the Google dependencies have loaded
 	 */
@@ -220,6 +239,7 @@ for (var i = 0; i < widgets.length; i++) {
 renderReCaptcha(widgets[i]);
 }
 }
-</script>
-<script type="text/javascript" src="{{ asset('js/recaptcha.js') }}"></script>
-<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{ app.request.locale }}" async defer></script>
+	</script>
+	<script type="text/javascript" src="{{ asset('js/recaptcha.js') }}"></script>
+	<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaApiLoad&render=explicit&hl={{ app.request.locale }}" async defer></script>
+{# {% endblock %} #}
