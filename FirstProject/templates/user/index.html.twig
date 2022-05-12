@@ -6,10 +6,34 @@
 
 {% block body %}
 	<link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet"/>
-<script src="{{asset('assets/libs/chart/excanvas.min.js')}}"></script>
-<script src="{{asset('dist/js/pages/chart/chart-page-init.js')}}"></script>
+	<script src="{{asset('assets/libs/chart/excanvas.min.js')}}"></script>
+	<script src="{{asset('dist/js/pages/chart/chart-page-init.js')}}"></script>
 
-	
+	{# {% for o in tabStat %} #}
+	{# <li>{{tabStat[i]}}  , {{names[i]}}</li> #}
+	<div class="row">
+		{% for i in 0..5 %}
+			<div class="col-md-3">
+				<div class="card mt-0">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="peity_line_neutral left text-center mt-2">
+								<span>
+									<span style="display: none">12,6,9,23,14,10,17</span>
+									<canvas width="50" height="24"></canvas>
+								</span>
+								<h6>{{"%.2f"|format(tabStat[i]/size*100)}}%</h6>
+							</div>
+						</div>
+						<div class="col-md-6 border-left text-center pt-2">
+							<h3 class="mb-0 fw-bold">{{tabStat[i]}}</h3>
+							<span class="text-muted">{{names[i]}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 
 	<script>
 		$("#zero_config").DataTable();
@@ -77,5 +101,19 @@
 		</div>
 	</div>
 
+	<link href="{{asset('assets/libs/flot/css/float-chart.css')}}" rel="stylesheet" />
 
+{# <script src="{{asset('assets/libs/chart/matrix.interface.js')}}"></script>
+<script src="{{asset('assets/libs/chart/excanvas.min.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.js')}}"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.pie.')}}js"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.time.')}}js"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.stack.')}}js"></script>
+<script src="{{asset('assets/libs/flot/jquery.flot.crosshair.')}}js"></script>
+<script src="{{asset('assets/libs/chart/jquery.peity.min.')}}js"></script>
+<script src="{{asset('assets/libs/chart/matrix.charts.js')}}"></script>
+<script src="{{asset('assets/libs/chart/jquery.flot.pie.')}}min.js"></script>
+<script src="{{asset('assets/libs/flot.tooltip/js/jquery.')}}flot.tooltip.min.js"></script>
+<script src="{{asset('assets/libs/chart/turning-series.js')}}"></script> #}
+<script src="{{asset('dist/js/pages/chart/chart-page-init.js')}}"></script>
 {% endblock %}

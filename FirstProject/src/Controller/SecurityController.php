@@ -11,6 +11,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends AbstractController
 {
+
+    /**
+     * @Route("/loginJson", name="loginJson", methods={"POST"})
+     */
+    public function loginJson(Request $request): Response
+    {
+        $user = $this->getUser();
+
+        return $this->json([
+            'username' => $user->getEmail(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
     /**
      * @Route("/","/login", name="app_login")
      */

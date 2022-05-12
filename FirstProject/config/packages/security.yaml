@@ -29,7 +29,10 @@ security:
                 secret:   '%kernel.secret%' # required
                 lifetime: 604800 # 1 week in seconds
                 token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
-
+            json_login:
+                check_path:    loginJson
+                username_path: security.creden  tials.login
+                password_path: security.credentials.password
                 # token_provider:
                 #     doctrine: true
                 # by default, the feature is enabled by checking a

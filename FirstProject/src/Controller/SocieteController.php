@@ -46,10 +46,10 @@ class SocieteController extends AbstractController
     public function listFrontStudenSocietes(Request $request)
     {
         $societes = $this->getDoctrine()->getRepository(Societe::class)->findAll();
-        
+
         return $this->render('Societe/list1.html.twig', ["societes" => $societes]);
     }
-      /**
+    /**
      * @Route("/addSociete", name="addSociete")
      */
     public function addSociete(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
@@ -82,7 +82,7 @@ class SocieteController extends AbstractController
                 )
             );
             $user->setRoles(array("ROLE_SOCIETE"));
-          
+
 
             $em->persist($user);
             $em->persist($societe);
@@ -92,7 +92,7 @@ class SocieteController extends AbstractController
         return $this->render("societe/add.html.twig", array('form' => $form->createView()));
     }
 
-     /**
+    /**
      * @Route("/deleteSociete/{idsoc}", name="deleteSociete")
      */
     public function deleteSociete($idsoc)
@@ -104,7 +104,7 @@ class SocieteController extends AbstractController
         return $this->redirectToRoute("listSociete");
     }
 
-       /**
+    /**
      * @Route("/updateSociete/{idsoc}", name="updateSociete")
      */
     public function updateSociete(Request $request, $idsoc)
@@ -122,7 +122,7 @@ class SocieteController extends AbstractController
     }
 
 
-     /**
+    /**
      * @Route("/detailSociete/{id}", name="detailSociete")
      */
     public function DetailSociete($id)
@@ -132,34 +132,35 @@ class SocieteController extends AbstractController
         return $this->render('societe/detail.html.twig', ["societe" => $societe]);
     }
 
- /**
-   * Creates a new ActionItem entity.
-   *
-   * @Route("/search", name="ajax_search")
+    /**
+     * Creates a new ActionItem entity.
+     *
+     * @Route("/search", name="ajax_search")
 
-   */
-  public function searchAction(Request $request, SocieteRepository $Sr)
-  {
-      $em = $this->getDoctrine()->getManager();
-      $requestString = $request->get('q');
-      $societe = $Sr->findEntitiesByString($requestString);
-      if (!$societe) {
-          $result['societes']['error'] = "societe introuvable ";
-      } else {
-          $result['societes'] = $this->getRealEntities($societe);
-      }
-      return new Response(json_encode($result));
-  }
-
-
-  public function getRealEntities($societes){
-
-    foreach ($societes as $societes){
-        $realEntities[$societes->getIdSoc()] = [$societes->getNom() ,$societes->getAdresse(),$societes->getImgsoc()];
+     */
+    public function searchAction(Request $request, SocieteRepository $Sr)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $societe = $Sr->findEntitiesByString($requestString);
+        if (!$societe) {
+            $result['societes']['error'] = "societe introuvable ";
+        } else {
+            $result['societes'] = $this->getRealEntities($societe);
+        }
+        return new Response(json_encode($result));
     }
 
-    return $realEntities;
-}
+
+    public function getRealEntities($societes)
+    {
+
+        foreach ($societes as $societes) {
+            $realEntities[$societes->getIdSoc()] = [$societes->getNom(), $societes->getAdresse(), $societes->getImgsoc()];
+        }
+
+        return $realEntities;
+    }
 
 
     /**
@@ -168,17 +169,17 @@ class SocieteController extends AbstractController
     public function listSocieteJSON(NormalizerInterface $Normalizer)
     {
         $donnees = $this->getDoctrine()->getRepository(Societe::class)->findAll();
-        $serializer=new Serializer([new ObjectNormalizer()]);
-        $formatted=$serializer->normalize($donnees);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($donnees);
         return new JsonResponse($formatted);
     }
-     /**
-    * @Route("/addSocieteJSON",name="addSocieteJSON")
-    */
+    /**
+     * @Route("/addSocieteJSON",name="addSocieteJSON")
+     */
 
-    public function ajouterSocieteJSON(Request $request,NormalizerInterface $Normalizer)
+    public function ajouterSocieteJSON(Request $request, NormalizerInterface $Normalizer)
     {
-	    $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $Soc = new Societe();
         $Soc->setIdsoc($request->get('idsoc'));
         $Soc->setNom($request->get('nom'));
@@ -188,49 +189,48 @@ class SocieteController extends AbstractController
         $Soc->setMdpsoc($request->get('mdpsoc'));
         $em->persist($Soc);
         $em->flush();
-        $jsonContent = $Normalizer->normalize($Soc, 'json',['groups'=>'post:read']);
+        $jsonContent = $Normalizer->normalize($Soc, 'json', ['groups' => 'post:read']);
         return new Response(json_encode($jsonContent));;
     }
 
     /**
-    * @Route("/deleteSocieteJSON", name="deleteSocieteJSON")
-    */
+     * @Route("/deleteSocieteJSON", name="deleteSocieteJSON")
+     */
     public function deleteSocieteJSON(Request $request)
 
-    {$idsoc=$request->get("idsoc");
-        $em=$this->getDoctrine()->getManager();
-        $societe=$em->getRepository(Societe::class)->find($idsoc);
-        if($societe!=null)
-        {$em->remove($societe);
+    {
+        $idsoc = $request->get("idsoc");
+        $em = $this->getDoctrine()->getManager();
+        $societe = $em->getRepository(Societe::class)->find($idsoc);
+        if ($societe != null) {
+            $em->remove($societe);
             $em->flush();
-            $serialize=new Serializer([new ObjectNormalizer()]);
-            $formatted=$serialize->normalize("societe supprimee avec succes");
+            $serialize = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serialize->normalize("societe supprimee avec succes");
             return new JsonResponse($formatted);
         }
 
-return new JsonResponse("idsoc invalide");
- }
+        return new JsonResponse("idsoc invalide");
+    }
 
-       /**
-    * @Route("/updateSocieteJSON", name="updateSocieteJSON")
-    */
+    /**
+     * @Route("/updateSocieteJSON", name="updateSocieteJSON")
+     */
     public function updateSocieteJSON(Request $request)
 
-    {  
-        $idsoc=$request->get("idsoc");
-        $em=$this->getDoctrine()->getManager();
-        $Soc=$em->getRepository(Societe::class)->find($idsoc);
+    {
+        $idsoc = $request->get("idsoc");
+        $em = $this->getDoctrine()->getManager();
+        $Soc = $em->getRepository(Societe::class)->find($idsoc);
         $Soc->setNom($request->get('nom'));
         $Soc->setEmail($request->get('email'));
         $Soc->setAdresse($request->get('adresse'));
         $Soc->setImgsoc($request->get('imgsoc'));
         $Soc->setMdpsoc($request->get('mdpsoc'));
         $em->persist($Soc);
-            $em->flush();
-            $serialize=new Serializer([new ObjectNormalizer()]);
-            $formatted=$serialize->normalize("societe modifiee avec succes");
-            return new JsonResponse($formatted);
-
+        $em->flush();
+        $serialize = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serialize->normalize("societe modifiee avec succes");
+        return new JsonResponse($formatted);
     }
-
 }

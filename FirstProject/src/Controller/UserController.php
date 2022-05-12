@@ -16,6 +16,14 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 /**
  * @Route("/user")
  */
@@ -26,19 +34,129 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $repository): Response
     {
-        // return $this->render('user/index.html.twig', [
-        //     'controller_name' => 'UserController',
-        // ]);nnn
-        $tabuser = $repository->findAll();
 
-        $o = new User();
-        foreach ($o as $tabuser) {
+        $tabuser = $repository->findAll();
+        // $o = new User();
+        
+        $stats[] = new Stat();
+        
+        $tabStat = [0, 0, 0, 0, 0, 0];
+        $names = ['','','','','','',];
+
+        $names[0]=('ADMIN');
+        $names[1]=('ETUDIANT');
+        $names[2]=('RECRUTEUR');
+        $names[3]=('ENSIEGNAN');
+        $names[4]=('UNIVERSITE');
+        $names[5]=('User');
+
+        foreach ($tabuser as $o) {
+            if (in_array('ROLE_ADMIN', $o->getRoles())) {
+                $tabStat[0]++;
+            }
+            if (in_array('ROLE_ETUDIANT', $o->getRoles())) {
+                $tabStat[1]++;
+            }
+            if (in_array('ROLE_RECRUTEUR', $o->getRoles())) {
+                $tabStat[2]++;
+            }
+            if (in_array('ROLE_ENSIEGNANT', $o->getRoles())) {
+                $tabStat[3]++;
+            }
+            if (in_array('ROLE_UNIVERSITE', $o->getRoles())) {
+                $tabStat[4]++;
+            }
+            if (in_array('ROLE_User', $o->getRoles())) {
+                $tabStat[5]++;
+            }
         }
+        // foreach ($stats as $stat){
+        //     $stat->setNum(tabStat);
+        // }
         return $this->render('user/index.html.twig', [
-            'tab' => $tabuser
+            'tab' => $tabuser,
+            'size' => sizeof($tabuser),
+            'tabStat' => $tabStat,
+            'names' => $names
         ]);
     }
 
+
+    /**
+     * @Route("/listUserJSON", name="listUserJSON")
+     */
+    public function listUserJSON(NormalizerInterface $Normalizer)
+    {
+        $donnees = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($donnees);
+        return new JsonResponse($formatted);
+    }
+    /**
+     * @Route("/addUserJSON",name="addUserJSON")
+     */
+
+    public function ajouterUserJSON(Request $request, NormalizerInterface $Normalizer, UserPasswordEncoderInterface $userPasswordEncoder)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $user->setId($request->get('id'));
+        $user->setName($request->get('name'));
+        $user->setLastName($request->get('lastName'));
+        $user->setEmail($request->get('email'));
+        
+        $user->setPassword(
+            $userPasswordEncoder->encodePassword(
+                $user,
+                $request->get('password')
+            )
+        );
+        $em->persist($user);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($user, 'json', ['groups' => 'post:read']);
+        return new Response(json_encode($jsonContent));;
+    }
+
+    /**
+     * @Route("/deleteUserJSON", name="deleteUserJSON")
+     */
+    public function deleteUserJSON(Request $request)
+
+    {
+        $iduser = $request->get("iduser");
+        $em = $this->getDoctrine()->getManager();
+        $User = $em->getRepository(User::class)->find($iduser);
+        if ($User != null) {
+            $em->remove($User);
+            $em->flush();
+            $serialize = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serialize->normalize("User supprimee avec succes");
+            return new JsonResponse($formatted);
+        }
+
+        return new JsonResponse("iduser invalide");
+    }
+
+    /**
+     * @Route("/updateUserJSON", name="updateUserJSON")
+     */
+    public function updateUserJSON(Request $request)
+
+    {
+        $iduser = $request->get("id");
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($iduser);
+        $user->setId($iduser);
+        $user->setName($request->get('name'));
+        $user->setLastName($request->get('lastName'));
+        $user->setEmail($request->get('email'));
+        $user->setPassword($request->get('password'));
+        $em->persist($user);
+        $em->flush();
+        $serialize = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serialize->normalize("User modifiee avec succes");
+        return new JsonResponse($formatted);
+    }
     /**
      * @Route ("/delete/{id}",name="UserDelete")
      */
@@ -201,5 +319,21 @@ class UserController extends AbstractController
             'tab' => $tabuser,
 
         ]);
+    }
+}
+
+
+class Stat
+{
+    const num = 0;
+    const name = '';
+
+    function setNum($num)
+    {
+        $this->num = $num;
+    }
+    function setName($name)
+    {
+        $this->name = $name;
     }
 }
