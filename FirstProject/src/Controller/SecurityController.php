@@ -8,23 +8,41 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/loginJson", name="loginJson", methods={"POST"})
+     * @Route("/loginJson", name="loginJson")
      */
     public function loginJson(Request $request): Response
     {
-        $user = $this->getUser();
 
-        return $this->json([
-            'username' => $user->getEmail(),
-            'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
-            'roles' => $user->getRoles(),
-        ]);
+        $email = $request->query->get("email");
+        $password = $request->query->get("password");
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+        //ken 19itofbase
+        if ($user) {
+            //lazm n9arn password zeda madamo crypté nestašmlo password verify
+            if ($user->isBlocked()) {
+                return new Response("blocked");
+            } else {
+                if (password_verify($password, $user->getPassword())) {
+                    $serializer = new Serializer([new ObjectNormalizer()]);
+                    $formatted = $serializer->normalize($user);
+                    return new JsonResponse($formatted);
+                } else {
+                    return new Response("password inccorect");
+                }
+            }
+        } else {
+            return new Response("failed");
+        }
     }
 
     /**

@@ -357,14 +357,12 @@
 									<span class="hide-menu">Categorie</span>
 								</a>
 							</li>
-							{% if is_granted('ROLE_ADMIN','ROLE_ENSEIGNANT','ROLE_UNIVERSITE') %}
 								<li class="sidebar-item">
 									<a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('app_cours_index')}}" aria-expanded="false">
 										<i class="mdi mdi-chart-bar"></i>
 										<span class="hide-menu">Cour</span>
 									</a>
 								</li>
-							{% endif %}
 
 							<li class="sidebar-item">
 								<a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">

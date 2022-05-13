@@ -20,10 +20,69 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\verifyUserEmail\src\Exception\VerifyEmailExceptionInterface;
 // \symfonycasts\VerifyEmailExceptionInterface.php
 use App\Form\UserType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+
+
+
+    /**
+     * @Route("/signupJSON", name="app_signupjson")
+     */
+    public function signUpJson(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+
+        $name = $request->query->get("name");
+        $LastName = $request->query->get("lastName");
+        $email = $request->query->get("email");
+        $password = $request->query->get("password");
+        $roles = $request->query->get("roles");
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new Response("email invalid.");
+        }
+        $user = new User();
+
+
+        $user->setName($name);
+        $user->setLastName($LastName);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $user->setIsverified(true);
+
+        $user->setPassword(
+            $userPasswordEncoder->encodePassword(
+                $user,
+                $password
+            )
+        );
+
+        $user->setRoles(array("ROLE_ETUDIANT"));
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // generate a signed url and email it to the user
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('mouhamedrami.bendhia@esprit.tn', 'Ez-learning Mail Bot'))
+                ->to($user->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+        // do anything else you need here, like send an email
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return new JsonResponse("Account is created",  200);
+        } catch (\Exception $ex) {
+            return new Response("execption " . $ex->getMessage());
+        }
+    }
 
     public function __construct(EmailVerifier $emailVerifier)
     {
@@ -137,7 +196,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/user/add", name="admin_addUser")
      */
-    public function addUserWithrole(Request $request, UserPasswordEncoderInterface $userPasswordEncoder , EntityManagerInterface $entityManager): Response
+    public function addUserWithrole(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $user->setPassword("");
