@@ -8,9 +8,46 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/loginJson", name="loginJson")
+     */
+    public function loginJson(Request $request): Response
+    {
+
+        $email = $request->query->get("email");
+        $password = $request->query->get("password");
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+        //ken 19itofbase
+        if ($user) {
+            //lazm n9arn password zeda madamo crypté nestašmlo password verify
+            if ($user->isBlocked()) {
+                return new Response("blocked");
+            } else {
+                if (password_verify($password, $user->getPassword())) {
+                   // $serializer = new Serializer([new ObjectNormalizer()]);
+                   // $formatted = $serializer->normalize($user);
+                   return $this->json($user, Response::HTTP_OK,[],[
+                    ObjectNormalizer::IGNORED_ATTRIBUTES=>['tests','reponseEtudiants'],
+                    ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=> function($object){
+                        return $object->getId();
+                    }
+                ]);
+                } else {
+                    return new Response("password inccorect");
+                }
+            }
+        } else {
+            return new Response("failed");
+        }
+    }
     /**
      * @Route("/login", name="app_login")
      */
@@ -67,4 +104,7 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    
+
 }

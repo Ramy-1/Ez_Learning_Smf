@@ -19,15 +19,16 @@ class CoursController extends AbstractController
     /**
      * @Route("/", name="app_cours_index", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,CategorieRepository $categorieRepository): Response
     {
-        
+        $categories=$categorieRepository->findAll();
         $cours = $entityManager
             ->getRepository(Cours::class)
             ->findAll();
 
         return $this->render('cours/index.html.twig', [
             'cours' => $cours,
+            "categories"=>$categories
         ]);
     }
 
@@ -38,7 +39,8 @@ class CoursController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Cours::class);
         //$cours = $repository->findByDate();
-        $cours = $repository->findAll();
+        $cours = $repository->findby(["etat"=>1]);
+
         $categories=$categorieRepository->findAll();
         return $this->render('cours/indexf.html.twig', [
             'cours' => $cours,
@@ -90,7 +92,7 @@ class CoursController extends AbstractController
         $reclamation = $entityManager->getRepository(Cours::class)->find($id);
         $reclamation->setEtat(0);
         $entityManager->flush();
-        return $this->redirectToRoute('app_cours_index');
+        return $this->redirectToRoute('app_cours_indexf');
     }
     /**
      * @Route("/{id}/activer", name="coursinarchiver", methods={"GET","POST"})
@@ -101,7 +103,7 @@ class CoursController extends AbstractController
         $reclamation = $entityManager->getRepository(Cours::class)->find($id);
         $reclamation->setEtat(1);
         $entityManager->flush();
-        return $this->redirectToRoute('app_cours_index');
+        return $this->redirectToRoute('app_cours_indexf');
     }
     /**
      * @Route("/{id}", name="app_cours_show", methods={"GET"})

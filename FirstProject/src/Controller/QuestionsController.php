@@ -6,6 +6,7 @@ use App\Entity\Questions;
 use App\Entity\ReponseEtudiant;
 use App\Form\QuestionsType;
 use App\Repository\QuestionsRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\ReponsesRepository;
 use App\Repository\ReponseEtudiantRepository;
 use App\Repository\TestRepository;
@@ -185,8 +186,9 @@ class QuestionsController extends AbstractController
      * @return Response
      * @Route("/student/submit/test/{testid}", name="submit_test")
      */
-    public function submit($testid,Request $request,TestRepository $testRepository,ReponsesRepository $reponsesRepository,ReponseEtudiantRepository $ReponseEtudiantRepository, \Swift_Mailer $mailer)
+    public function submit($testid,CategorieRepository $CategorieRepository,Request $request,TestRepository $testRepository,ReponsesRepository $reponsesRepository,ReponseEtudiantRepository $ReponseEtudiantRepository, \Swift_Mailer $mailer)
     {
+    $categories=$CategorieRepository->findAll();
         $id=$request->get('id');
         $test=$testRepository->findOneBy(['id'=>$testid]);
         //dump($test);
@@ -249,7 +251,7 @@ class QuestionsController extends AbstractController
     $mailer->send($message);
   
         return $this->render('test/result.html.twig', [
-            
+            'categories'=>$categories,
             'test'=>$test,
             'note'=>$note
         ]);

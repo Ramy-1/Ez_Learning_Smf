@@ -5,6 +5,7 @@
 {% block title %}Societe{% endblock %}
 {% block javascripts %}
     {{parent()}}
+    
 {% endblock %}
 {% block menu %}
     {{parent()}}
@@ -17,7 +18,7 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Cours</h4>
+              <h4 class="page-title"></h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
@@ -47,33 +48,23 @@
 <h1 align ="center"> <br>Tableau des societes</h1>
 
 
-			<table class="table" border="2">
+			<table class="table-responsive" id="table">
 				<thead class="thead-light">
 					<tr>
-						<th>
-							<label class="customcheckbox mb-3">
-								<input type="checkbox" id="mainCheckbox"/>
-								<span class="checkmark"></span>
-							</label>
-						</th>
+						
 						 <td>nom</td>
                          <td>email</td>
                          <td>adresse</td>
                          <td> imgsoc</td>
                          <td> mdpsoc</td>
+                         <td> actions</td>
 					</tr>
 				</thead>
 				<tbody class="customtable">
 					
 				  {% for societe in societes %}
         <tr>
-							<th>
-								<label class="customcheckbox">
-									<input type="checkbox" class="listCheckbox"/>
-									<span class="checkmark"></span>
-								</label>
-							</th>
-          
+							
             <td>{{ societe.nom}}</td>
             <td>{{ societe.email }}</td>
             <td>{{ societe.adresse }}</td>
@@ -96,5 +87,10 @@
 	</div>
     <a class="btn btn-primary" href="{{ path('addSociete') }}">Ajouter une societe</a>
 </div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-
+ <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
 {% endblock %}

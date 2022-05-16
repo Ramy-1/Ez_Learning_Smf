@@ -44,12 +44,12 @@
               <div class="card">
              
                   <div class="card-body">
-    <h1 >Categorie index</h1>
+    <h1 >Categories</h1>
 
-    <div class="container my-2">
+   {#} <div class="container my-2">
         <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
-    </div>
-    <table class="table" id="mytable">
+    </div>#}
+    <table class="table" id="table">
         <thead>
             <tr>
                 <th class="btn-danger">Idcat</th>
@@ -106,4 +106,10 @@
 
 
     </script>
+     <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
 {% endblock %}

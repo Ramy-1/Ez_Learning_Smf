@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use App\Repository\ReponseEtudiantRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ReponseEtudiantRepository::class)
  */
 class ReponseEtudiant
 {
     /**
+     * @Groups("reponseEtudiant")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")

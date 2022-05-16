@@ -94,6 +94,21 @@
   </div>
  <p>{{ cour.description }}</p>
         </div> 
+         </div>
+        <a href="{{ path('app_cours_index') }}"  class="btn btn-success"><i class="bi bi-cart-plus"></i>back to list</a>
+
+    <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn btn-dark"><i class="bi bi-cart-plus"></i>edit</a>
+
+
+
+    <a href="{{ path('coursarchiver',{'id':cour.id})}}" class="btn btn-success">
+        <i class="bi bi-cart-plus"></i> archiver
+        <a href="{{ path('coursinarchiver',{'id':cour.id})}}" class="btn btn-success">
+            <i class="bi bi-cart-plus"></i> activer
+</a>
+    <a href="{{ path('app_categorie_show',{'idcat':cour.idcat})}}" class="btn btn-success">
+        <i class="bi bi-cart-plus"></i> cat
+    </a>
  {% else %}
  <table class="table">
         <tbody>

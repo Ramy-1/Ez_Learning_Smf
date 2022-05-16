@@ -1,45 +1,77 @@
-{% extends 'backbase.html.twig' %}
-{% block title %}Evenement index{% endblock %}
-
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Test{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title"></h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Evenements
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
 
-    <h1 class="btn-danger" align="center" style="background-color: darkgrey;color: white">Evenement index</h1>
+{{parent()}}
+    <h1>Evenement </h1>
 <div class="container">
     <div class="card-body">
-    <div class="container my-2">
+    {#<div class="container my-2">
         <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction1()" placeholder="rate search" id="myInput">
-    </div>
-    <table class="table table-striped" id="mytable">
+    </div>#}
+    <table class="table " id="table">
         <thead>
         <tr>
-            <th style="font-style: oblique" class="btn-danger" >Idorg</th>
-            <th class="btn-danger">Description</th>
-            <th class="btn-danger">Date</th>
-            <th class="btn-danger">Photo</th>
-            <th class="btn-danger">Lien</th>
-            <th class="btn-danger">Heure</th>
-            <th class="btn-danger">Nb participants</th>
+            <th  >Idorg</th>
+            <th >Description</th>
+            <th >Date</th>
+            <th >Photo</th>
+            <th>Lien</th>
+            <th >Heure</th>
+            <th >Nb participants</th>
 
-            <th class="btn-danger">actions</th>
+            <th >actions</th>
         </tr>
         </thead>
         <tbody>
 
-        <a href="{{ path('app_evenement_new') }}" class="" style="color:darkorange" >Create new</a>
+        <a href="{{ path('app_evenement_new') }}" class=" btn btn-primary"  >Ajouter un evenement</a>
         {% for evenement in evenements |reverse %}
             <tr>
                 <td>{{ evenement.idorg }}</td>
                 <td>{{ evenement.description }}</td>
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : ''}}</td>
-                <td><img class="w-100" src="{{ asset('images/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
+                <td><img class="w-100" src="{{ asset('uploads/'~ evenement.imgev) }}" alt="Image de {{ evenement.imgev }}">
                 </td>
 
                 <td>{{ evenement.lien }}</td>
                 <td>{{ evenement.heure }}</td>
                 <td>{{ evenement.nbrparticipant }}</td>
                 <td>
-                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="" style="color: darkorange">show</a>
-                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="" style="color: darkorange">edit</a>
+                    <a href="{{ path('app_evenement_show', {'idevent': evenement.idevent}) }}" class="btn btn-success btn-sm text-white">Afficher</a>
+                    <a href="{{ path('app_evenement_edit', {'idevent': evenement.idevent}) }}" class="btn btn-warning btn-sm" >Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -78,5 +110,10 @@
 
 
     </script>
-
+ <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
 {% endblock %}

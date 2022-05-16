@@ -50,12 +50,7 @@
 			 <table class="table-responsive mb-3" id="table" >
 				<thead class="thead-light">
 					<tr>
-						<th style="padding-right: 30px;"> 
-							<label class="customcheckbox ">
-								<input type="checkbox" id="mainCheckbox"/>
-								<span class="checkmark"></span>
-							</label>
-						</th>
+						
 						<th style="padding-right: 30px;">type</th>
                         <th style="padding-right: 30px;">description</th>
                         <th style="padding-right: 30px;">id etudiant</th>
@@ -69,12 +64,7 @@
 					
 						{% for reclamation in reclamations %}
         					<tr>
-							<td>
-								<label class="customcheckbox">
-									<input type="checkbox" class="listCheckbox"/>
-									<span class="checkmark"></span>
-								</label>
-							</td>
+							
 							<td style="padding-right: 30px;">{{ reclamation.type}}</td>
 							<td>{{ reclamation.description }}</td>
 							<td>{{ reclamation.idetudiant }}</td>
@@ -92,7 +82,7 @@
 		</tbody>
 	</table>
 
-	<a class="btn btn-primary" href="{{ path('addReclamation') }}">Ajouter une Reclamation</a>
+
 </div>
 
 </div>
@@ -100,6 +90,11 @@
 </div>
 <link rel="stylesheet" type="text/css" href="{{asset('assets/extra-libs/multicheck/multicheck.css')}}"/>
 <script src="{{asset('assets/extra-libs/multicheck/datatable-checkbox-init.js')}}"></script>
-
+ <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
 
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Cours;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use SymfonyCasts\verifyUserEmail\src\Exception\VerifyEmailExceptionInterface;
 
 class Home1Controller extends AbstractController
 {
@@ -22,6 +24,9 @@ class Home1Controller extends AbstractController
      */
     public function index(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        $repository = $this->getDoctrine()->getRepository(Cours::class);
+        //$cours = $repository->findByDate();
+        $cours = $repository->findby(["etat"=>1]);
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -62,6 +67,7 @@ class Home1Controller extends AbstractController
         return $this->render('home1/index.html.twig', [
             'controller_name' => 'Home1Controller',
             'registrationForm' => $form->createView(),
+            'cours'=>$cours
         ]);
     }
 }

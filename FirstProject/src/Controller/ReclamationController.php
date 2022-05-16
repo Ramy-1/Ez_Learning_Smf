@@ -58,7 +58,7 @@ class ReclamationController extends AbstractController
             //$reclamation->setMoyenne(0);
             $em->persist($reclamation);
             $em->flush();
-            return $this->redirectToRoute('listReclamation');
+            return $this->redirectToRoute('app_reclamation_etudiant',array('id'=>$user->getId()));
         }
         $recs = $this->getDoctrine()->getRepository(Reclamation::class)->findAll();
         $reps = $this->getDoctrine()->getRepository(Reponserec::class)->findAll();

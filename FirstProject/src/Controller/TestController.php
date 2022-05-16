@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 use Dompdf\Dompdf;
@@ -196,6 +202,99 @@ class TestController extends AbstractController
     return $response;
 
    // return new Response("The PDF file has been succesfully generated !");
+    }
+
+
+
+    /**
+     * @Route("/list/TestJSON", name="listTestJSON")
+     *
+     */
+    public function listTestJSON(NormalizerInterface $Normalizer,TestRepository $testRepository)
+    {
+        $donnees = $testRepository->findAll();
+        //$serializer=new Serializer([new ObjectNormalizer()]);
+        //formatted=$serializer->normalize($donnees);
+        //return new JsonResponse($formatted);
+        return $this->json($donnees, Response::HTTP_OK,[],[
+                ObjectNormalizer::IGNORED_ATTRIBUTES=>['user','reponseEtudiants'],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=> function($object){
+                    return $object->getId();
+                }
+            ]);
+    }
+     /**
+    * @Route("/add/TestJSON",name="addTestJSON")
+    */
+
+    public function ajouterTestJSON(Request $request,NormalizerInterface $Normalizer)
+    {
+	    $em = $this->getDoctrine()->getManager();
+        $test = new Test();
+        $test->setTitre($request->get('titre'));
+        $test->setDescription($request->get('description'));
+        $test->setSuccessScore($request->get('success'));
+        $test->setImage($request->get('image'));
+        $em->persist($test);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($test, 'json',['groups'=>'post:read']);
+        return $this->json($test, Response::HTTP_OK,[],[
+            ObjectNormalizer::IGNORED_ATTRIBUTES=>['user','reponseEtudiants'],
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=> function($object){
+                return $object->getId();
+            }
+        ]);
+
+    }
+
+    /**
+    * @Route("/delete/TestJSON", name="deleteTestJSON")
+    */
+    public function deleteTestJSON(Request $request)
+
+    {
+        $id=$request->get("id");
+        $em=$this->getDoctrine()->getManager();
+        $test=$em->getRepository(Test::class)->find($id);
+        if($test!=null)
+        {$em->remove($test);
+            $em->flush();
+            $serialize=new Serializer([new ObjectNormalizer()]);
+            $formatted=$serialize->normalize("Test supprimee avec succes");
+            return $this->json($test, Response::HTTP_OK,[],[
+                ObjectNormalizer::IGNORED_ATTRIBUTES=>['user','reponseEtudiants'],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=> function($object){
+                    return $object->getId();
+                }
+            ]);
+        }
+
+return new JsonResponse("id test invalide");
+ }
+
+       /**
+    * @Route("/update/TestJSON", name="updateTestJSON")
+    */
+    public function updateTestJSON(Request $request)
+
+    {  
+        $id=$request->get("id");
+        $em=$this->getDoctrine()->getManager();
+        $test=$em->getRepository(Test::class)->find($id);
+        $test->setTitre($request->get('titre'));
+        $test->setDescription($request->get('description'));
+        
+        $em->persist($test);
+            $em->flush();
+            $serialize=new Serializer([new ObjectNormalizer()]);
+            $formatted=$serialize->normalize("Test modifiee avec succes");
+            return $this->json($test, Response::HTTP_OK,[],[
+                ObjectNormalizer::IGNORED_ATTRIBUTES=>['user','reponseEtudiants'],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=> function($object){
+                    return $object->getId();
+                }
+            ]);
+
     }
 
    

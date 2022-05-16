@@ -62,9 +62,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reponses_index',{'questionid':question.id}) }}">back to list</a>
+    <a href="{{ path('app_reponses_index',{'questionid':question.id}) }}" class="btn btn-success text-white">Afficher la liste</a>
 
-    <a href="{{ path('app_reponses_edit', {'id': reponse.id}) }}">edit</a>
+    <a href="{{ path('app_reponses_edit', {'id': reponse.id}) }}" class="btn btn-warning">Modifier</a>
 
     {{ include('reponses/_delete_form.html.twig') }}
 {% endblock %}

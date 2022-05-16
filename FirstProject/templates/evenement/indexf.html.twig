@@ -1,40 +1,39 @@
-{% extends 'frontbase.html.twig' %}{% block title %}EZ Learning{% endblock %}
+{% extends 'base_front.html.twig' %}
 {% block stylesheets %}
     {{parent()}}
 {% endblock %}
-
-{% block menu %}
+{% block javascripts %}
     {{parent()}}
 {% endblock %}
-
 {% block body %}
+{{parent()}}
+<div class="intro-section single-cover" id="home-section">
+      
+      <div class="slide-1 " style="background-image: url('{{asset('images/img_2.jpg')}}');" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                  <h1 data-aos="fade-up" data-aos-delay="0"></h1>
+                  <p data-aos="fade-up" data-aos-delay="100"></p>
+                </div>
+
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
 
     <h1>Evenement index</h1>
 
-    <div class="intro-section" id="home-section">
-
-        <div class="slide-1" style="background-image: url('{{asset('assets/frontoffice/images/hero_1.jpg')}}');" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6 mb-4">
-                                <h1  data-aos="fade-up" data-aos-delay="100">Evenement</h1>
-                                <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
-                                <p data-aos="fade-up" data-aos-delay="300"><a href="#" class="btn btn-primary py-3 px-5 btn-pill">Consulter</a></p>
-
-                            </div>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <section class="product bg-white">
         <button type="submit" style="background-color:lavender"><a href="top2events">Consulter "Top 2 events"</a></button>
         {% for evenement in evenements %}

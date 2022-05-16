@@ -27,7 +27,7 @@
                       <a href="{{ path('app_questions_index',{'testid':test.id}) }}">Questions</a>
                     </li>
                      <li class="breadcrumb-item active" aria-current="page">
-                      New Question
+                      Ajouter un Question
                     </li>
                   </ol>
                 </nav>
@@ -50,5 +50,5 @@
 
     {{ include('questions/_form.html.twig') }}
 
-    <a href="{{ path('app_questions_index',{'testid':test.id}) }}">back to list</a>
+    <a href="{{ path('app_questions_index',{'testid':test.id}) }} "class="btn btn-success"></a>
 {% endblock %}

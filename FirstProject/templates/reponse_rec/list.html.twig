@@ -17,13 +17,13 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Tests</h4>
+              <h4 class="page-title"></h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Tests
+                      Reponse Reclamation
                     </li>
                   </ol>
                 </nav>
@@ -47,12 +47,13 @@
 <h1 align ="center" > <br>Tableau des reponses </h1>
 
 <div class="table-responsive">
-			<table class="table" border="2">
+			<table class="table" id="table">
 				<thead class="thead-light">
 					<tr>
 						 <td>id reclamation</td>
                          <td>description</td>
                          <td>date reponse</td>
+                         <td>Actions</td>
 					</tr>
 				</thead>
 				<tbody class="customtable">
@@ -72,5 +73,11 @@
 		
 		</tbody>
 	</table>
+  <script>
+$(document).ready(function() {
+    $('#table').DataTable();
+    
+} );
+</script>
 </div><link rel="stylesheet" type="text/css" href="../assets/extra-libs/multicheck/multicheck.css"/><script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
 {% endblock %}

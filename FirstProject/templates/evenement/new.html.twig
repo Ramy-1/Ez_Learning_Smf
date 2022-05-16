@@ -1,12 +1,46 @@
-
-{% extends 'backbase.html.twig' %}{% block title %}New Evenement{% endblock %}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block title %}Test{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+    <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+          <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+              <h4 class="page-title"></h4>
+              <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Evenement
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
 {% block body %}
+
+{{parent()}}
 <div class="row">
     <div  style="display: list-item;align-items: normal;justify-content: normal;margin-top: 15px; padding: 10px;">
 
         <div class="card">
             <div class="card-body">
-    <h1 style="color: coral" align="">Create new Evenement</h1>
+    <h1 style="color: coral" align="">Ajouter un Evenement</h1>
                 {% for message in app.flashes('info') %}
                     <div class="alert alert-danger"
                          style="width: 100%;text-align: center;font-size: 30px;font-weight: bolder;">
@@ -14,7 +48,7 @@
                     </div>
                 {% endfor %}
     {{ include('evenement/_form.html.twig') }}
-          <button>      <a href="/evenement/" class="btn btn-success "> <i class="fas fa-check">Back To List</i> </a></button>
+          <button>      <a href="/evenement/" class="btn btn-success "> <i class="fas fa-check">Afficher la liste</i> </a></button>
 
 
 {% endblock %}

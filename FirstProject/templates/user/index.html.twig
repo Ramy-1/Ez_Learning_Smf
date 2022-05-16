@@ -35,7 +35,29 @@
 {% block body %}
 
 {{parent()}}
-
+<div class="row">
+		{% for i in 0..5 %}
+			<div class="col-md-3">
+				<div class="card mt-0">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="peity_line_neutral left text-center mt-2">
+								<span>
+									{# <i class="mdi mdi-account-convert"> #}
+									<canvas width="50" height="24"></canvas>
+								</span>
+								<h6>{{"%.2f"|format(tabStat[i]/size*100)}}%</h6>
+							</div>
+						</div>
+						<div class="col-md-6 border-left text-center pt-2">
+							<h3 class="mb-0 fw-bold">{{tabStat[i]}}</h3>
+							<span class="text-muted">{{names[i]}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
  <!-- ============================================================== -->
           <!-- Start Page Content -->
           <!-- ============================================================== -->

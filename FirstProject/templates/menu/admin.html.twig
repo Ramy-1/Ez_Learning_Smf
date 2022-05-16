@@ -8,7 +8,7 @@
                 <li class="sidebar-item {% if app.request.attributes.get('_route')=="home" %} selected{% endif %}">
                     <a
                     class="sidebar-link waves-effect waves-dark sidebar-link"
-                    href="{{path('app_home')}}"
+                    href="#"
                     aria-expanded="false"
                     ><i class="mdi mdi-view-dashboard"></i
                     ><span class="hide-menu">Dashboard</span></a
@@ -74,9 +74,27 @@
 								</a>
 							</li>
 							<li class="sidebar-item">
+								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('listReponse')}}" aria-expanded="false">
+									<i class="mdi mdi-chart-bar"></i>
+									<span class="hide-menu">Reponse Reclamation</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('StatReponse')}}" aria-expanded="false">
+									<i class="mdi mdi-chart-bar"></i>
+									<span class="hide-menu">Statistique Reclamation</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
 								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('app_categorie_index')}}" aria-expanded="false">
 									<i class="mdi mdi-chart-bar"></i>
 									<span class="hide-menu">Categories</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('app_evenement_index')}}" aria-expanded="false">
+									<i class="mdi mdi-chart-bar"></i>
+									<span class="hide-menu">Evenements</span>
 								</a>
 							</li>
                 </ul>

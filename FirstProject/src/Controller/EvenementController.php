@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Categorie;
 use App\Form\EvenementType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +26,14 @@ class EvenementController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $evenements = $entityManager
             ->getRepository(Evenement::class)
             ->findAll();
 
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenements,
+            "categories"=>$categories
         ]);
     }
 
@@ -40,11 +43,13 @@ class EvenementController extends AbstractController
      */
     public function top2(Request $request): Response
     {
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $repository = $this->getDoctrine()->getRepository(Evenement::class);
         $evenement = $repository->top2();
 
         return $this->render('evenement/indexf.html.twig', [
             'evenements' => $evenement,
+            "categories"=>$categories
         ]);
     }
     /**
@@ -52,6 +57,7 @@ class EvenementController extends AbstractController
      */
     public function indexd(EntityManagerInterface $entityManager): Response
     {
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
@@ -81,7 +87,7 @@ class EvenementController extends AbstractController
         $dompdf->stream("mypdf.pdf", [
             "Attachment" => true
         ]);
-        return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_evenement_index', ["categories"=>$categories], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/front", name="app_evenement_indexf", methods={"GET"})
@@ -91,9 +97,14 @@ class EvenementController extends AbstractController
         $evenements = $entityManager
             ->getRepository(Evenement::class)
             ->findAll();
+        $categories = $entityManager
+            ->getRepository(Categorie::class)
+            ->findAll();
+
 
         return $this->render('evenement/indexf.html.twig', [
             'evenements' => $evenements,
+            'categories' => $categories,
         ]);
     }
 
@@ -107,6 +118,13 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('imgev')->getData();
+            $fichier=$evenement->getDescription().'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $evenement->setImgev($fichier);
             $this->addFlash('info', 'added successfully  ');
             $entityManager->persist($evenement);
             $entityManager->flush();
@@ -137,6 +155,13 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('imgev')->getData();
+            $fichier=$evenement->getDescription().'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $evenement->setImgev($fichier);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);

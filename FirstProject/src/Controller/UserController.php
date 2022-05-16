@@ -31,14 +31,52 @@ class UserController extends AbstractController
         // return $this->render('user/index.html.twig', [
         //     'controller_name' => 'UserController',
         // ]);nnn
+        
         $tabuser = $repository->findAll();
 
         $o = new User();
         foreach ($o as $tabuser) {
         }
+        $tabStat = [0, 0, 0, 0, 0, 0];
+        $names = ['','','','','','',];
+
+        $names[0]=('ADMIN');
+        $names[1]=('ETUDIANT');
+        $names[2]=('RECRUTEUR');
+        $names[3]=('ENSIEGNAN');
+        $names[4]=('UNIVERSITE');
+        $names[5]=('SOCIETE');
+
+        foreach ($tabuser as $o) {
+            if (in_array('ROLE_ADMIN', $o->getRoles())) {
+                $tabStat[0]++;
+            }
+            if (in_array('ROLE_ETUDIANT', $o->getRoles())) {
+                $tabStat[1]++;
+            }
+            if (in_array('ROLE_RECRUTEUR', $o->getRoles())) {
+                $tabStat[2]++;
+            }
+            if (in_array('ROLE_ENSIEGNANT', $o->getRoles())) {
+                $tabStat[3]++;
+            }
+            if (in_array('ROLE_UNIVERSITE', $o->getRoles())) {
+                $tabStat[4]++;
+            }
+            if (in_array('ROLE_SOCIETE', $o->getRoles())) {
+                $tabStat[5]++;
+            }
+        }
+        // foreach ($stats as $stat){
+        //     $stat->setNum(tabStat);
+        // }
         return $this->render('user/index.html.twig', [
-            'tab' => $tabuser
+            'tab' => $tabuser,
+            'size' => sizeof($tabuser),
+            'tabStat' => $tabStat,
+            'names' => $names
         ]);
+        
     }
 
     /**

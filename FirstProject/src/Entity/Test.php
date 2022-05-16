@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TestRepository::class)
@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\File;
 class Test
 {
     /**
+     * @Groups("test")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")

@@ -34,19 +34,19 @@ class UniversiteController extends AbstractController
     /**
      * @Route("/front", name="app_universite_indexf", methods={"GET"})
      */
-    public function index2(EntityManagerInterface $entityManager, Request $request): Response
+    public function index2(EntityManagerInterface $entityManager, Request $request,PaginatorInterface $paginator): Response
     {
-        $universites = $entityManager
+       /* $universites = $entityManager
             ->getRepository(Universite::class)
             ->findAll();
-        
+        */
             $categories = $entityManager
             ->getRepository(Categorie::class)
             ->findAll();
-        // $universites = $paginator->paginate(
-        //     $universites,
-        //     $request->query->getInt('page', 1),
-        //     3);
+         $universites = $paginator->paginate(
+             $universites,
+             $request->query->getInt('page', 1),
+            3);
 
         return $this->render('universite/indexf.html.twig', [
             'universites' => $universites,
