@@ -11,6 +11,7 @@
         "dompdf/dompdf": "^1.2",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "google/apiclient": "2.0",
+        "symfony/monolog-bundle": "^3.1",
         "knplabs/knp-paginator-bundle": "^5.8",
         "mhujer/breadcrumbs-bundle": "^1.5",
         "sensio/framework-extra-bundle": "^6.2",
@@ -41,6 +42,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/maker-bundle": "^1.38",
+        "symfony/debug-bundle": "4.4.*",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/stopwatch": "4.4.*",
         "symfony/web-profiler-bundle": "4.4.*",
